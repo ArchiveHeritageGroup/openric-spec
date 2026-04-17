@@ -1,0 +1,108 @@
+# Copyright (C) 2026 Johan Pieterse
+# Plain Sailing Information Systems
+# Email: johan@plansailingisystems.co.za
+#
+# This file is part of OpenRiC. Licensed under AGPL-3.0-or-later.
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validator-tests:
+    name: Validator tests + fixture pack
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: validator/pyproject.toml
+
+      - name: Install validator
+        working-directory: validator
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+
+      - name: Run unit + fixture tests
+        working-directory: validator
+        run: pytest tests/ -v --tb=short
+
+      - name: Verify schemas are valid JSON Schema 2020-12
+        run: |
+          python -c "
+          import json, pathlib, sys
+          from jsonschema import Draft202012Validator
+          errors = 0
+          for p in pathlib.Path('schemas').glob('*.schema.json'):
+              try:
+                  Draft202012Validator.check_schema(json.loads(p.read_text()))
+                  print(f'  ✓ {p.name}')
+              except Exception as e:
+                  print(f'  ✗ {p.name}: {e}')
+                  errors += 1
+          sys.exit(1 if errors else 0)
+          "
+
+      - name: Verify SHACL shapes parse as Turtle
+        run: |
+          pip install rdflib
+          python -c "
+          import pathlib, sys
+          from rdflib import Graph
+          errors = 0
+          for p in pathlib.Path('shapes').glob('*.shacl.ttl'):
+              try:
+                  g = Graph()
+                  g.parse(str(p), format='turtle')
+                  print(f'  ✓ {p.name} ({len(g)} triples)')
+              except Exception as e:
+                  print(f'  ✗ {p.name}: {e}')
+                  errors += 1
+          sys.exit(1 if errors else 0)
+          "
+
+  site-links:
+    name: Spec site link check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check internal Markdown links resolve
+        run: |
+          python -c "
+          import pathlib, re, sys
+          root = pathlib.Path('.')
+          md_files = list(root.rglob('*.md')) + list(root.rglob('*.markdown'))
+          md_files = [p for p in md_files if '.venv' not in p.parts and 'validator' not in p.parts]
+          pattern = re.compile(r'\[([^\]]+)\]\(([^)]+)\)')
+          broken = []
+          for p in md_files:
+              for m in pattern.finditer(p.read_text()):
+                  target = m.group(2).split('#')[0]
+                  if target.startswith(('http://', 'https://', 'mailto:')):
+                      continue
+                  if target == '':
+                      continue
+                  resolved = (p.parent / target).resolve()
+                  if not resolved.exists():
+                      # Allow .html extension for jekyll-generated pages when a .md sibling exists
+                      if target.endswith('.html'):
+                          md_sibling = (p.parent / target[:-5]).with_suffix('.md').resolve()
+                          if md_sibling.exists():
+                              continue
+                      broken.append(f'  {p}: [{m.group(1)}] -> {target}')
+          if broken:
+              print('Broken internal links:')
+              print('\n'.join(broken))
+              sys.exit(1)
+          print(f'Checked {len(md_files)} markdown files — all internal links resolve.')
+          "

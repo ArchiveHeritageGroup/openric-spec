@@ -25,7 +25,9 @@ openric-validate --fixture fonds-minimal
 | 1 | `fonds-minimal` | Smallest valid record — title + creator |
 | 2 | `fonds-with-series` | *(planned)* Hierarchy: fonds + series + item |
 | 3 | `fonds-multilingual` | *(planned)* Multiple `@language` titles |
-| 4 | `agent-person-simple` | *(planned)* Person with dates of existence |
+| 4 | `agent-person-simple` | Minimal Agent response from live Heratio |
+| 4b | `place-country` | Place with GeoNames authority URI, lat/long |
+| 4c | `subgraph-depth-1` | Rooted subgraph exercising the six graph invariants |
 | 5 | `agent-corporate-body` | *(planned)* CorporateBody with mandate + place |
 | 6 | `agent-family` | *(planned)* Family with member relations |
 | 7 | `agent-with-relations` | *(planned)* Successor / predecessor chains |
