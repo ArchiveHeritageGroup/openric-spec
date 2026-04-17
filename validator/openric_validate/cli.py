@@ -18,9 +18,12 @@ from pathlib import Path
 from . import __version__
 from .http_client import fetch_json, ServerUnreachable
 from .schema_check import validate_against_schema, SchemaCheckError
+from .shape_check import validate_against_shapes
 from .report import Report, Finding, Severity
 
-SCHEMAS_DIR = Path(__file__).resolve().parent.parent.parent / "schemas"
+SPEC_ROOT = Path(__file__).resolve().parent.parent.parent
+SCHEMAS_DIR = SPEC_ROOT / "schemas"
+SHAPES_PATH = SPEC_ROOT / "shapes" / "openric.shacl.ttl"
 
 
 def _build_parser() -> argparse.ArgumentParser:
@@ -139,4 +142,46 @@ def _run_record_check(url: str, schemas_dir: Path, report: Report) -> None:
                 target=err.json_path,
             ))
 
-    # SHACL check deferred — will be wired in once shape_check is populated.
+    # SHACL validation against RiC-O shapes
+    if SHAPES_PATH.exists():
+        conforms, results_text = validate_against_shapes(response, SHAPES_PATH)
+        if conforms:
+            report.add(Finding(
+                check="record-shacl",
+                severity=Severity.PASS,
+                message="Response conforms to openric.shacl.ttl",
+                target=url,
+            ))
+        else:
+            # Split pyshacl's multi-line text into one Finding per violation
+            for block in _split_pyshacl_results(results_text):
+                report.add(Finding(
+                    check="record-shacl",
+                    severity=Severity.VIOLATION,
+                    message=block.strip()[:500],
+                    target=url,
+                ))
+    else:
+        report.add(Finding(
+            check="record-shacl",
+            severity=Severity.WARNING,
+            message=f"SHACL shapes not found at {SHAPES_PATH}; skipping shape check",
+            target=str(SHAPES_PATH),
+        ))
+
+
+def _split_pyshacl_results(text: str) -> list[str]:
+    """Split pyshacl's human-readable report into per-violation blocks."""
+    if "Constraint Violation" not in text:
+        return [text]
+    blocks = []
+    current: list[str] = []
+    for line in text.splitlines():
+        if line.startswith("Constraint Violation") and current:
+            blocks.append("\n".join(current))
+            current = [line]
+        else:
+            current.append(line)
+    if current:
+        blocks.append("\n".join(current))
+    return blocks
