@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openric.org/schemas/v0.1.0/service-description.schema.json",
+  "title": "OpenRiC Service Description",
+  "description": "Validates the root /api/ric/v1/ response. At v0.1 this is permissive — either a plain {name, version, description} object (Heratio's current shorthand) or the richer openric:Service envelope from viewing-api.md §4.1.",
+
+  "oneOf": [
+    {
+      "title": "Plain shorthand",
+      "type": "object",
+      "required": ["name", "version"],
+      "properties": {
+        "name":        { "type": "string" },
+        "version":     { "type": "string" },
+        "description": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    {
+      "title": "Full OpenRiC service envelope",
+      "type": "object",
+      "required": ["@type"],
+      "properties": {
+        "@context":              { "type": ["string", "object", "array"] },
+        "@type":                 { "type": "string", "const": "openric:Service" },
+        "openric:version":       { "type": "string" },
+        "openric:conformance":   {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^L[1-4](-[a-z]+)?$" }
+        },
+        "openric:endpoints":     { "type": "object" },
+        "openric:implementation": {
+          "type": "object",
+          "properties": {
+            "name":    { "type": "string" },
+            "version": { "type": "string" },
+            "url":     { "type": "string", "format": "uri" }
+          }
+        }
+      },
+      "additionalProperties": true
+    }
+  ]
+}

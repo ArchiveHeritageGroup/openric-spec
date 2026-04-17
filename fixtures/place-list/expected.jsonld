@@ -1,0 +1,30 @@
+{
+  "@context": {
+    "rico": "https://www.ica.org/standards/RiC/ontology#",
+    "openric": "https://openric.org/ns/v1#"
+  },
+  "@type": "rico:PlaceList",
+  "openric:total": 182,
+  "openric:page": 1,
+  "openric:limit": 3,
+  "openric:items": [
+    {
+      "@id": "https://heratio.theahg.co.za/place/912324",
+      "@type": "rico:Place",
+      "rico:name": "Africa",
+      "openric:localType": "city"
+    },
+    {
+      "@id": "https://heratio.theahg.co.za/place/912245",
+      "@type": "rico:Place",
+      "rico:name": "Albany",
+      "openric:localType": "city"
+    },
+    {
+      "@id": "https://heratio.theahg.co.za/place/912220",
+      "@type": "rico:Place",
+      "rico:name": "Alessandro",
+      "openric:localType": "city"
+    }
+  ]
+}

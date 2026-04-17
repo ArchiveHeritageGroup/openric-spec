@@ -1,0 +1,26 @@
+{
+  "@context": "https://www.ica.org/standards/RiC/ontology",
+  "@type": "rico:RecordList",
+  "ric:total": 2781,
+  "ric:page": 1,
+  "ric:items": [
+    {
+      "@id": "https://heratio.theahg.co.za/informationobject/kc4x-45tz-em84",
+      "@type": "rico:RecordSet",
+      "rico:identifier": "dem001",
+      "rico:title": null
+    },
+    {
+      "@id": "https://heratio.theahg.co.za/informationobject/kc4x-45tz-em84",
+      "@type": "rico:RecordSet",
+      "rico:identifier": "dem001",
+      "rico:title": null
+    },
+    {
+      "@id": "https://heratio.theahg.co.za/informationobject/kc4x-45tz-em84",
+      "@type": "rico:RecordSet",
+      "rico:identifier": "dem001",
+      "rico:title": null
+    }
+  ]
+}

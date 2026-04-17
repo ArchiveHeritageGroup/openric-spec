@@ -158,10 +158,24 @@ def _resolve_schema(
     ):
         return "Repository", schemas_dir / "repository.schema.json"
 
+    # List response shape — any *List type routes to the generic list schema
+    if short.endswith("List") and short != "List":
+        return short, schemas_dir / "list.schema.json"
+
     filename = _SCHEMA_BY_TYPE.get(short)
-    if not filename:
-        return None, None
-    return short, schemas_dir / filename
+    if filename:
+        return short, schemas_dir / filename
+
+    # Untyped shorthand responses — infer from URL path and response shape.
+    # Error: "error" key present.
+    if "error" in response and isinstance(response["error"], str):
+        return "Error", schemas_dir / "error.schema.json"
+    # Service description: root endpoint, no @type, has name + version.
+    if ("name" in response and "version" in response
+            and (url.rstrip("/").endswith("/v1") or url.rstrip("/").endswith("/api/ric/v1"))):
+        return "Service", schemas_dir / "service-description.schema.json"
+
+    return None, None
 
 
 def _run_record_check(url: str, schemas_dir: Path, report: Report) -> None:

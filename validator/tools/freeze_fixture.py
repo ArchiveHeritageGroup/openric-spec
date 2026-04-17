@@ -53,9 +53,12 @@ def freeze(case: str, url: str, notes: str | None) -> int:
         print(f"fetch failed: {e}", file=sys.stderr)
         return 3
 
-    if resp.status_code >= 400:
+    # 4xx responses are valid for error-fixture capture; we still parse JSON below.
+    if resp.status_code >= 500:
         print(f"{url} returned HTTP {resp.status_code}", file=sys.stderr)
         return 3
+    if resp.status_code >= 400:
+        print(f"note: capturing {resp.status_code} response from {url}", file=sys.stderr)
 
     try:
         payload = resp.json()

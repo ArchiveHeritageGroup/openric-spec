@@ -42,11 +42,17 @@ def _fixture_cases() -> list[tuple[str, Path]]:
     return cases
 
 
+def _source_url(fixture_dir: Path) -> str:
+    url_file = fixture_dir / "source-url.txt"
+    return url_file.read_text().strip() if url_file.exists() else ""
+
+
 @pytest.mark.parametrize("name,expected_path", _fixture_cases())
 def test_fixture_validates_against_schema(name: str, expected_path: Path):
     """Every fixture's expected.jsonld must validate against its resolved schema."""
     response = json.loads(expected_path.read_text())
-    short_type, schema_path = _resolve_schema(response, SCHEMAS)
+    url = _source_url(expected_path.parent)
+    short_type, schema_path = _resolve_schema(response, SCHEMAS, url)
     assert schema_path is not None, (
         f"No schema registered for @type {response.get('@type')!r} in fixture {name}"
     )
@@ -60,7 +66,8 @@ def test_fixture_validates_against_schema(name: str, expected_path: Path):
 def test_subgraph_fixtures_satisfy_invariants(name: str, expected_path: Path):
     """Subgraph-type fixtures must satisfy the six graph-primitive invariants."""
     response = json.loads(expected_path.read_text())
-    short_type, _ = _resolve_schema(response, SCHEMAS)
+    url = _source_url(expected_path.parent)
+    short_type, _ = _resolve_schema(response, SCHEMAS, url)
     if short_type != "Subgraph":
         pytest.skip(f"{name} is not a Subgraph fixture")
     violations = check_subgraph_invariants(response)

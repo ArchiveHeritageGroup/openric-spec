@@ -1,0 +1,34 @@
+{
+  "@context": {
+    "rico": "https://www.ica.org/standards/RiC/ontology#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "owl": "http://www.w3.org/2002/07/owl#"
+  },
+  "@id": "https://heratio.theahg.co.za/informationobject/cat-in-arms",
+  "@type": "https://www.ica.org/standards/RiC/ontology#Record",
+  "rico:type": "Record",
+  "rico:title": "Demo of folder1",
+  "rico:identifier": "Cat",
+  "rico:description": "Example item Scope and content",
+  "rico:hasExtent": {
+    "@type": "https://www.ica.org/standards/RiC/ontology#Extent",
+    "rico:extentType": "1 paqge"
+  },
+  "rico:heldBy": {
+    "@id": "https://heratio.theahg.co.za/repository/the-archive-and-heritage-group",
+    "@type": "https://www.ica.org/standards/RiC/ontology#CorporateBody",
+    "rico:name": "The Archive And Heritage Group"
+  },
+  "rico:conditionsOfAccess": "Example item Conditions governing access",
+  "rico:hasInstantiation": [
+    {
+      "@type": "https://www.ica.org/standards/RiC/ontology#Instantiation",
+      "rico:identifier": "cat.jpg",
+      "rico:mimeType": "image/jpeg",
+      "rico:size": 102354
+    }
+  ]
+}

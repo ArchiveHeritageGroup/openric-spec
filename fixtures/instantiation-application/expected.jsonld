@@ -1,0 +1,26 @@
+{
+  "@context": {
+    "rico": "https://www.ica.org/standards/RiC/ontology#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#"
+  },
+  "@id": "https://heratio.theahg.co.za/instantiation/910880",
+  "@type": "rico:Instantiation",
+  "rico:identifier": "PS_AtoM_-_Training_Manual__rev_3.0.docx",
+  "rico:title": "PS_AtoM_-_Training_Manual__rev_3.0.docx",
+  "rico:description": "MIME: application/vnd.openxmlformats-officedocument.wordprocessingml.document | Size: 18982.5 KB",
+  "rico:hasMimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  "rico:hasCarrierType": "digital",
+  "rico:hasExtent": {
+    "@type": "rico:Extent",
+    "rico:quantity": 19438040,
+    "rico:extentType": "bytes"
+  },
+  "rico:technicalCharacteristics": "Checksum (sha256): e0fb6a7c4c1ddf7d725754b36cf721f68b1c3eea122c41420b9a3191704d686e",
+  "rico:isInstantiationOf": {
+    "@id": "https://heratio.theahg.co.za/informationobject/atom-training-manual-v3-0",
+    "@type": "rico:Record",
+    "rico:title": "AtoM training manual V3.0"
+  }
+}

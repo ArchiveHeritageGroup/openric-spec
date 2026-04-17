@@ -1,0 +1,24 @@
+{
+  "@context": {
+    "rico": "https://www.ica.org/standards/RiC/ontology#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#"
+  },
+  "@id": "https://heratio.theahg.co.za/activity/910378",
+  "@type": "rico:Production",
+  "rico:name": "Creation",
+  "openric:localType": "production",
+  "rico:isOrWasAssociatedWithDate": {
+    "@type": "rico:DateRange",
+    "rico:beginningDate": {
+      "@value": "1961-01-01",
+      "@type": "xsd:date"
+    },
+    "rico:endDate": {
+      "@value": "1999-01-01",
+      "@type": "xsd:date"
+    },
+    "rico:expressedDate": "1961"
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "name": "RIC-O Linked Data API",
+  "version": "1.0",
+  "description": "Linked Data publication endpoints for RIC-O compliant serialization"
+}
