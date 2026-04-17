@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openric.org/schemas/v0.1.0/rule.schema.json",
+  "title": "OpenRiC Rule response",
+  "description": "Validates a single /rules/{id} response. Rules carry mandates, laws, policies, or any authority document that governs archival holdings.",
+
+  "type": "object",
+  "required": ["@id", "@type"],
+
+  "properties": {
+    "@context": {
+      "oneOf": [
+        { "type": "string", "format": "uri" },
+        { "type": "object" },
+        { "type": "array" }
+      ]
+    },
+
+    "@id": {
+      "type": "string",
+      "format": "uri"
+    },
+
+    "@type": {
+      "oneOf": [
+        {
+          "type": "string",
+          "pattern": "^(rico:Rule|rico:Mandate|https://www\\.ica\\.org/standards/RiC/ontology#(Rule|Mandate))$"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^(rico:Rule|rico:Mandate|https://www\\.ica\\.org/standards/RiC/ontology#(Rule|Mandate))$"
+          },
+          "minItems": 1
+        }
+      ]
+    },
+
+    "rico:title":            { "$ref": "#/$defs/langString" },
+    "rico:name":             { "$ref": "#/$defs/langString" },
+    "rico:description":      { "$ref": "#/$defs/langString" },
+    "rico:descriptiveNote":  { "$ref": "#/$defs/langString" },
+    "rico:ruleType":         { "type": "string" },
+    "rico:hasSource":        { "$ref": "#/$defs/langString" },
+
+    "openric:localType":     { "type": "string" },
+    "openric:jurisdiction":  { "type": "string" },
+
+    "owl:sameAs": {
+      "oneOf": [
+        { "type": "string", "format": "uri" },
+        { "type": "array", "items": { "type": "string", "format": "uri" } }
+      ]
+    },
+
+    "rico:hasDateRangeSet": {
+      "oneOf": [
+        { "$ref": "#/$defs/dateRange" },
+        { "type": "array", "items": { "$ref": "#/$defs/dateRange" } }
+      ]
+    }
+  },
+
+  "additionalProperties": true,
+
+  "$defs": {
+    "langString": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "null" },
+        {
+          "type": "object",
+          "required": ["@value"],
+          "properties": {
+            "@value":    { "type": "string" },
+            "@language": { "type": "string" }
+          }
+        },
+        {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              { "type": "string" },
+              {
+                "type": "object",
+                "required": ["@value"],
+                "properties": {
+                  "@value":    { "type": "string" },
+                  "@language": { "type": "string" }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+
+    "dateRange": {
+      "type": "object",
+      "anyOf": [
+        { "required": ["rico:beginningDate"] },
+        { "required": ["rico:endDate"] },
+        { "required": ["rico:startDate"] },
+        { "required": ["rico:expressedDate"] },
+        { "required": ["rico:normalizedDate"] }
+      ],
+      "properties": {
+        "@type":                 { "type": "string" },
+        "rico:beginningDate":    { "type": ["string", "object"] },
+        "rico:endDate":          { "type": ["string", "object"] },
+        "rico:startDate":        { "type": ["string", "object"] },
+        "rico:expressedDate":    { "type": ["string", "object"] },
+        "rico:normalizedDate":   { "type": "string" }
+      }
+    }
+  }
+}

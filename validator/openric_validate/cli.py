@@ -128,6 +128,8 @@ _SCHEMA_BY_TYPE = {
     "Production":    "activity.schema.json",
     "Accumulation":  "activity.schema.json",
     "Activity":      "activity.schema.json",
+    "Rule":          "rule.schema.json",
+    "Mandate":       "rule.schema.json",
 }
 
 
