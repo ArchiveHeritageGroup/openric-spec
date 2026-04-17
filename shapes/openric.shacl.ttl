@@ -258,15 +258,17 @@
     sh:targetClass rico:Place ;
     sh:name "Place Validation" ;
 
-    sh:property [
-        sh:path rico:hasPlaceName ;
-        sh:minCount 1 ;
-        sh:message "Place must have at least one name"
-    ] ;
+    # Accept either rico:name (shorthand) OR rico:hasPlaceName (canonical).
+    sh:or (
+        [ sh:property [ sh:path rico:name ; sh:minCount 1 ] ]
+        [ sh:property [ sh:path rico:hasPlaceName ; sh:minCount 1 ] ]
+    ) ;
 
     sh:property [
         sh:path rico:hasPlaceName ;
-        sh:node :PlaceNameShape
+        sh:node :PlaceNameShape ;
+        sh:severity sh:Info ;
+        sh:message "When present, rico:hasPlaceName must be properly structured"
     ] .
 
 

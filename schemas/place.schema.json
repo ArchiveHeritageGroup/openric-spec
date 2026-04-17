@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openric.org/schemas/v0.1.0/place.schema.json",
+  "title": "OpenRiC Place response",
+  "description": "Validates a single /places/{id} response. Places carry name, optional coordinates, optional authority URI (e.g. GeoNames), and optional hierarchical parent.",
+
+  "type": "object",
+  "required": ["@id", "@type"],
+
+  "properties": {
+    "@context": {
+      "oneOf": [
+        { "type": "string", "format": "uri" },
+        { "type": "object" },
+        { "type": "array" }
+      ]
+    },
+
+    "@id": {
+      "type": "string",
+      "format": "uri"
+    },
+
+    "@type": {
+      "oneOf": [
+        {
+          "type": "string",
+          "pattern": "^(rico:Place|https://www\\.ica\\.org/standards/RiC/ontology#Place)$"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^(rico:Place|https://www\\.ica\\.org/standards/RiC/ontology#Place)$"
+          },
+          "minItems": 1
+        }
+      ]
+    },
+
+    "rico:name":           { "$ref": "#/$defs/langString" },
+    "rico:description":    { "$ref": "#/$defs/langString" },
+    "rico:streetAddress":  { "type": ["string", "null"] },
+
+    "rico:latitude":  { "type": ["number", "null"], "minimum": -90,  "maximum": 90 },
+    "rico:longitude": { "type": ["number", "null"], "minimum": -180, "maximum": 180 },
+
+    "owl:sameAs": {
+      "oneOf": [
+        { "type": "string", "format": "uri" },
+        { "type": "array", "items": { "type": "string", "format": "uri" } }
+      ]
+    },
+
+    "openric:localType": { "type": "string" },
+
+    "rico:isOrWasPartOf": {
+      "oneOf": [
+        { "type": "string", "format": "uri" },
+        {
+          "type": "object",
+          "properties": {
+            "@id":       { "type": "string", "format": "uri" },
+            "@type":     { "type": "string" },
+            "rico:name": { "$ref": "#/$defs/langString" }
+          }
+        },
+        {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              { "type": "string", "format": "uri" },
+              { "type": "object" }
+            ]
+          }
+        }
+      ]
+    },
+
+    "rico:hasPlaceName": {
+      "oneOf": [
+        { "$ref": "#/$defs/placeName" },
+        { "type": "array", "items": { "$ref": "#/$defs/placeName" } }
+      ]
+    }
+  },
+
+  "additionalProperties": true,
+
+  "$defs": {
+    "langString": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "null" },
+        {
+          "type": "object",
+          "required": ["@value"],
+          "properties": {
+            "@value":    { "type": "string" },
+            "@language": { "type": "string" }
+          }
+        },
+        {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              { "type": "string" },
+              {
+                "type": "object",
+                "required": ["@value"],
+                "properties": {
+                  "@value":    { "type": "string" },
+                  "@language": { "type": "string" }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+
+    "placeName": {
+      "type": "object",
+      "required": ["rico:textualValue"],
+      "properties": {
+        "@type":             { "type": "string" },
+        "rico:textualValue": { "$ref": "#/$defs/langString" }
+      }
+    }
+  }
+}

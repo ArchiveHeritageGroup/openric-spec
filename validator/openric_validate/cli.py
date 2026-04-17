@@ -123,6 +123,7 @@ _SCHEMA_BY_TYPE = {
     "Person":        "agent.schema.json",
     "CorporateBody": "agent.schema.json",
     "Family":        "agent.schema.json",
+    "Place":         "place.schema.json",
 }
 
 
