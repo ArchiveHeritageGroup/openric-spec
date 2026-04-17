@@ -25,6 +25,7 @@ OpenRiC is not a product. It is a specification. Any system — AtoM, Heratio, A
 | Validator CLI (`openric-validate`) | ✓ Schema + SHACL + graph-invariant checks |
 | Conformance fixture pack | ✓ 20 canonical fixtures |
 | Reference implementation ([Heratio](https://github.com/ArchiveHeritageGroup/heratio)) | ✓ 8 endpoint types live-validate |
+| [Live demo](demo/) — browser-side viewer calling the reference implementation | ✓ 2D + 3D graph, interactive drill-down |
 | CI — unit tests, schema well-formedness, SHACL parse, Markdown links | ✓ GitHub Actions green |
 | **Frozen v0.1.0 release** | **✓ Tagged** — see [CHANGELOG](https://github.com/ArchiveHeritageGroup/openric-spec/blob/main/CHANGELOG.md) |
 
