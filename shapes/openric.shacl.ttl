@@ -293,23 +293,13 @@
     sh:property [
         sh:path rico:hasMimeType ;
         sh:maxCount 1 ;
-        sh:pattern "^[a-z]+/[a-z0-9.+-]+$" ;
+        sh:pattern "^[a-zA-Z0-9!#$&^_.+-]+/[a-zA-Z0-9!#$&^_.+-]+$" ;
         sh:severity sh:Warning ;
         sh:message "Digital instantiation should have a valid MIME type"
-    ] ;
-
-    sh:sparql [
-        sh:message "Instantiation should be linked from a Record via rico:hasInstantiation" ;
-        sh:severity sh:Warning ;
-        sh:select """
-            SELECT $this WHERE {
-                $this a rico:Instantiation .
-                FILTER NOT EXISTS {
-                    ?record rico:hasInstantiation $this .
-                }
-            }
-        """
     ] .
+
+# The cross-entity "Instantiation must be linked from a Record" check lives in
+# shapes/full-graph.shacl.ttl since it requires the full triple store.
 
 
 # ============================================================================
@@ -379,64 +369,8 @@
 
 
 # ============================================================================
-# CROSS-ENTITY VALIDATION (SPARQL-based)
+# Cross-entity SPARQL shapes were moved to shapes/full-graph.shacl.ttl
 # ============================================================================
-
-# Cross-graph SPARQL shapes below.
-# Severity is sh:Info because these shapes assume full-graph context; when
-# validating a single-entity API response (partial graph), they produce
-# expected false positives. Run these against the full triple store for
-# authoritative results.
-
-:OrphanedRecordShape a sh:NodeShape ;
-    sh:targetClass rico:Record ;
-    sh:name "Orphaned Record Detection" ;
-    sh:sparql [
-        sh:message "Record has no parent and is not a top-level fonds (global graph check)" ;
-        sh:severity sh:Info ;
-        sh:select """
-            SELECT $this WHERE {
-                $this a rico:Record .
-                FILTER NOT EXISTS { $this rico:isOrWasPartOf ?parent }
-            }
-        """
-    ] .
-
-
-:UnlinkedAgentShape a sh:NodeShape ;
-    sh:targetClass rico:Person, rico:CorporateBody, rico:Family ;
-    sh:name "Unlinked Agent Detection" ;
-    sh:sparql [
-        sh:message "Agent is not linked to any records or activities (global graph check)" ;
-        sh:severity sh:Info ;
-        sh:select """
-            SELECT $this WHERE {
-                { $this a rico:Person } UNION
-                { $this a rico:CorporateBody } UNION
-                { $this a rico:Family }
-                FILTER NOT EXISTS {
-                    { ?record rico:hasCreator $this }
-                    UNION
-                    { ?record rico:hasAccumulator $this }
-                    UNION
-                    { ?activity rico:hasOrHadParticipant $this }
-                }
-            }
-        """
-    ] .
-
-
-:DuplicateIdentifierShape a sh:NodeShape ;
-    sh:targetClass rico:RecordSet, rico:Record ;
-    sh:name "Duplicate Identifier Detection" ;
-    sh:sparql [
-        sh:message "Multiple records share the same identifier" ;
-        sh:severity sh:Warning ;
-        sh:select """
-            SELECT $this WHERE {
-                $this rico:identifier ?id .
-                ?other rico:identifier ?id .
-                FILTER($this != ?other)
-            }
-        """
-    ] .
+# They require the full RiC-O graph to be loaded and produce false positives
+# on single-entity API responses. Load them only when validating a whole
+# triple store.

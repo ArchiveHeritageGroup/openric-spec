@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openric.org/schemas/v0.1.0/instantiation.schema.json",
+  "title": "OpenRiC Instantiation response",
+  "description": "Validates a single /instantiations/{id} response. Instantiations are the digital or physical manifestations of a record (TIFF, JPEG, PDF, bound volume, etc.).",
+
+  "type": "object",
+  "required": ["@id", "@type"],
+
+  "properties": {
+    "@context": {
+      "oneOf": [
+        { "type": "string", "format": "uri" },
+        { "type": "object" },
+        { "type": "array" }
+      ]
+    },
+
+    "@id": {
+      "type": "string",
+      "format": "uri"
+    },
+
+    "@type": {
+      "oneOf": [
+        {
+          "type": "string",
+          "pattern": "^(rico:Instantiation|https://www\\.ica\\.org/standards/RiC/ontology#Instantiation)$"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^(rico:Instantiation|https://www\\.ica\\.org/standards/RiC/ontology#Instantiation)$"
+          },
+          "minItems": 1
+        }
+      ]
+    },
+
+    "rico:identifier":   { "type": ["string", "null"] },
+    "rico:title":        { "$ref": "#/$defs/langString" },
+    "rico:description":  { "$ref": "#/$defs/langString" },
+
+    "rico:hasMimeType": {
+      "type": ["string", "null"],
+      "pattern": "^[a-zA-Z0-9!#$&^_.+-]+/[a-zA-Z0-9!#$&^_.+-]+$"
+    },
+
+    "rico:hasCarrierType": { "type": ["string", "null"] },
+
+    "rico:hasExtent": {
+      "oneOf": [
+        { "$ref": "#/$defs/extent" },
+        { "type": "array", "items": { "$ref": "#/$defs/extent" } }
+      ]
+    },
+
+    "rico:technicalCharacteristics":            { "$ref": "#/$defs/langString" },
+    "rico:productionTechnicalCharacteristics":  { "$ref": "#/$defs/langString" },
+
+    "rico:isInstantiationOf": {
+      "oneOf": [
+        { "type": "string", "format": "uri" },
+        {
+          "type": "object",
+          "properties": {
+            "@id":       { "type": "string", "format": "uri" },
+            "@type":     { "type": "string" },
+            "rico:title": { "$ref": "#/$defs/langString" }
+          }
+        }
+      ]
+    },
+
+    "rico:hasAccessRestriction":    { "type": "array" },
+    "rico:hasChecksum":             { "type": ["string", "object"] }
+  },
+
+  "additionalProperties": true,
+
+  "$defs": {
+    "langString": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "null" },
+        {
+          "type": "object",
+          "required": ["@value"],
+          "properties": {
+            "@value":    { "type": "string" },
+            "@language": { "type": "string" }
+          }
+        },
+        {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              { "type": "string" },
+              {
+                "type": "object",
+                "required": ["@value"],
+                "properties": {
+                  "@value":    { "type": "string" },
+                  "@language": { "type": "string" }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+
+    "extent": {
+      "type": "object",
+      "properties": {
+        "@type":            { "type": "string" },
+        "rico:extentType":  { "type": "string" },
+        "rico:quantity":    { "type": ["number", "string"] }
+      }
+    }
+  }
+}

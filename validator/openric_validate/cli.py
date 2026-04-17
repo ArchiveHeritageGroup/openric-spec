@@ -124,6 +124,7 @@ _SCHEMA_BY_TYPE = {
     "CorporateBody": "agent.schema.json",
     "Family":        "agent.schema.json",
     "Place":         "place.schema.json",
+    "Instantiation": "instantiation.schema.json",
 }
 
 
@@ -216,7 +217,7 @@ def _run_record_check(url: str, schemas_dir: Path, report: Report) -> None:
             for block in _split_pyshacl_results(results_text):
                 report.add(Finding(
                     check=shacl_check,
-                    severity=Severity.VIOLATION,
+                    severity=_severity_from_block(block),
                     message=block.strip()[:500],
                     target=url,
                 ))
@@ -227,6 +228,16 @@ def _run_record_check(url: str, schemas_dir: Path, report: Report) -> None:
             message=f"SHACL shapes not found at {SHAPES_PATH}; skipping shape check",
             target=str(SHAPES_PATH),
         ))
+
+
+def _severity_from_block(block: str) -> Severity:
+    """Map pyshacl's 'Severity: sh:Xxx' line to our report Severity enum."""
+    lower = block.lower()
+    if "severity: sh:info" in lower:
+        return Severity.INFO
+    if "severity: sh:warning" in lower:
+        return Severity.WARNING
+    return Severity.VIOLATION
 
 
 def _split_pyshacl_results(text: str) -> list[str]:

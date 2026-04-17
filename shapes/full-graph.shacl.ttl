@@ -1,0 +1,100 @@
+# Copyright (C) 2026 Johan Pieterse
+# Plain Sailing Information Systems
+# Email: johan@plansailingisystems.co.za
+#
+# This file is part of OpenRiC.
+#
+# OpenRiC is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# OpenRiC SHACL shapes — full-graph checks
+# ========================================
+# These shapes assume the entire RiC-O graph is loaded into the data graph
+# before validation. They do cross-entity queries (e.g. "is this instantiation
+# linked from any record?", "is this agent orphaned?") that produce false
+# positives on single-document API responses.
+#
+# Run these only against a full triple store dump, not against `/records/{id}`,
+# `/agents/{id}`, etc. responses.
+#
+# Usage (example):
+#   pyshacl -s full-graph.shacl.ttl -d full-store.nt -f human
+
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rico: <https://www.ica.org/standards/RiC/ontology#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix : <https://openric.org/shapes/full-graph#> .
+
+
+:InstantiationLinkedFromRecordShape a sh:NodeShape ;
+    sh:targetClass rico:Instantiation ;
+    sh:name "Instantiation-Record Link Check" ;
+    sh:sparql [
+        sh:message "Instantiation should be linked from a Record via rico:hasInstantiation" ;
+        sh:severity sh:Warning ;
+        sh:select """
+            SELECT $this WHERE {
+                $this a rico:Instantiation .
+                FILTER NOT EXISTS {
+                    ?record rico:hasInstantiation $this .
+                }
+            }
+        """
+    ] .
+
+
+:OrphanedRecordShape a sh:NodeShape ;
+    sh:targetClass rico:Record ;
+    sh:name "Orphaned Record Detection" ;
+    sh:sparql [
+        sh:message "Record has no parent and is not a top-level fonds" ;
+        sh:severity sh:Warning ;
+        sh:select """
+            SELECT $this WHERE {
+                $this a rico:Record .
+                FILTER NOT EXISTS { $this rico:isOrWasPartOf ?parent }
+            }
+        """
+    ] .
+
+
+:UnlinkedAgentShape a sh:NodeShape ;
+    sh:targetClass rico:Person, rico:CorporateBody, rico:Family ;
+    sh:name "Unlinked Agent Detection" ;
+    sh:sparql [
+        sh:message "Agent is not linked to any records or activities" ;
+        sh:severity sh:Info ;
+        sh:select """
+            SELECT $this WHERE {
+                { $this a rico:Person } UNION
+                { $this a rico:CorporateBody } UNION
+                { $this a rico:Family }
+                FILTER NOT EXISTS {
+                    { ?record rico:hasCreator $this }
+                    UNION
+                    { ?record rico:hasAccumulator $this }
+                    UNION
+                    { ?activity rico:hasOrHadParticipant $this }
+                }
+            }
+        """
+    ] .
+
+
+:DuplicateIdentifierShape a sh:NodeShape ;
+    sh:targetClass rico:RecordSet, rico:Record ;
+    sh:name "Duplicate Identifier Detection" ;
+    sh:sparql [
+        sh:message "Multiple records share the same identifier" ;
+        sh:severity sh:Warning ;
+        sh:select """
+            SELECT $this WHERE {
+                $this rico:identifier ?id .
+                ?other rico:identifier ?id .
+                FILTER($this != ?other)
+            }
+        """
+    ] .
