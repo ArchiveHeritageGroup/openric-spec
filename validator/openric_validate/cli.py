@@ -30,6 +30,7 @@ from . import __version__
 from .http_client import fetch_json, ServerUnreachable
 from .schema_check import validate_against_schema, SchemaCheckError
 from .shape_check import validate_against_shapes
+from .graph_check import check_subgraph_invariants
 from .report import Report, Finding, Severity
 
 SPEC_ROOT = Path(__file__).resolve().parent.parent.parent
@@ -130,6 +131,7 @@ _SCHEMA_BY_TYPE = {
     "Activity":      "activity.schema.json",
     "Rule":          "rule.schema.json",
     "Mandate":       "rule.schema.json",
+    "Subgraph":      "subgraph.schema.json",
 }
 
 
@@ -206,6 +208,29 @@ def _run_record_check(url: str, schemas_dir: Path, report: Report) -> None:
                     message=err.message,
                     target=err.json_path,
                 ))
+
+    # Subgraph-only: validate the six graph-primitive invariants
+    # from graph-primitives.md §6 before running SHACL on the document.
+    if short_type == "Subgraph":
+        violations = check_subgraph_invariants(response)
+        if violations:
+            for v in violations:
+                report.add(Finding(
+                    check="subgraph-invariants",
+                    severity=Severity.VIOLATION,
+                    message=f"[{v.invariant}] {v.message}",
+                    target=url,
+                ))
+        else:
+            report.add(Finding(
+                check="subgraph-invariants",
+                severity=Severity.PASS,
+                message="Subgraph satisfies the six invariants from graph-primitives.md §6",
+                target=url,
+            ))
+        # Subgraph responses bundle many RiC-O entities as nodes/edges;
+        # they are not a single SHACL-target document. Skip SHACL.
+        return
 
     # SHACL validation against RiC-O shapes
     shacl_check = f"{(short_type or 'entity').lower()}-shacl"
