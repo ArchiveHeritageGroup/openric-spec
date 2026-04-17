@@ -119,17 +119,64 @@ This page runs **inside your browser** and fetches live RiC-O data from the refe
     });
   }
 
+  function apiUrlForNode(data) {
+    // Derive the matching /api/ric/v1/{entity} URL from the node's type + atomUrl + id.
+    var id = data.id || '';
+    var atomUrl = data.atomUrl || '';
+    var type = data.type || '';
+    var heratio = 'https://heratio.theahg.co.za/api/ric/v1';
+
+    // Slug-based endpoints — pull slug from atomUrl.
+    var slug = atomUrl ? atomUrl.replace(/^\/+/, '').split('/').pop() : '';
+
+    // Id-based endpoints — pull numeric id from the canonical URI tail.
+    var tailId = id.replace(/\/$/, '').split('/').pop();
+
+    switch (type) {
+      case 'RecordSet': case 'Record': case 'RecordPart':
+        return slug ? heratio + '/records/' + slug : null;
+      case 'Person': case 'CorporateBody': case 'Family': case 'Agent':
+        return slug ? heratio + '/agents/' + slug : null;
+      case 'Place':
+        return /^\d+$/.test(tailId) ? heratio + '/places/' + tailId : null;
+      case 'Production': case 'Accumulation': case 'Activity':
+        return /^\d+$/.test(tailId) ? heratio + '/activities/' + tailId : null;
+      case 'Rule':
+        return /^\d+$/.test(tailId) ? heratio + '/rules/' + tailId : null;
+      case 'Instantiation':
+        return /^\d+$/.test(tailId) ? heratio + '/instantiations/' + tailId : null;
+      default:
+        return null;
+    }
+  }
+
   function onNodeClick(data) {
     // data may come from cytoscape (flat) or from ForceGraph3D (node object).
-    // Cytoscape wraps in .data.*; 3D library gives us the raw node.
     var label = data.label || data.name || 'Unknown';
     var id = data.id || '';
     var type = data.type || '—';
+    var atomUrl = data.atomUrl || '';
+    var heratioHost = 'https://heratio.theahg.co.za';
+    var archiveLink = atomUrl ? heratioHost + atomUrl : null;
+    var jsonLdLink = apiUrlForNode(data);
+
     var html = '<div><strong>' + escapeHtml(label) + '</strong></div>' +
                '<div style="color:#6b7280; font-size:0.85em; margin:0.3rem 0;">' +
-               'type: <code>' + escapeHtml(type) + '</code></div>' +
-               '<div style="word-break:break-all; font-size:0.85em;">' +
-               '<a href="' + escapeHtml(id) + '" target="_blank">' + escapeHtml(id) + '</a></div>';
+               'type: <code>' + escapeHtml(type) + '</code></div>';
+
+    if (archiveLink) {
+      html += '<div style="margin:0.5rem 0;"><a href="' + escapeHtml(archiveLink) +
+              '" target="_blank" rel="noopener">↗ Open in archive</a></div>';
+    }
+    if (jsonLdLink) {
+      html += '<div style="margin:0.4rem 0;"><a href="' + escapeHtml(jsonLdLink) +
+              '" target="_blank" rel="noopener">↗ View JSON-LD</a></div>';
+    }
+
+    html += '<div style="margin-top:0.6rem; font-size:0.8em; color:#6b7280;">' +
+            'Canonical <code>@id</code> (SPARQL subject IRI, not a browseable page):<br>' +
+            '<span style="word-break:break-all; font-family:monospace;">' + escapeHtml(id) + '</span></div>';
+
     nodeInfoEl.innerHTML = html;
   }
 
