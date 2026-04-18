@@ -12,6 +12,7 @@ title: OpenRiC
     </p>
     <div class="hero-cta">
       <a class="btn-primary" href="spec/">Read the spec →</a>
+      <a class="btn-ghost" href="api-explorer/">Try the API ↗</a>
       <a class="btn-ghost" href="https://viewer.openric.org">Live viewer ↗</a>
       <a class="btn-ghost" href="https://github.com/openric/spec/discussions">Discussions ↗</a>
     </div>
@@ -43,7 +44,19 @@ title: OpenRiC
     <span class="surface-icon">🔌</span>
     <h3>Reference API <span class="status-pill live">live</span></h3>
     <div class="url">ric.theahg.co.za</div>
-    <p>Independently-deployed Laravel service backed by a real archival database. 21 read endpoints, 9 write endpoints, <code>X-API-Key</code> auth.</p>
+    <p>Independently-deployed Laravel service backed by a real archival database. ~40 endpoints across read/write/OAI-PMH, <code>X-API-Key</code> auth, auto-generated OpenAPI at <code>/api/ric/v1/openapi.json</code>.</p>
+  </a>
+  <a class="surface-card" href="api-explorer/">
+    <span class="surface-icon">🧪</span>
+    <h3>API Explorer <span class="status-pill live">live</span></h3>
+    <div class="url">openric.org/api-explorer</div>
+    <p>Interactive Swagger UI. Point at any OpenRiC server, paste an API key, try every endpoint live from the browser.</p>
+  </a>
+  <a class="surface-card" href="conformance/">
+    <span class="surface-icon">✅</span>
+    <h3>Conformance Suite <span class="status-pill live">live</span></h3>
+    <div class="url">openric.org/conformance</div>
+    <p>Black-box probe: point at any server, get a pass/fail report across every documented endpoint. Pure bash + jq.</p>
   </a>
 </div>
 

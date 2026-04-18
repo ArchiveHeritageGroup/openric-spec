@@ -47,6 +47,12 @@ The following endpoints were added to the Viewing API document (`§4.11–4.18`)
 - `conformance/README.md` — what it does and how to run it in CI.
 - `conformance/.github-workflows-conformance.yml` — copy-paste GitHub Actions workflow for weekly + push-triggered conformance runs.
 
+### API Explorer
+
+- **[openric.org/api-explorer/](https://openric.org/api-explorer/)** — interactive Swagger UI page. Point it at any OpenRiC server (default: reference). Loads the server's `/openapi.json`, renders all ~40 endpoints grouped by tag, and lets you "Try it out" with your own API key (key stays in localStorage, never leaves your browser).
+- **`GET /api/ric/v1/openapi.json`** — every OpenRiC server now ships a live OpenAPI 3.0 spec with full request/response schemas for Agents, Records, Places, Rules, Activities, Instantiations, Relations, Graph, SPARQL, Uploads, OAI-PMH, and Validation. Previously this endpoint returned an empty stub.
+- **`GET /api/ric/v1/docs`** — per-server embedded Swagger UI. Bookmark this on your own deployment for the canonical test console.
+
 ### Graph endpoint additions
 
 - `/graph?uri=/default/term/{id}` and `/default/thing/{id}`, `/default/concept/{id}`, `/default/subject/{id}` — the subgraph root dispatcher now recognises Term/Thing/Concept/Subject entity URIs, so clicking a subject node in the viewer drills into the records tagged with it. `rico:hasBroaderConcept` + `rico:hasSubject` edges.

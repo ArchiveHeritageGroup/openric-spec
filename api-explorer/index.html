@@ -1,0 +1,190 @@
+<!--
+  Copyright (C) 2026 Johan Pieterse / Plain Sailing Information Systems
+  Email: johan@plainsailingisystems.co.za
+  SPDX-License-Identifier: AGPL-3.0-or-later
+
+  OpenRiC API Explorer — static Swagger UI page for openric.org.
+  Users paste a server base URL + optional API key; the page loads that
+  server's /openapi.json and lets them try endpoints.
+
+  Served from openric.org/api-explorer/ via GitHub Pages.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OpenRiC API Explorer</title>
+  <meta name="description" content="Interactive API explorer for any OpenRiC-conformant server." />
+  <link rel="canonical" href="https://openric.org/api-explorer/" />
+  <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5/swagger-ui.css" />
+  <style>
+    :root {
+      --fg: #e5e7eb; --muted: #9ca3af; --bg: #111827; --panel: #1f2937;
+      --border: #334155; --accent: #3b82f6;
+    }
+    body { margin: 0; font-family: system-ui, -apple-system, sans-serif; background: #fff; color: #111; }
+    header { background: #0f172a; color: var(--fg); padding: 0.8rem 1.2rem;
+      border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
+    header h1 { margin: 0; font-size: 1rem; font-weight: 600; }
+    header h1 small { color: var(--muted); font-weight: 400; margin-left: 0.5rem; font-size: 0.8rem; }
+    header a { color: #60a5fa; text-decoration: none; font-size: 0.85rem; }
+    header a:hover { text-decoration: underline; }
+    header .right { margin-left: auto; display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .setup {
+      background: #f3f4f6; border-bottom: 1px solid #e5e7eb; padding: 1rem 1.5rem;
+      display: grid; grid-template-columns: 2fr 1fr auto; gap: 0.8rem; align-items: end;
+    }
+    .setup label { display: block; font-size: 0.78rem; color: #4b5563; margin-bottom: 0.25rem; }
+    .setup input { width: 100%; padding: 0.5rem 0.7rem; border: 1px solid #d1d5db;
+      border-radius: 4px; font-size: 0.9rem; font-family: monospace; }
+    .setup button { padding: 0.55rem 1.2rem; background: var(--accent); color: white;
+      border: 1px solid var(--accent); border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 0.9rem; }
+    .setup button:hover { background: #2563eb; }
+    .setup .status { grid-column: 1 / -1; font-size: 0.82rem; color: #6b7280; margin-top: 0.3rem; }
+    .setup .status.err { color: #dc2626; }
+    .setup .status.ok { color: #059669; }
+    .setup .presets { grid-column: 1 / -1; font-size: 0.78rem; color: #6b7280; }
+    .setup .presets a { color: var(--accent); cursor: pointer; margin-right: 1rem; }
+    .setup .presets a:hover { text-decoration: underline; }
+    .swagger-ui .topbar { display: none; }
+    .swagger-ui .info { margin-top: 1.5rem; }
+    .intro { padding: 2rem 1.5rem; max-width: 900px; margin: 0 auto; color: #374151; }
+    .intro h2 { margin-top: 0; color: #111827; }
+    .intro code { background: #f3f4f6; padding: 0.1rem 0.35rem; border-radius: 3px; font-size: 0.88rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1><a href="/" style="color: var(--fg);">OpenRiC</a> API Explorer <small>any OpenRiC-conformant server</small></h1>
+    <div class="right">
+      <a href="/" target="_self">Spec ↗</a>
+      <a href="/conformance/" target="_self">Conformance ↗</a>
+      <a href="https://capture.openric.org" target="_blank" rel="noopener">Capture ↗</a>
+      <a href="https://viewer.openric.org" target="_blank" rel="noopener">Viewer ↗</a>
+    </div>
+  </header>
+
+  <div class="setup">
+    <div>
+      <label for="server">Server base URL (path to <code>/api/ric/v1</code>)</label>
+      <input id="server" placeholder="https://ric.theahg.co.za/api/ric/v1" />
+    </div>
+    <div>
+      <label for="apikey">API key <small style="color:#9ca3af;">(only for write endpoints)</small></label>
+      <input id="apikey" type="password" placeholder="X-API-Key value (optional)" />
+    </div>
+    <div>
+      <button id="load" type="button">Load spec →</button>
+    </div>
+    <div class="presets">
+      Quick-load:
+      <a data-url="https://ric.theahg.co.za/api/ric/v1">Reference server (ric.theahg.co.za)</a>
+    </div>
+    <div class="status" id="status">Paste a server URL and click Load. The page fetches <code>{server}/openapi.json</code> and renders Swagger UI from it.</div>
+  </div>
+
+  <div id="swagger-ui"></div>
+
+  <section class="intro" id="intro">
+    <h2>What is this?</h2>
+    <p>The <strong>OpenRiC API Explorer</strong> is an interactive test console
+    for any server that implements the OpenRiC Viewing + Write API. It loads
+    the server's <code>openapi.json</code> and renders it with Swagger UI so
+    you can:</p>
+    <ul>
+      <li>Browse every endpoint grouped by entity type (Agents, Records, Places, Rules, Activities, Instantiations, Relations, Graph, OAI-PMH).</li>
+      <li>See the request + response schemas for each.</li>
+      <li><strong>Try endpoints directly</strong> from the browser — paste an API key into <em>Authorize</em> and the explorer signs every write request with <code>X-API-Key</code>.</li>
+    </ul>
+    <h2>How does it work?</h2>
+    <p>Every OpenRiC server serves a live OpenAPI 3.0 spec at
+    <code>{base}/openapi.json</code>. The explorer fetches that document
+    from whatever server you point it at — no build step, no server-side
+    rendering on openric.org, no API key ever leaves your browser.</p>
+    <h2>What next?</h2>
+    <p>If you're integrating, bookmark your server's <code>{base}/docs</code>
+    — every OpenRiC server ships the explorer under that path too. This
+    standalone page at openric.org is for evaluating multiple servers
+    without having to hit <code>/docs</code> on each.</p>
+    <p>Questions? <a href="https://github.com/openric/spec/discussions">Discussions</a>.</p>
+  </section>
+
+  <script src="https://unpkg.com/swagger-ui-dist@5/swagger-ui-bundle.js"></script>
+  <script src="https://unpkg.com/swagger-ui-dist@5/swagger-ui-standalone-preset.js"></script>
+  <script>
+    const STORAGE_KEY = 'openric-explorer';
+    const $ = (id) => document.getElementById(id);
+    const serverInput = $('server');
+    const keyInput    = $('apikey');
+    const statusEl    = $('status');
+    const introEl     = $('intro');
+
+    // Restore last session
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+      if (saved.server) serverInput.value = saved.server;
+      if (saved.key)    keyInput.value = saved.key;
+    } catch {}
+
+    function setStatus(cls, html) {
+      statusEl.className = `status ${cls}`;
+      statusEl.innerHTML = html;
+    }
+
+    async function load() {
+      const server = serverInput.value.trim().replace(/\/$/, '');
+      const key    = keyInput.value.trim();
+      if (!server) { setStatus('err', 'Server URL is required.'); return; }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ server, key }));
+
+      setStatus('', `Fetching <code>${server}/openapi.json</code>…`);
+      try {
+        const resp = await fetch(server + '/openapi.json', {
+          headers: { 'Accept': 'application/json' },
+        });
+        if (!resp.ok) { setStatus('err', `Spec fetch failed: ${resp.status} ${resp.statusText}`); return; }
+        const spec = await resp.json();
+        setStatus('ok', `Loaded spec: <strong>${spec.info?.title || 'untitled'}</strong> v${spec.info?.version || '?'} — ${Object.keys(spec.paths || {}).length} paths.`);
+
+        introEl.style.display = 'none';
+
+        const ui = SwaggerUIBundle({
+          spec,
+          dom_id: '#swagger-ui',
+          presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
+          layout: 'BaseLayout',
+          deepLinking: true,
+          tryItOutEnabled: true,
+          persistAuthorization: true,
+          defaultModelsExpandDepth: 1,
+          docExpansion: 'list',
+          filter: true,
+        });
+        if (key) {
+          try { ui.preauthorizeApiKey('ApiKeyAuth', key); }
+          catch (e) { /* user can click Authorize manually */ }
+        }
+        window.ui = ui;
+      } catch (e) {
+        setStatus('err', `Could not load: ${e.message}. Check CORS + URL.`);
+      }
+    }
+
+    $('load').addEventListener('click', load);
+    document.querySelectorAll('.presets a').forEach(a => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        serverInput.value = a.dataset.url;
+        load();
+      });
+    });
+    serverInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') load(); });
+    keyInput.addEventListener('keydown',    (e) => { if (e.key === 'Enter') load(); });
+
+    // Auto-load on arrival if we already have a saved server.
+    if (serverInput.value) setTimeout(load, 100);
+  </script>
+</body>
+</html>
