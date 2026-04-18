@@ -5,15 +5,15 @@ title: OpenRiC
 
 <div class="hero">
   <div class="hero-inner">
-    <div class="hero-eyebrow">OpenRiC · v0.1.0 · all four surfaces live</div>
+    <div class="hero-eyebrow">OpenRiC · v0.2.0 · ~40 endpoints, OAI-PMH, API Explorer, conformance suite live</div>
     <h1>Records in Contexts, served over HTTP — implementation-neutral, IIIF-inspired.</h1>
     <p class="hero-lede">
       OpenRiC is an open specification for how archival descriptions map to RiC-CM / RiC-O, how that data is served over HTTP for both reading and writing, and how graph-based interfaces can render it consistently across any conformant server. Not a product. A contract anyone can implement.
     </p>
     <div class="hero-cta">
-      <a class="btn-primary" href="spec/">Read the spec →</a>
+      <a class="btn-primary" href="guides/getting-started.html">Get started in 15 min →</a>
+      <a class="btn-ghost" href="spec/">Read the spec ↗</a>
       <a class="btn-ghost" href="api-explorer/">Try the API ↗</a>
-      <a class="btn-ghost" href="https://viewer.openric.org">Live viewer ↗</a>
       <a class="btn-ghost" href="https://github.com/openric/spec/discussions">Discussions ↗</a>
     </div>
   </div>
@@ -76,6 +76,11 @@ title: OpenRiC
     <div class="phase-num">Phase 2</div>
     <h4>Beyond the reference <span class="status-pill live">done</span></h4>
     <p>Viewer on npm, capture client shipped, reference API split into its own deployment. Portability proven on both read and write sides.</p>
+  </div>
+  <div class="phase-card done">
+    <div class="phase-num">Phase 2.5</div>
+    <h4>Spec v0.2.0 frozen <span class="status-pill live">done</span></h4>
+    <p>Agent + Record write endpoints, OAI-PMH v2.0, OpenAPI 3.0 spec + Swagger UI, conformance probe, self-service API key flow, getting-started walkthrough. Tagged 2026-04-18.</p>
   </div>
   <div class="phase-card current">
     <div class="phase-num">Phase 3</div>

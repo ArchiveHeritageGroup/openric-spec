@@ -12,6 +12,11 @@ title: OpenRiC — Guides
 </div>
 
 <div class="surfaces">
+  <a class="surface-card" href="getting-started.html">
+    <span class="surface-icon">🚀</span>
+    <h3>Getting started</h3>
+    <p>Zero-to-working in 15 minutes. Read, request a key, write, link, probe, embed, harvest. Start here if OpenRiC is new to you.</p>
+  </a>
   <a class="surface-card" href="viewer.html">
     <span class="surface-icon">🗺</span>
     <h3>Viewer guide</h3>

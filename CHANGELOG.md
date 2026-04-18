@@ -1,8 +1,12 @@
 # OpenRiC Specification — Changelog
 
-## Unreleased — progress since v0.1.0
+## Unreleased
 
-Everything below is on live infrastructure; a `v0.2.0` tag is planned once the changes settle and a second implementation is in sight.
+<!-- New entries go here. Keep this section at the top; promote on tag cut. -->
+
+## v0.2.0 — 2026-04-18
+
+Second freeze of the OpenRiC specification. All changes below are live on the reference infrastructure at ric.theahg.co.za and have been verified with the conformance probe.
 
 ### New public surfaces
 
