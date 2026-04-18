@@ -1,0 +1,27 @@
+# Copy this to .github/workflows/openric-conformance.yml in any repo
+# implementing OpenRiC, then set BASE (and optionally OPENRIC_API_KEY as a
+# secret) to point at your server. Probe runs in < 1 minute.
+name: OpenRiC conformance
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '17 6 * * 1'   # Weekly, Mondays 06:17 UTC
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: openric/spec
+          path: openric-spec
+      - name: Install jq
+        run: sudo apt-get install -y jq
+      - name: Run probe
+        env:
+          BASE: ${{ vars.OPENRIC_BASE || 'https://ric.theahg.co.za/api/ric/v1' }}
+          KEY:  ${{ secrets.OPENRIC_API_KEY }}
+        run: bash openric-spec/conformance/probe.sh

@@ -27,8 +27,25 @@ The following endpoints were added to the Viewing API document (`§4.11–4.18`)
 
 **Write-side (new — requires `X-API-Key` + `write` / `delete` scopes):**
 - `POST /{type}`, `PATCH /{type}/{id}`, `DELETE /{type}/{id}` for `{type} ∈ places|rules|activities|instantiations`.
+- `POST /agents`, `PATCH /agents/{id}`, `DELETE /agents/{id}` — rico:Agent / Person / CorporateBody / Family (ISAAR-CPF).
+- `POST /records`, `PATCH /records/{id}`, `DELETE /records/{id}` — rico:Record / RecordSet (ISAD).
 - `POST /relations`, `PATCH /relations/{id}`, `DELETE /relations/{id}`.
+- `POST /upload` — multipart file upload; returns `{id, url, mime, size, filename}` with a publicly-fetchable URL under `/uploads/`.
 - `DELETE /entities/{id}` — type-agnostic delete-by-id for UIs that hold an id without a type.
+
+### Harvesting — OAI-PMH v2.0
+
+- `GET /oai?verb=...` — standard OAI-PMH endpoint over `information_object` records.
+- Six verbs: `Identify`, `ListMetadataFormats`, `ListSets`, `ListIdentifiers`, `ListRecords`, `GetRecord`.
+- Two metadata prefixes: `oai_dc` (Dublin Core — title/identifier/description/date/type) and `rico_ld` (RiC-O JSON-LD wrapped in CDATA for harvesters that want the full graph).
+- Sets are derived from the hierarchy: each top-level (`parent_id IS NULL`) record becomes a `fonds:N` set.
+- Resumption tokens are opaque base64(JSON) and carry the prefix, offset, set, from, until filters.
+
+### Conformance suite
+
+- `conformance/probe.sh` — black-box probe that hits every documented endpoint and verifies shape via `jq`. Takes a `BASE` env var for any OpenRiC-conformant server. Optional `KEY` enables write-side probes. Exits non-zero if any required endpoint fails.
+- `conformance/README.md` — what it does and how to run it in CI.
+- `conformance/.github-workflows-conformance.yml` — copy-paste GitHub Actions workflow for weekly + push-triggered conformance runs.
 
 ### Graph endpoint additions
 
