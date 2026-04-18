@@ -65,4 +65,4 @@ GitHub Actions workflow (`.github/workflows/ci.yml`) runs on every push and PR:
 
 ---
 
-*v0.1.0 is a draft freeze. If you plan to implement against it, please [open an issue on GitHub](https://github.com/ArchiveHeritageGroup/openric-spec/issues) so we know who's implementing and can coordinate breaking changes in v0.2.x.*
+*v0.1.0 is a draft freeze. If you plan to implement against it, please [open an issue on GitHub](https://github.com/openric/spec/issues) so we know who's implementing and can coordinate breaking changes in v0.2.x.*

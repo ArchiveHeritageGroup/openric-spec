@@ -38,7 +38,7 @@ for arg in "$@"; do
 done
 
 cd "$(dirname "$0")/.."
-REPO="ArchiveHeritageGroup/openric-spec"
+REPO="openric/spec"
 VERSION_FILE="version.json"
 
 # Colours

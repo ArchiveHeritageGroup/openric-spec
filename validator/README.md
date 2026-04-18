@@ -65,4 +65,4 @@ pytest tests/ -v
 
 AGPL-3.0-or-later.
 
-The [spec itself](https://github.com/ArchiveHeritageGroup/openric-spec) is under CC-BY 4.0 — distinct from this validator.
+The [spec itself](https://github.com/openric/spec) is under CC-BY 4.0 — distinct from this validator.

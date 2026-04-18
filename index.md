@@ -27,7 +27,7 @@ OpenRiC is not a product. It is a specification. Any system — AtoM, Heratio, A
 | Reference implementation ([Heratio](https://github.com/ArchiveHeritageGroup/heratio)) | ✓ 8 endpoint types live-validate |
 | [Live demo](demo/) — browser-side viewer calling the reference implementation | ✓ 2D + 3D graph, interactive drill-down |
 | CI — unit tests, schema well-formedness, SHACL parse, Markdown links | ✓ GitHub Actions green |
-| **Frozen v0.1.0 release** | **✓ Tagged** — see [CHANGELOG](https://github.com/ArchiveHeritageGroup/openric-spec/blob/main/CHANGELOG.md) |
+| **Frozen v0.1.0 release** | **✓ Tagged** — see [CHANGELOG](https://github.com/openric/spec/blob/main/CHANGELOG.md) |
 
 ---
 
@@ -60,7 +60,7 @@ Invite spec editors from outside AHG. Engage with EGAD-adjacent reviewers. Freez
 | [Graph Primitives](spec/graph-primitives.html) | Abstract concepts — node, edge, cluster, drill, layout hints |
 | [Conformance](spec/conformance.html) | JSON Schemas, fixtures, and a validator CLI |
 
-*All four are drafts. Open-ended feedback and proposals → [GitHub Discussions](https://github.com/ArchiveHeritageGroup/openric-spec/discussions). Concrete bugs or spec typos → [Issues](https://github.com/ArchiveHeritageGroup/openric-spec/issues).*
+*All four are drafts. Open-ended feedback and proposals → [GitHub Discussions](https://github.com/openric/spec/discussions). Concrete bugs or spec typos → [Issues](https://github.com/openric/spec/issues).*
 
 ---
 

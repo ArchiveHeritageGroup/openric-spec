@@ -43,8 +43,8 @@ openric-validate = "openric_validate.cli:main"
 
 [project.urls]
 Homepage = "https://openric.org"
-Repository = "https://github.com/ArchiveHeritageGroup/openric-spec"
-Issues = "https://github.com/ArchiveHeritageGroup/openric-spec/issues"
+Repository = "https://github.com/openric/spec"
+Issues = "https://github.com/openric/spec/issues"
 
 [tool.setuptools.packages.find]
 include = ["openric_validate*"]

@@ -7,7 +7,7 @@ Published at **[openric.org](https://openric.org)**.
 ## Structure
 
 ```
-openric-spec/
+spec/
 ├── index.md             — landing page (rendered as openric.org/)
 ├── spec/
 │   ├── mapping.md       — archival description → RiC-CM / RiC-O
