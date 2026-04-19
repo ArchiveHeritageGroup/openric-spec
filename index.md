@@ -30,25 +30,25 @@ title: OpenRiC
     <div class="boundary-label">Specification</div>
     <div class="boundary-title">OpenRiC</div>
     <p>Four documents, JSON Schemas, SHACL shapes, a 27-case fixture pack, an OpenAPI 3.0 contract, and a black-box conformance probe. CC-BY 4.0. Versioned; <code>v0.2.0</code> is current.</p>
-    <div class="boundary-where">openric.org</div>
+    <div class="boundary-where"><a href="https://openric.org/">openric.org</a></div>
   </div>
   <div class="boundary-cell impl">
     <div class="boundary-label">Implementation</div>
     <div class="boundary-title">Reference API</div>
     <p>One Laravel service that implements the OpenRiC contract. Real archival data behind it. ~40 endpoints, OAI-PMH, auto-generated OpenAPI. AGPL-3.0. Anyone can run their own.</p>
-    <div class="boundary-where">ric.theahg.co.za</div>
+    <div class="boundary-where"><a href="https://ric.theahg.co.za/">ric.theahg.co.za</a></div>
   </div>
   <div class="boundary-cell tools">
     <div class="boundary-label">Clients</div>
     <div class="boundary-title">Viewer, Capture, Explorer</div>
     <p>Three pure-browser apps that talk to any conformant server — not just the reference. 2D + 3D graph rendering, data capture, Swagger UI. No privileged access; they use the same HTTP contract adopters see.</p>
-    <div class="boundary-where">viewer · capture · api-explorer</div>
+    <div class="boundary-where"><a href="https://viewer.openric.org">viewer</a> · <a href="https://capture.openric.org">capture</a> · <a href="api-explorer/">api-explorer</a></div>
   </div>
   <div class="boundary-cell consumer">
     <div class="boundary-label">Operational consumer</div>
     <div class="boundary-title">Heratio</div>
     <p>An existing GLAM platform that consumes the Reference API over HTTP for every mutating admin action — no special shortcut. Proves the contract is sufficient for a real, production archive. Independent AGPL project.</p>
-    <div class="boundary-where">heratio.theahg.co.za</div>
+    <div class="boundary-where"><a href="https://heratio.theahg.co.za/">heratio.theahg.co.za</a></div>
   </div>
 </div>
 
