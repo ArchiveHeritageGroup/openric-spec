@@ -30,7 +30,7 @@ The reference implementation is **live at [ric.theahg.co.za](https://ric.theahg.
 ```
 .
 ├── index.md                 — site landing page (rendered at openric.org/)
-├── architecture.md          — how the four public surfaces fit together
+├── architecture.md          — how the four public deployments fit together
 ├── for-institutions.md      — executive / institutional brief
 ├── governance.md            — stewardship, change process, compatibility
 ├── spec/                    — the four normative documents

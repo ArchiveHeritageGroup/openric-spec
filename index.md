@@ -120,7 +120,9 @@ title: OpenRiC
   </a>
 </div>
 
-## Four public surfaces
+## Four public deployments
+
+These are the four independently-hosted, separately-licensed, interoperable surfaces that make up the OpenRiC ecosystem. Any one of them can be replaced by a third-party implementation without touching the others — that is the point.
 
 <div class="surfaces">
   <a class="surface-card" href="spec/">
@@ -147,6 +149,13 @@ title: OpenRiC
     <div class="url">ric.theahg.co.za</div>
     <p>Independently-deployed Laravel service backed by a real archival database. ~40 endpoints across read/write/OAI-PMH, <code>X-API-Key</code> auth, auto-generated OpenAPI at <code>/api/ric/v1/openapi.json</code>.</p>
   </a>
+</div>
+
+## Pages on openric.org
+
+These live inside the specification site itself — interactive tools, reference material, and evidence pages layered on top of the four deployments above.
+
+<div class="surfaces">
   <a class="surface-card" href="api-explorer/">
     <span class="surface-icon">🧪</span>
     <h3>API Explorer <span class="status-pill live">live</span></h3>
@@ -197,10 +206,25 @@ title: OpenRiC
     <h4>Spec v0.2.0 frozen <span class="status-pill live">done</span></h4>
     <p>Agent + Record write endpoints, OAI-PMH v2.0, OpenAPI 3.0 spec + Swagger UI, conformance probe, self-service API key flow, getting-started walkthrough. Tagged 2026-04-18.</p>
   </div>
-  <div class="phase-card current">
+  <div class="phase-card done">
     <div class="phase-num">Phase 3</div>
+    <h4>Proof + Profiles draft <span class="status-pill live">done</span></h4>
+    <p><a href="proof.html">Proof-of-implementation page</a> with live numbers, 7-step use case, ISAD(G)→RiC-O mapping. <a href="profiles.html">Profiles framework</a> defining six named capability axes; <a href="spec/profiles/core-discovery.html">Core Discovery Profile v0.3-draft</a> normative doc landed for review. Tagged 2026-04-19.</p>
+  </div>
+  <div class="phase-card current">
+    <div class="phase-num">Phase 4</div>
     <h4>Governance &amp; review <span class="status-pill pending">current</span></h4>
-    <p>Invite external spec editors. Engage EGAD-adjacent reviewers. Attract a second, non-reference implementation. Freeze <strong>v1.0</strong> when one passes conformance.</p>
+    <p>Invite external spec editors. Engage EGAD-adjacent reviewers on the Core Discovery draft's open questions. Ratify profile framework. Attract a second, non-reference implementation.</p>
+  </div>
+  <div class="phase-card">
+    <div class="phase-num">Phase 5</div>
+    <h4>v0.3.0 freeze <span class="status-pill draft">planned</span></h4>
+    <p>Close the 8 open design questions in Core Discovery. Add profile-scoped SHACL, OpenAPI tags, fixture manifest, probe <code>--profile</code> flag, conformance badge. Reference API declares <code>openric_conformance.profiles</code>.</p>
+  </div>
+  <div class="phase-card">
+    <div class="phase-num">Phase 6+</div>
+    <h4>Additional profiles &amp; v1.0 <span class="status-pill draft">planned</span></h4>
+    <p>Define Authority &amp; Context, Provenance &amp; Event, Digital Object Linkage, Export-Only, Round-Trip Editing — each when an implementer is ready. Freeze <strong>v1.0</strong> when a second implementation passes conformance on any profile.</p>
   </div>
   <div class="phase-card">
     <div class="phase-num">Beyond v1.0</div>
@@ -218,7 +242,7 @@ title: OpenRiC
   </a>
   <a class="spec-doc" href="architecture.html">
     <strong>Architecture</strong>
-    <span>How the four public surfaces fit together and talk to each other.</span>
+    <span>How the four public deployments fit together and talk to each other.</span>
   </a>
   <a class="spec-doc" href="guides/">
     <strong>Guides</strong>

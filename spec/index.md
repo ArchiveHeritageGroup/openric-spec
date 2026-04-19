@@ -40,7 +40,7 @@ v0.1.0 is frozen — implementations can claim conformance against that tag. The
 
 ## See also
 
-- [Architecture](../architecture.html) — how the four public OpenRiC surfaces fit together
+- [Architecture](../architecture.html) — how the four public OpenRiC deployments fit together
 - [Guides](../guides/) — user-facing how-tos for the viewer and capture client
 - [Discussions](https://github.com/openric/spec/discussions) — spec feedback, second-implementer Q&A, mapping sanity checks
 - [Live demo](../demo/) — open it, drag nodes, hit the reference API
