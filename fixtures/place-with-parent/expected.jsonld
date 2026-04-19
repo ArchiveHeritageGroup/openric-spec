@@ -6,7 +6,7 @@
     "xsd": "http://www.w3.org/2001/XMLSchema#",
     "owl": "http://www.w3.org/2002/07/owl#"
   },
-  "@id": "https://heratio.theahg.co.za/place/912151",
+  "@id": "https://ric.theahg.co.za/place/912151",
   "@type": "rico:Place",
   "rico:name": "Thebes (Luxor)",
   "rico:description": "Ancient Thebes, modern-day Luxor. Major archaeological site where Middle Kingdom funerary objects including model boats were commonly found.",
@@ -16,7 +16,7 @@
   "rico:longitude": 32.6578,
   "owl:sameAs": "https://www.geonames.org/347342/luxor.html",
   "rico:isOrWasPartOf": {
-    "@id": "https://heratio.theahg.co.za/place/912150",
+    "@id": "https://ric.theahg.co.za/place/912150",
     "@type": "rico:Place",
     "rico:name": "Egypt"
   }

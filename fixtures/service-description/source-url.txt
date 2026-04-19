@@ -1,1 +1,1 @@
-https://heratio.theahg.co.za/api/ric/v1/
+https://ric.theahg.co.za/api/ric/v1/

@@ -5,7 +5,7 @@
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "xsd": "http://www.w3.org/2001/XMLSchema#"
   },
-  "@id": "https://heratio.theahg.co.za/actor/south-african-heritage-foundation",
+  "@id": "https://ric.theahg.co.za/actor/south-african-heritage-foundation",
   "@type": "rico:CorporateBody",
   "rico:name": "South African Heritage Foundation",
   "rico:normalizedForm": "South African Heritage Foundation",

@@ -6,7 +6,7 @@
     "xsd": "http://www.w3.org/2001/XMLSchema#",
     "owl": "http://www.w3.org/2002/07/owl#"
   },
-  "@id": "https://heratio.theahg.co.za/rule/912155",
+  "@id": "https://ric.theahg.co.za/rule/912155",
   "@type": "rico:Rule",
   "rico:title": "Egyptian Antiquities Protection Law (Law 117/1983)",
   "rico:name": "Egyptian Antiquities Protection Law (Law 117/1983)",

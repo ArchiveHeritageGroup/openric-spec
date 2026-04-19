@@ -5,6 +5,6 @@
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "xsd": "http://www.w3.org/2001/XMLSchema#"
   },
-  "@id": "https://heratio.theahg.co.za/actor/d6mh-ktzy-h6qz",
+  "@id": "https://ric.theahg.co.za/actor/d6mh-ktzy-h6qz",
   "@type": "rico:Agent"
 }

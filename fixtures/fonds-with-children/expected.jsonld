@@ -7,7 +7,7 @@
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "owl": "http://www.w3.org/2002/07/owl#"
   },
-  "@id": "https://heratio.theahg.co.za/informationobject/kc4x-45tz-em84",
+  "@id": "https://ric.theahg.co.za/informationobject/kc4x-45tz-em84",
   "@type": "https://www.ica.org/standards/RiC/ontology#Record",
   "rico:type": "Record",
   "rico:identifier": "dem001"

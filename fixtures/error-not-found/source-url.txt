@@ -1,1 +1,1 @@
-https://heratio.theahg.co.za/api/ric/v1/records/this-slug-does-not-exist
+https://ric.theahg.co.za/api/ric/v1/records/this-slug-does-not-exist

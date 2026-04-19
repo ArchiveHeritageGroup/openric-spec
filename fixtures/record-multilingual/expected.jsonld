@@ -7,7 +7,7 @@
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "owl": "http://www.w3.org/2002/07/owl#"
   },
-  "@id": "https://heratio.theahg.co.za/informationobject/cat-in-arms",
+  "@id": "https://ric.theahg.co.za/informationobject/cat-in-arms",
   "@type": "https://www.ica.org/standards/RiC/ontology#Record",
   "rico:type": "Record",
   "rico:title": "Demo of folder1",
@@ -18,7 +18,7 @@
     "rico:extentType": "1 paqge"
   },
   "rico:heldBy": {
-    "@id": "https://heratio.theahg.co.za/repository/the-archive-and-heritage-group",
+    "@id": "https://ric.theahg.co.za/repository/the-archive-and-heritage-group",
     "@type": "https://www.ica.org/standards/RiC/ontology#CorporateBody",
     "rico:name": "The Archive And Heritage Group"
   },
