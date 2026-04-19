@@ -19,6 +19,78 @@ title: OpenRiC
   </div>
 </div>
 
+<div class="plain-lede">
+  <p><strong>In plain language:</strong> OpenRiC lets different archival systems publish, exchange, validate, and explore RiC-based archival data in a consistent way. It's a shared contract — like IIIF for images, but for archival description. Any system that implements it can be read, written to, and graph-walked the same way.</p>
+</div>
+
+## How the pieces fit together
+
+<div class="boundary-grid">
+  <div class="boundary-cell spec">
+    <div class="boundary-label">Specification</div>
+    <div class="boundary-title">OpenRiC</div>
+    <p>Four documents, JSON Schemas, SHACL shapes, a 27-case fixture pack, an OpenAPI 3.0 contract, and a black-box conformance probe. CC-BY 4.0. Versioned; <code>v0.2.0</code> is current.</p>
+    <div class="boundary-where">openric.org</div>
+  </div>
+  <div class="boundary-cell impl">
+    <div class="boundary-label">Implementation</div>
+    <div class="boundary-title">Reference API</div>
+    <p>One Laravel service that implements the OpenRiC contract. Real archival data behind it. ~40 endpoints, OAI-PMH, auto-generated OpenAPI. AGPL-3.0. Anyone can run their own.</p>
+    <div class="boundary-where">ric.theahg.co.za</div>
+  </div>
+  <div class="boundary-cell tools">
+    <div class="boundary-label">Clients</div>
+    <div class="boundary-title">Viewer, Capture, Explorer</div>
+    <p>Three pure-browser apps that talk to any conformant server — not just the reference. 2D + 3D graph rendering, data capture, Swagger UI. No privileged access; they use the same HTTP contract adopters see.</p>
+    <div class="boundary-where">viewer · capture · api-explorer</div>
+  </div>
+  <div class="boundary-cell consumer">
+    <div class="boundary-label">Operational consumer</div>
+    <div class="boundary-title">Heratio</div>
+    <p>An existing GLAM platform that consumes the Reference API over HTTP for every mutating admin action — no special shortcut. Proves the contract is sufficient for a real, production archive. Independent AGPL project.</p>
+    <div class="boundary-where">heratio.theahg.co.za</div>
+  </div>
+</div>
+
+<div class="callout">
+  <p><strong>If you only remember one thing:</strong> <em>OpenRiC is the contract; Heratio is one consumer of that contract.</em> The contract is deliberately designed so that any archival system — not just Heratio — can speak it.</p>
+</div>
+
+## Start here — evaluate OpenRiC in 5 minutes
+
+<div class="evaluate-grid">
+  <a class="evaluate-step" href="guides/getting-started.html">
+    <div class="step-num">1</div>
+    <div class="step-title">Read the 15-min walkthrough</div>
+    <p>Zero to working integration: reads, writes, graph, harvest, embed.</p>
+  </a>
+  <a class="evaluate-step" href="demo/browse/">
+    <div class="step-num">2</div>
+    <div class="step-title">Browse the live data</div>
+    <p>~40 endpoints on the reference server. Records, Agents, Places, Rules, Activities, Instantiations, Repositories, Functions.</p>
+  </a>
+  <a class="evaluate-step" href="demo/">
+    <div class="step-num">3</div>
+    <div class="step-title">Walk the graph</div>
+    <p>Click any node to drill into its RiC-O neighbourhood. Same data, visual.</p>
+  </a>
+  <a class="evaluate-step" href="api-explorer/">
+    <div class="step-num">4</div>
+    <div class="step-title">Try the API</div>
+    <p>Swagger UI over the OpenAPI 3.0 spec. "Try it out" on every endpoint with your own key.</p>
+  </a>
+  <a class="evaluate-step" href="conformance/">
+    <div class="step-num">5</div>
+    <div class="step-title">Probe a server for conformance</div>
+    <p>Pure bash + jq. Point at any OpenRiC server; get a pass/fail report across every required endpoint.</p>
+  </a>
+  <a class="evaluate-step" href="spec/">
+    <div class="step-num">6</div>
+    <div class="step-title">Read the spec</div>
+    <p>Four short documents: mapping, viewing API, graph primitives, conformance.</p>
+  </a>
+</div>
+
 ## Four public surfaces
 
 <div class="surfaces">
@@ -26,7 +98,7 @@ title: OpenRiC
     <span class="surface-icon">📖</span>
     <h3>Specification <span class="status-pill live">live</span></h3>
     <div class="url">openric.org</div>
-    <p>Four documents, 12 JSON Schemas, SHACL shapes, 20-case conformance fixture pack, validator CLI. CC-BY 4.0.</p>
+    <p>Four documents, 19 JSON Schemas, SHACL shapes, 27-case fixture pack, validator CLI, conformance probe, OpenAPI 3.0 contract. CC-BY 4.0.</p>
   </a>
   <a class="surface-card" href="https://viewer.openric.org">
     <span class="surface-icon">🗺</span>
@@ -64,10 +136,6 @@ title: OpenRiC
     <div class="url">openric.org/demo/browse</div>
     <p>Live catalogue view — cards, per-type filters, pagination. Points at any OpenRiC server; click-through to the graph viewer.</p>
   </a>
-</div>
-
-<div class="callout">
-  <p><strong>Noteworthy:</strong> the reference implementation consumes its own public API. <a href="https://heratio.theahg.co.za">Heratio</a> — the operational GLAM platform backing this ecosystem — calls <code>ric.theahg.co.za/api/ric/v1/*</code> for every mutating admin action, same surface any third-party client uses. No privileged shortcut. If the API is sufficient for Heratio, it's sufficient for anyone.</p>
 </div>
 
 ## Condensed roadmap

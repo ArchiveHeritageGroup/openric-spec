@@ -300,7 +300,7 @@ GET /api/ric/v1/entities/{id}/info
 
 Minimal JSON-LD entity card: `{id, class, slug, name, type, description}`. For popovers / hover tooltips / autocomplete result expansion. Cheap to fetch.
 
-### 4.18 Write operations *(added post-v0.1.0; L3 conformance)*
+### 4.18 Write operations *(added in v0.2.0; L3 conformance)*
 
 All write operations require `X-API-Key` with a scope matching the operation. See §6 (Authentication) for details.
 

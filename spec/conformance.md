@@ -72,7 +72,7 @@ Every endpoint response MUST validate against its JSON Schema. Schemas are JSON 
 | `error.schema.json` | Any error response |
 | `validation-report.schema.json` | `POST /validate` |
 
-**Added post-v0.1.0 (pending v0.2.0 freeze):**
+**Added in v0.2.0:**
 
 | Schema | Validates |
 |---|---|
@@ -119,7 +119,7 @@ Initial fixture set covers:
 19. `subgraph-filtered-by-type` — graph endpoint with `types=rico:Person`
 20. `validation-failure` — deliberately broken input, expected SHACL failures
 
-**Added post-v0.1.0 (pending v0.2.0 freeze):**
+**Added in v0.2.0:**
 
 21. `autocomplete-egypt` — cross-entity search result shape
 22. `relations-for-place` — outgoing + incoming split on a Place

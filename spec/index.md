@@ -5,7 +5,7 @@ title: OpenRiC — Specification
 
 <div class="hero">
   <div class="hero-inner">
-    <div class="hero-eyebrow">Specification · v0.1.0</div>
+    <div class="hero-eyebrow">Specification · v0.2.0</div>
     <h1>The spec, in four documents</h1>
     <p class="hero-lede">OpenRiC is an open, implementation-neutral specification for serving ICA's Records in Contexts (RiC-CM / RiC-O) over HTTP. It's made of four short documents — a mapping table, an HTTP API, a graph-render model, and a conformance test suite.</p>
   </div>
