@@ -56,6 +56,35 @@ title: OpenRiC
   <p><strong>If you only remember one thing:</strong> <em>OpenRiC is the contract; Heratio is one consumer of that contract.</em> The contract is deliberately designed so that any archival system — not just Heratio — can speak it.</p>
 </div>
 
+## Who is this for?
+
+<div class="audience-grid">
+  <a class="audience-card" href="guides/getting-started.html">
+    <div class="audience-icon">🧑‍💻</div>
+    <div class="audience-title">Developers</div>
+    <p>You want to read data, write data, or build a client. Start with the 15-min walkthrough, then the API Explorer.</p>
+    <div class="audience-next">Getting-started guide →</div>
+  </a>
+  <a class="audience-card" href="for-institutions.html">
+    <div class="audience-icon">🏛️</div>
+    <div class="audience-title">Institutions + decision-makers</div>
+    <p>You're evaluating whether OpenRiC is worth adopting, requesting from vendors, or endorsing. Non-technical 3-min brief.</p>
+    <div class="audience-next">Institutional brief →</div>
+  </a>
+  <a class="audience-card" href="spec/">
+    <div class="audience-icon">📚</div>
+    <div class="audience-title">Archivists + standards-adjacent</div>
+    <p>You care about ISAD(G) / ISAAR / ISDF / ISDIAH → RiC mapping. Read the mapping doc first, then the graph primitives.</p>
+    <div class="audience-next">Specification →</div>
+  </a>
+  <a class="audience-card" href="governance.html">
+    <div class="audience-icon">🤝</div>
+    <div class="audience-title">Implementers + contributors</div>
+    <p>You want to build a conformant server, submit a spec change, or steward the project. See how governance + conformance work.</p>
+    <div class="audience-next">Governance →</div>
+  </a>
+</div>
+
 ## Start here — evaluate OpenRiC in 5 minutes
 
 <div class="evaluate-grid">
@@ -182,6 +211,14 @@ title: OpenRiC
   <a class="spec-doc" href="guides/">
     <strong>Guides</strong>
     <span>How to embed the viewer, use the capture client, and call the API from code.</span>
+  </a>
+  <a class="spec-doc" href="for-institutions.html">
+    <strong>For institutions</strong>
+    <span>3-min executive brief for directors, IT leads, and procurement officers.</span>
+  </a>
+  <a class="spec-doc" href="governance.html">
+    <strong>Governance</strong>
+    <span>Stewardship, change process, compatibility policy, how to contribute.</span>
   </a>
   <a class="spec-doc" href="demo/">
     <strong>Live demo</strong>
