@@ -1,0 +1,191 @@
+# Copyright (C) 2026 Johan Pieterse / Plain Sailing Information Systems
+# SPDX-License-Identifier: AGPL-3.0-or-later
+#
+# OpenRiC SHACL shapes — profile: core-discovery
+# ==============================================
+# Single-entity shapes for the minimum conformance target: records, agents,
+# repositories. Structural only — cross-entity ("this Record must be
+# referenced by…") checks live in profile: graph-traversal.
+#
+# Shapes in this file:
+#   - RecordSetShape        — fonds / series / file
+#   - RecordShape           — item-level records
+#   - PersonShape           — rico:Person
+#   - CorporateBodyShape    — rico:CorporateBody
+#   - FamilyShape           — rico:Family
+#   - AgentNameShape        — structured rico:hasAgentName values
+#   - RepositoryShape       — ISDIAH custodial institutions
+#
+# Usage:
+#   pyshacl -s always-on.shacl.ttl -s core-discovery.shacl.ttl \
+#           -d data.jsonld -f human
+
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix rico: <https://www.ica.org/standards/RiC/ontology#> .
+@prefix :     <https://openric.org/shapes#> .
+
+
+# ----------------------------------------------------------------------------
+# Record shapes
+# ----------------------------------------------------------------------------
+
+:RecordSetShape a sh:NodeShape ;
+    sh:targetClass rico:RecordSet ;
+    sh:name "RecordSet Validation" ;
+    sh:description "Validates RecordSet entities (fonds, series, files)" ;
+
+    sh:property [
+        sh:path rico:title ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:minLength 1 ;
+        sh:message "RecordSet must have exactly one non-empty title"
+    ] ;
+
+    sh:property [
+        sh:path rico:identifier ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:severity sh:Warning ;
+        sh:message "RecordSet should have an identifier (reference code)"
+    ] ;
+
+    sh:property [
+        sh:path rico:scopeAndContent ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:severity sh:Warning ;
+        sh:message "RecordSet should have scope and content description"
+    ] ;
+
+    sh:property [
+        sh:path rico:isOrWasPartOf ;
+        sh:class rico:RecordSet ;
+        sh:severity sh:Info ;
+        sh:message "Parent should be a RecordSet"
+    ] ;
+
+    sh:property [
+        sh:path rico:isOrWasHeldBy ;
+        sh:class rico:CorporateBody ;
+        sh:severity sh:Warning ;
+        sh:message "RecordSet should be held by a repository (CorporateBody)"
+    ] .
+
+
+:RecordShape a sh:NodeShape ;
+    sh:targetClass rico:Record ;
+    sh:name "Record Validation" ;
+    sh:description "Validates Record entities (items)" ;
+
+    sh:property [
+        sh:path rico:title ;
+        sh:minCount 1 ;
+        sh:datatype xsd:string ;
+        sh:minLength 1 ;
+        sh:message "Record must have a title"
+    ] ;
+
+    sh:property [
+        sh:path rico:isOrWasPartOf ;
+        sh:minCount 1 ;
+        sh:severity sh:Warning ;
+        sh:message "Record should be part of a RecordSet"
+    ] .
+
+
+# ----------------------------------------------------------------------------
+# Agent shapes
+# ----------------------------------------------------------------------------
+# OpenRiC v0.1 accepts EITHER rico:name (shorthand, common in practice) OR
+# rico:hasAgentName (RiC-O canonical structured form). At least one must
+# be present.
+
+:PersonShape a sh:NodeShape ;
+    sh:targetClass rico:Person ;
+    sh:name "Person Validation" ;
+
+    sh:or (
+        [ sh:property [ sh:path rico:name ; sh:minCount 1 ] ]
+        [ sh:property [ sh:path rico:hasAgentName ; sh:minCount 1 ] ]
+    ) ;
+
+    sh:property [
+        sh:path rico:hasAgentName ;
+        sh:node :AgentNameShape ;
+        sh:severity sh:Info ;
+        sh:message "When present, rico:hasAgentName must be properly structured"
+    ] .
+
+
+:CorporateBodyShape a sh:NodeShape ;
+    sh:targetClass rico:CorporateBody ;
+    sh:name "CorporateBody Validation" ;
+
+    sh:or (
+        [ sh:property [ sh:path rico:name ; sh:minCount 1 ] ]
+        [ sh:property [ sh:path rico:hasAgentName ; sh:minCount 1 ] ]
+    ) ;
+
+    sh:property [
+        sh:path rico:hasAgentName ;
+        sh:node :AgentNameShape ;
+        sh:severity sh:Info ;
+        sh:message "When present, rico:hasAgentName must be properly structured"
+    ] .
+
+
+:FamilyShape a sh:NodeShape ;
+    sh:targetClass rico:Family ;
+    sh:name "Family Validation" ;
+
+    sh:or (
+        [ sh:property [ sh:path rico:name ; sh:minCount 1 ] ]
+        [ sh:property [ sh:path rico:hasAgentName ; sh:minCount 1 ] ]
+    ) .
+
+
+:AgentNameShape a sh:NodeShape ;
+    sh:name "AgentName Structure" ;
+
+    sh:property [
+        sh:path rico:textualValue ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:minLength 1 ;
+        sh:message "AgentName must have exactly one non-empty textualValue"
+    ] .
+
+
+# ----------------------------------------------------------------------------
+# Repository (ISDIAH) shape
+# ----------------------------------------------------------------------------
+# Repository = rico:CorporateBody acting as a custodial institution.
+# CorporateBodyShape above handles name; this layers ISDIAH-specific
+# recommendations on top.
+
+:RepositoryShape a sh:NodeShape ;
+    sh:targetSubjectsOf rico:isOrHasCurrentCustodian ;
+    sh:name "Repository (ISDIAH) Recommendations" ;
+    sh:description "Custodial institutions that hold records. Applied to any subject of isOrHasCurrentCustodian." ;
+
+    sh:property [
+        sh:path rico:identifier ;
+        sh:severity sh:Warning ;
+        sh:message "Repository should have an identifier (institution code)"
+    ] ;
+
+    sh:property [
+        sh:path rico:history ;
+        sh:severity sh:Info ;
+        sh:message "Repository should describe its history / founding context"
+    ] ;
+
+    sh:property [
+        sh:path rico:isOrWasLocatedAt ;
+        sh:severity sh:Info ;
+        sh:message "Repository should link to at least one Place"
+    ] .
