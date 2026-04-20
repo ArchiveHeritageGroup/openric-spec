@@ -5,7 +5,7 @@ title: OpenRiC
 
 <div class="hero">
   <div class="hero-inner">
-    <div class="hero-eyebrow">OpenRiC · v0.2.0 · ~40 endpoints, OAI-PMH, API Explorer, conformance suite live</div>
+    <div class="hero-eyebrow">OpenRiC · v0.2.0 · 46 endpoints, OAI-PMH, API Explorer, conformance suite live</div>
     <h1>Records in Contexts, served over HTTP — implementation-neutral, IIIF-inspired.</h1>
     <p class="hero-lede">
       OpenRiC is an open specification for how archival descriptions map to RiC-CM / RiC-O, how that data is served over HTTP for both reading and writing, and how graph-based interfaces can render it consistently across any conformant server. Not a product. A contract anyone can implement.
@@ -35,7 +35,7 @@ title: OpenRiC
   <div class="boundary-cell impl">
     <div class="boundary-label">Implementation</div>
     <div class="boundary-title">Reference API</div>
-    <p>One Laravel service that implements the OpenRiC contract. Real archival data behind it. ~40 endpoints, OAI-PMH, auto-generated OpenAPI. AGPL-3.0. Anyone can run their own.</p>
+    <p>One Laravel service that implements the OpenRiC contract. Real archival data behind it. 46 endpoints across full 8-entity CRUD (Records, Agents, Places, Rules, Activities, Instantiations, Repositories, Functions), OAI-PMH, auto-generated OpenAPI. AGPL-3.0. Anyone can run their own.</p>
     <div class="boundary-where"><a href="https://ric.theahg.co.za/">ric.theahg.co.za</a></div>
   </div>
   <div class="boundary-cell tools">
@@ -96,7 +96,7 @@ title: OpenRiC
   <a class="evaluate-step" href="demo/browse/">
     <div class="step-num">2</div>
     <div class="step-title">Browse the live data</div>
-    <p>~40 endpoints on the reference server. Records, Agents, Places, Rules, Activities, Instantiations, Repositories, Functions.</p>
+    <p>Full 8-entity CRUD (46 endpoints): Records, Agents, Places, Rules, Activities, Instantiations, Repositories, Functions.</p>
   </a>
   <a class="evaluate-step" href="demo/">
     <div class="step-num">3</div>
@@ -147,7 +147,7 @@ These are the four independently-hosted, separately-licensed, interoperable surf
     <span class="surface-icon">🔌</span>
     <h3>Reference API <span class="status-pill live">live</span></h3>
     <div class="url">ric.theahg.co.za</div>
-    <p>Independently-deployed Laravel service backed by a real archival database. ~40 endpoints across read/write/OAI-PMH, <code>X-API-Key</code> auth, auto-generated OpenAPI at <code>/api/ric/v1/openapi.json</code>.</p>
+    <p>Independently-deployed Laravel service backed by a real archival database. 46 endpoints across read/write/OAI-PMH with full 8-entity CRUD, <code>X-API-Key</code> auth, auto-generated OpenAPI at <code>/api/ric/v1/openapi.json</code>. Also hosts a live RiC-CM reference navigator at <code>/reference/ric-cm/</code> — SPARQL-backed, declared-vs-inherited separation, versioned URLs.</p>
   </a>
 </div>
 
