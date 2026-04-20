@@ -1,0 +1,57 @@
+{
+    "$schema": "./manifest.schema.json",
+    "schema_version": 1,
+    "description": "Maps every OpenRiC conformance fixture to the profile(s) it exercises. Hand-maintained; keep in sync with fixtures/README.md and the profile definitions under spec/profiles/. Consumed by openric-validate and conformance probes to run only the fixtures relevant to a given profile claim.",
+    "profile_ids": [
+        "always-on",
+        "core-discovery",
+        "authority-context",
+        "digital-object-linkage",
+        "graph-traversal",
+        "round-trip-editing"
+    ],
+    "fixtures": [
+        { "name": "service-description",        "profiles": ["always-on"],           "status": "done",    "purpose": "Service description root document with openric_conformance declaration" },
+        { "name": "error-not-found",            "profiles": ["always-on"],           "status": "done",    "purpose": "Canonical 404 error envelope" },
+
+        { "name": "fonds-minimal",              "profiles": ["core-discovery"],      "status": "done",    "purpose": "Smallest valid record — title + creator" },
+        { "name": "fonds-with-children",        "profiles": ["core-discovery"],      "status": "done",    "purpose": "Hierarchy: fonds + children records" },
+        { "name": "record-multilingual",        "profiles": ["core-discovery"],      "status": "done",    "purpose": "Multiple @language titles on a record" },
+        { "name": "record-list",                "profiles": ["core-discovery"],      "status": "done",    "purpose": "Record list endpoint shape" },
+        { "name": "agent-person-simple",        "profiles": ["core-discovery"],      "status": "done",    "purpose": "Minimal Person agent" },
+        { "name": "agent-corporate-body",       "profiles": ["core-discovery"],      "status": "done",    "purpose": "CorporateBody agent" },
+        { "name": "agent-family",               "profiles": ["core-discovery"],      "status": "done",    "purpose": "Family agent" },
+        { "name": "autocomplete-egypt",         "profiles": ["core-discovery"],      "status": "done",    "purpose": "Cross-entity prefix autocomplete" },
+        { "name": "vocabulary",                 "profiles": ["core-discovery"],      "status": "done",    "purpose": "RiC-O vocabulary listing" },
+        { "name": "entity-info-place",          "profiles": ["core-discovery"],      "status": "done",    "purpose": "Minimal entity info card (for popovers / tooltips)" },
+
+        { "name": "place-country",              "profiles": ["authority-context"],   "status": "done",    "purpose": "Place with GeoNames authority URI, lat/long" },
+        { "name": "place-with-parent",          "profiles": ["authority-context"],   "status": "done",    "purpose": "Place nested under a parent place" },
+        { "name": "place-list",                 "profiles": ["authority-context"],   "status": "done",    "purpose": "Place list endpoint shape" },
+        { "name": "rule-law",                   "profiles": ["authority-context"],   "status": "done",    "purpose": "Rule — law/mandate" },
+        { "name": "activity-production",        "profiles": ["authority-context"],   "status": "done",    "purpose": "Creation/production event" },
+        { "name": "activity-accumulation",      "profiles": ["authority-context"],   "status": "done",    "purpose": "Accumulation event" },
+
+        { "name": "instantiation-tiff",         "profiles": ["digital-object-linkage"], "status": "done", "purpose": "Instantiation — TIFF carrier" },
+        { "name": "instantiation-application",  "profiles": ["digital-object-linkage"], "status": "done", "purpose": "Instantiation — application/pdf etc." },
+
+        { "name": "hierarchy-with-children",    "profiles": ["graph-traversal"],     "status": "done",    "purpose": "3-axis nested-set hierarchy walk (parent + children + siblings)" },
+        { "name": "relation-list",              "profiles": ["graph-traversal"],     "status": "done",    "purpose": "Relation list endpoint shape" },
+        { "name": "relations-for-place",        "profiles": ["graph-traversal"],     "status": "done",    "purpose": "Relations filtered to one subject entity" },
+        { "name": "subgraph-depth-1",           "profiles": ["graph-traversal"],     "status": "done",    "purpose": "Rooted subgraph exercising the six graph invariants" },
+        { "name": "subgraph-depth-2",           "profiles": ["graph-traversal"],     "status": "done",    "purpose": "Graph: 2-hop BFS" },
+
+        { "name": "entity-write-place",         "profiles": ["round-trip-editing"],  "status": "done",    "purpose": "Entity write — create Place" },
+        { "name": "write-response-create",      "profiles": ["round-trip-editing"],  "status": "done",    "purpose": "Canonical write-response envelope" },
+
+        { "name": "agent-with-relations",       "profiles": ["core-discovery", "graph-traversal"], "status": "planned", "purpose": "Successor / predecessor chains between agents" },
+        { "name": "repository-with-holdings",   "profiles": ["core-discovery"],      "status": "planned", "purpose": "ISDIAH repository + ≥3 fonds" },
+        { "name": "function-with-activities",   "profiles": ["digital-object-linkage", "authority-context"], "status": "planned", "purpose": "ISDF function + ≥2 activities" },
+        { "name": "record-in-container",        "profiles": ["digital-object-linkage"], "status": "planned", "purpose": "Record held in rico:Thing container" },
+        { "name": "record-security-classified", "profiles": ["core-discovery"],      "status": "planned", "purpose": "Classification level on a record" },
+        { "name": "record-personal-data",       "profiles": ["core-discovery"],      "status": "planned", "purpose": "containsPersonalData flag on a record" },
+        { "name": "record-with-access-restriction", "profiles": ["core-discovery"],  "status": "planned", "purpose": "Access-restriction scope on a record" },
+        { "name": "subgraph-filtered-by-type",  "profiles": ["graph-traversal"],     "status": "planned", "purpose": "Graph filtered by node type" },
+        { "name": "validation-failure",         "profiles": ["always-on"],           "status": "planned", "purpose": "Deliberately broken input → expected SHACL failures" }
+    ]
+}

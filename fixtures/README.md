@@ -32,6 +32,26 @@ fixtures/<case-name>/
 openric-validate --fixture fonds-minimal
 ```
 
+## Profile manifest
+
+Every fixture is tagged with the OpenRiC conformance profile(s) it exercises
+in [`manifest.json`](manifest.json) (structure validated by
+[`manifest.schema.json`](manifest.schema.json)). Tools that support profile
+scoping read the manifest to select fixtures automatically:
+
+```bash
+# Run only fixtures relevant to Core Discovery
+openric-validate --profile=core-discovery
+
+# Shell equivalent — list the fixture names by profile from the manifest
+jq -r '.fixtures[] | select(.profiles | index("core-discovery")) | .name' manifest.json
+```
+
+Profile ids match the `openric_conformance.profiles[].id` values declared by
+servers and the `--profile=` flag on the conformance probe. The special id
+**`always-on`** covers fixtures that apply regardless of which profile a
+server claims (service description, error envelopes, SHACL validation).
+
 ## Current fixtures
 
 The reference host is `https://ric.theahg.co.za/api/ric/v1/` (OpenRiC reference

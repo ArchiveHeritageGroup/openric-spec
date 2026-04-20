@@ -1,0 +1,67 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://openric.org/fixtures/manifest.schema.json",
+    "title": "OpenRiC fixture manifest",
+    "description": "Structure for fixtures/manifest.json — profile-tagged conformance fixtures.",
+    "type": "object",
+    "required": ["schema_version", "profile_ids", "fixtures"],
+    "additionalProperties": true,
+    "properties": {
+        "schema_version": {
+            "type": "integer",
+            "const": 1
+        },
+        "description": {
+            "type": "string"
+        },
+        "profile_ids": {
+            "type": "array",
+            "description": "The set of profile ids that fixtures[].profiles[] may reference. Includes the special id 'always-on' for fixtures that apply to every profile claim.",
+            "items": {
+                "type": "string",
+                "enum": [
+                    "always-on",
+                    "core-discovery",
+                    "authority-context",
+                    "digital-object-linkage",
+                    "graph-traversal",
+                    "round-trip-editing",
+                    "export-only",
+                    "provenance-event"
+                ]
+            },
+            "minItems": 1,
+            "uniqueItems": true
+        },
+        "fixtures": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": ["name", "profiles", "status"],
+                "additionalProperties": true,
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Directory name under fixtures/ — e.g. 'fonds-minimal'.",
+                        "pattern": "^[a-z0-9][a-z0-9-]*$"
+                    },
+                    "profiles": {
+                        "type": "array",
+                        "description": "Profiles this fixture exercises. A fixture MAY cover more than one profile; 'always-on' means the fixture applies regardless of profile claims.",
+                        "items": { "type": "string" },
+                        "minItems": 1,
+                        "uniqueItems": true
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": ["done", "planned", "deprecated"]
+                    },
+                    "purpose": {
+                        "type": "string",
+                        "description": "One-line summary, typically taken from the case's notes.md or the table in fixtures/README.md."
+                    }
+                }
+            }
+        }
+    }
+}
