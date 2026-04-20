@@ -104,6 +104,13 @@ Each probe checks **both** the HTTP status code **and** the JSON shape
   Python validator in `../validator/` for that.
 - **Performance.** Not a load test.
 
+## Embedding a conformance badge
+
+For a live, shields.io-compatible badge showing a server's declared profiles,
+see the [**conformance badge**](badge.md) documentation. Implementers embed
+the generated badge URL in their README; it updates automatically whenever
+the server's `openric_conformance.profiles[]` declaration changes.
+
 ## Using it in CI
 
 Add to your Actions / GitLab CI / Woodpecker pipeline. The probe takes
