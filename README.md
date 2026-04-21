@@ -10,14 +10,14 @@
 
 ## Current version
 
-**v0.2.0** — frozen 2026-04-18. See [`CHANGELOG.md`](CHANGELOG.md).
+**v0.36.0** — 2026-04-21. All 7 profiles normative: Core Discovery, Authority & Context, Graph Traversal, Digital Object Linkage, Round-Trip Editing, Provenance & Event, Export-Only. See [`CHANGELOG.md`](CHANGELOG.md).
 
 ## The OpenRiC ecosystem
 
 | Repository | Role | Licence |
 |---|---|---|
 | **[openric/spec](https://github.com/openric/spec)** (you are here) | The specification, schemas, shapes, fixtures, conformance probe, API explorer | CC-BY 4.0 (spec) / AGPL-3.0 (tools) |
-| **[openric/service](https://github.com/openric/service)** *(coming)* | Reference implementation — Laravel service | AGPL-3.0 |
+| **[openric/service](https://github.com/openric/service)** | Reference implementation — Laravel service, public and tracking spec v0.36.0 | AGPL-3.0 |
 | **[openric/viewer](https://github.com/openric/viewer)** | `@openric/viewer` on npm — 2D + 3D graph rendering library | AGPL-3.0 |
 | **[openric/capture](https://github.com/openric/capture)** | Pure-browser data-entry client; talks to any conformant server | AGPL-3.0 |
 
