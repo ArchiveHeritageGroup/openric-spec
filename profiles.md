@@ -31,16 +31,16 @@ This is the pattern that turned IIIF from aspirational spec to eight-hundred-ins
 <div class="surfaces">
   <a class="surface-card" href="{{ '/spec/profiles/core-discovery.html' | relative_url }}">
     <span class="surface-icon">🔍</span>
-    <h3>Core Discovery <span class="status-pill live">v0.3.0-draft</span></h3>
+    <h3>Core Discovery <span class="status-pill live">v0.3.0 normative</span></h3>
     <div class="url">Records · Agents · Repositories · Vocabulary · Autocomplete</div>
     <p>The minimum "I can be queried" claim. Ten read-only endpoints, three entity types, no graph traversal. Every OpenRiC server starts here.</p>
   </a>
-  <div class="surface-card" style="opacity: 0.65; cursor: default;">
+  <a class="surface-card" href="{{ '/spec/profiles/authority-context.html' | relative_url }}">
     <span class="surface-icon">🏛</span>
-    <h3>Authority &amp; Context <span class="status-pill" style="background: var(--pending); color: #fff;">planned</span></h3>
+    <h3>Authority &amp; Context <span class="status-pill live">v0.4.0 normative</span></h3>
     <div class="url">Places · Rules · Activities as first-class</div>
     <p>Reconciliation-friendly identifiers for places, rules, and activities. The profile that turns a catalogue into a knowledge graph.</p>
-  </div>
+  </a>
   <div class="surface-card" style="opacity: 0.65; cursor: default;">
     <span class="surface-icon">📜</span>
     <h3>Provenance &amp; Event <span class="status-pill" style="background: var(--pending); color: #fff;">planned</span></h3>

@@ -221,10 +221,15 @@ These live inside the specification site itself — interactive tools, reference
     <h4>v0.3.0 freeze <span class="status-pill live">done</span></h4>
     <p>All 7 Core Discovery design questions resolved (Q6 RFC 7807 mandated and migrated in reference impl; ContactPoint shape pinned to <code>rico:ContactPoint</code>). Profile-scoped SHACL includes <code>:ContactPointShape</code>. Core Discovery Profile flipped from Draft to <strong>Normative</strong>. Tagged 2026-04-21.</p>
   </div>
+  <div class="phase-card done">
+    <div class="phase-num">Phase 6</div>
+    <h4>v0.4.0 — Authority &amp; Context <span class="status-pill live">done</span></h4>
+    <p>Second normative profile. <a href="spec/profiles/authority-context.html">Authority &amp; Context</a> covers Places, Rules, and Activities (Production, Accumulation) as first-class entities with reconciliation-friendly identifiers via <code>owl:sameAs</code>. Six of seven fixtures shipped; <code>function-with-activities</code> planned. All four design questions resolved. Tagged 2026-04-21.</p>
+  </div>
   <div class="phase-card">
-    <div class="phase-num">Phase 6+</div>
-    <h4>Additional profiles &amp; v1.0 <span class="status-pill draft">planned</span></h4>
-    <p>Define Authority &amp; Context, Provenance &amp; Event, Digital Object Linkage, Export-Only, Round-Trip Editing — each when an implementer is ready. Freeze <strong>v1.0</strong> when a second implementation passes conformance on any profile.</p>
+    <div class="phase-num">Phase 7+</div>
+    <h4>Remaining profiles &amp; v1.0 <span class="status-pill draft">planned</span></h4>
+    <p>Define Provenance &amp; Event (next cycle — now unblocked by Authority &amp; Context), Digital Object Linkage, Export-Only, Round-Trip Editing — each when an implementer is ready. Freeze <strong>v1.0</strong> when a second implementation passes conformance on any profile.</p>
   </div>
   <div class="phase-card">
     <div class="phase-num">Beyond v1.0</div>

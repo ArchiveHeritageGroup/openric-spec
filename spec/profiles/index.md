@@ -79,13 +79,13 @@ Consumers MUST read this field before issuing any requests that depend on a spec
 | Profile | Status | Scope |
 |---|---|---|
 | [**Core Discovery**](core-discovery.html) | **v0.3.0 normative** | Read-only Records, Agents, Repositories, vocabulary, autocomplete. The minimum "I can be queried" claim. |
-| **Authority & Context** | planned | Places, Rules, Activities as first-class entities with reconciliation-friendly identifiers. |
+| [**Authority & Context**](authority-context.html) | **v0.4.0 normative** | Places, Rules, Activities as first-class entities with reconciliation-friendly identifiers. |
 | **Provenance & Event** | planned | Activity subclasses (Production, Accumulation, etc.) with the full event model. Depends on Authority & Context. |
 | **Digital Object Linkage** | planned | Instantiation entities with checksum, MIME, IIIF manifest pointers. |
 | **Export-Only** | planned | OAI-PMH harvest plus one-shot JSON-LD dumps. Independent of all other profiles. |
 | **Round-Trip Editing** | planned | Full write surface with provenance-aware write-back rules. Depends on Core Discovery + Authority & Context. |
 
-Only **Core Discovery** is defined in this release. Subsequent profiles will be defined as demand emerges from implementers, starting with Authority & Context in the v0.4.0 cycle.
+**Core Discovery** and **Authority & Context** are both normative as of v0.4.0. The remaining four profiles will be defined as demand emerges from implementers; Provenance & Event is the likely next cycle, because its dependency on Authority & Context is now satisfied.
 
 <!-- TK Q1: confirm "profile" vs "level" naming. Profile chosen because our six axes are orthogonal, not a strict progression. -->
 
