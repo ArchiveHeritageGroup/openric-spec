@@ -16,9 +16,9 @@ A single Agent response (in this case resolved as `rico:Agent` because the under
 
 ## Files
 
-- [`input.json`](./input.json) — source payload
 - [`expected.jsonld`](./expected.jsonld) — canonical JSON-LD output
 - [`notes.md`](./notes.md) — human-readable notes
+- [`source-url.txt`](./source-url.txt) — live reference endpoint
 
 ## See also
 

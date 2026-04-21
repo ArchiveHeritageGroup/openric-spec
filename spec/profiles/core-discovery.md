@@ -11,7 +11,7 @@ description: The minimum-viable OpenRiC conformance target. Read-only Records, A
 **Spec version:** 0.3.0
 **Status:** Draft — open for comment
 **Dependencies:** None
-**Last updated:** 2026-04-19
+**Last updated:** 2026-04-21
 
 ---
 
@@ -220,7 +220,7 @@ Pagination envelope:
 
 ## 4. Error handling
 
-Errors MUST use the RFC 7807 Problem Details shape:
+Errors MUST use the RFC 7807 Problem Details shape with `Content-Type: application/problem+json`:
 
 ```json
 {
@@ -232,9 +232,25 @@ Errors MUST use the RFC 7807 Problem Details shape:
 }
 ```
 
-Implementations MAY emit additional fields alongside the RFC 7807 base fields. Content type MUST be `application/problem+json` for error responses.
+The five base fields (`type`, `title`, `status`, `detail`, `instance`) are REQUIRED. Implementations MAY emit additional fields alongside them — for example, an `id` of the missing entity, a `code` shorthand, a `max_bytes` upload ceiling, a validation `example`. Clients MUST tolerate unknown fields.
 
-<!-- TK Q6: RFC 7807 shift from Heratio's current {success:false} envelope. Breaks v0.2 clients. Decide before freeze. -->
+### 4.1 Error-type URIs
+
+The `type` field is the stable identifier clients SHOULD dispatch on. Titles and details are human-readable and MAY be reworded or localised without breaking clients. The registered types, with their HTTP status codes, are:
+
+| Type URI | HTTP status | Used for |
+|---|---|---|
+| `https://openric.org/errors/not-found` | 404 | Entity does not exist |
+| `https://openric.org/errors/bad-request` | 400 | Malformed request — missing or nonsense parameters |
+| `https://openric.org/errors/validation-failed` | 422 | Request shape was fine; content did not pass validation |
+| `https://openric.org/errors/authentication-required` | 401 | Protected route hit without credentials |
+| `https://openric.org/errors/forbidden` | 403 | Credentials valid but insufficient scope |
+| `https://openric.org/errors/conflict` | 409 | State conflict — e.g. delete blocked by descendants |
+| `https://openric.org/errors/payload-too-large` | 413 | Upload exceeded the size ceiling |
+| `https://openric.org/errors/unsupported-media-type` | 415 | Content-Type not accepted for this endpoint |
+| `https://openric.org/errors/internal-error` | 500 | Unexpected server-side failure |
+
+Implementations MAY mint additional types for implementation-specific errors; such types MUST live under a URI prefix the implementer controls (NOT under `https://openric.org/errors/`), and the HTTP status MUST match the meaning in RFC 9110.
 
 ## 5. SHACL shapes
 
@@ -324,7 +340,7 @@ Servers using the Heratio-style `{"success":false, "error":"..."}` error envelop
 
 ## 10. Open design questions
 
-Seven questions were flagged during drafting. Six now carry draft resolutions with rationale; external review is welcome to challenge any of them. Q6 remains explicitly open — it is a design coin-flip with real consequences for v0.2 clients, so it awaits community input before the v0.3.0 freeze.
+Seven questions were flagged during drafting. All seven now carry draft resolutions with rationale; external review is welcome to challenge any of them.
 
 **A note on numbering**: Q2 was retired during early drafting; the remaining questions keep their original IDs (Q1, Q3–Q8) so cross-document references stay stable. Any resolution below can be re-opened via a GitHub discussion citing the question ID.
 
@@ -364,13 +380,13 @@ Seven questions were flagged during drafting. Six now carry draft resolutions wi
 
 *External review welcome on*: the specific default (50) and max (200) page sizes.
 
-### Q6 — Error envelope shift to RFC 7807 in v0.3? *(open)*
+### Q6 — Error envelope shift to RFC 7807 in v0.3?
 
 **Question**: Mandate `application/problem+json` in v0.3 and deprecate the existing `{success: false, error: …}` envelope, or accept both?
 
-**Status**: **Open.** The reference API currently emits `{success: false, error: …}` (the shape v0.2 clients were built against). RFC 7807 is the IETF standard and is what most modern clients expect. Mandating it in v0.3 is a breaking change for every existing v0.2 client; accepting both indefinitely is ugly. A third option — mandate RFC 7807 in v0.3 but provide a migration window where the reference server emits *both* on 4xx/5xx — is under consideration.
+**Draft resolution**: **Mandate RFC 7807 in v0.3. No migration window.**
 
-*This question is explicitly deferred for external review.* Seeking input on whether RiC-CM reviewers (and any shadow implementers starting in v0.3) can absorb the breakage.
+**Rationale**: There are no external v0.2 clients to accommodate — only the reference server itself was emitting the old envelope, and the migration landed in the reference implementation at the same time as this resolution (OpenRiC service v0.8.11, `packages/ahg-ric/src/Support/ProblemDetails.php`). Accepting both shapes indefinitely would lock every future implementer into emitting two error formats on every 4xx/5xx, which is strictly worse than a single IETF-standard shape. A migration window buys nothing when the only affected client is the one doing the migration. The nine registered error-type URIs are in §4.1; they cover the full surface the reference implementation currently returns. Implementations MAY mint additional types under a prefix they control, as §4.1 states.
 
 ### Q7 — SHACL shapes open or closed?
 
