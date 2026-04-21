@@ -13,7 +13,7 @@ title: OpenRiC Mapping Specification
 
 ## 1. Purpose
 
-This specification defines a deterministic mapping from the traditional archival-description standards — **ISAD(G)**, **ISAAR(CPF)**, **ISDIAH**, **ISDF** — to the ICA's **Records in Contexts** conceptual model ([RiC-CM v1.0](https://www.ica.org/standards/RiC/RiC-CM_1-0.pdf)) and its ontology ([RiC-O v1.0](https://www.ica.org/standards/RiC/ontology)).
+This specification defines a deterministic mapping from the traditional archival-description standards — **ISAD(G)**, **ISAAR(CPF)**, **ISDIAH**, **ISDF** — to the ICA's **Records in Contexts** conceptual model ([RiC-CM v1.0](https://www.ica.org/app/uploads/2023/12/RiC-CM-1.0.pdf)) and its ontology ([RiC-O v1.0](https://www.ica.org/standards/RiC/ontology)).
 
 Given a conforming input description, exactly one conforming RiC graph SHALL result. The mapping is total: every entity in the input has a defined target class in RiC, and every normatively-required ISAD(G)/ISAAR(CPF)/ISDIAH element has a defined target predicate.
 
