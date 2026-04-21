@@ -47,12 +47,12 @@ This is the pattern that turned IIIF from aspirational spec to eight-hundred-ins
     <div class="url">Production · Accumulation · full event model</div>
     <p>Activity subclasses with the full event model — who did what, when, under which rule. Depends on Authority &amp; Context.</p>
   </div>
-  <div class="surface-card" style="opacity: 0.65; cursor: default;">
+  <a class="surface-card" href="{{ '/spec/profiles/digital-object-linkage.html' | relative_url }}">
     <span class="surface-icon">🗄</span>
-    <h3>Digital Object Linkage <span class="status-pill" style="background: var(--pending); color: #fff;">planned</span></h3>
-    <div class="url">Instantiations · MIME · checksums · IIIF</div>
-    <p>Surface instantiations of records — digital files, physical copies, checksums, MIME types, IIIF manifest pointers.</p>
-  </div>
+    <h3>Digital Object Linkage <span class="status-pill live">v0.6.0 normative</span></h3>
+    <div class="url">Instantiations · MIME · checksums · Functions</div>
+    <p>Concrete carriers of records — digital files, physical copies, checksums, MIME types — plus ISDF Functions. Optional <code>POST /upload</code> + thumbnail derivative for working catalogues.</p>
+  </a>
   <div class="surface-card" style="opacity: 0.65; cursor: default;">
     <span class="surface-icon">📦</span>
     <h3>Export-Only <span class="status-pill" style="background: var(--pending); color: #fff;">planned</span></h3>
@@ -106,6 +106,6 @@ See [Conformance](spec/conformance.html) for the full testing model.
 
 ## What's next
 
-**Core Discovery**, **Authority & Context**, and **Graph Traversal** are normative as of v0.5.0. The remaining four profiles will be defined one at a time as implementation demand surfaces them. This is intentional — defining seven profiles up front and having most go unimplemented is exactly how standards lose credibility. Each profile is drafted, reviewed, and frozen only when at least one independent implementer is ready to target it (or the reference implementation already exercises the full shape, as was the case for the three landed to date).
+**Core Discovery**, **Authority & Context**, **Graph Traversal**, and **Digital Object Linkage** are normative as of v0.6.0 — four of seven profiles frozen. The remaining three will be defined one at a time as implementation demand surfaces them. This is intentional — defining seven profiles up front and having most go unimplemented is exactly how standards lose credibility. Each profile is drafted, reviewed, and frozen only when at least one independent implementer is ready to target it (or the reference implementation already exercises the full shape, as was the case for the four landed to date).
 
 Comments on the profile framework or the Core Discovery draft are welcome at the [GitHub Discussions](https://github.com/ArchiveHeritageGroup/openric-spec/discussions).

@@ -231,10 +231,15 @@ These live inside the specification site itself — interactive tools, reference
     <h4>v0.5.0 — Graph Traversal <span class="status-pill live">done</span></h4>
     <p>Third normative profile. <a href="spec/profiles/graph-traversal.html">Graph Traversal</a> defines <code>/graph?uri=&amp;depth=</code>, <code>/relations</code>, <code>/relations-for/{id}</code>, <code>/hierarchy/{id}</code> — cross-entity walks keyed to the <a href="spec/graph-primitives.html">Graph Primitives</a> vocabulary, plus six full-graph SHACL shapes for store-wide hygiene (orphaned records, unlinked agents, duplicate identifiers). Five of seven fixtures shipped. Also: corrected "six profiles" → "seven profiles" across FAQ, data-management, and profile index — the spec has always declared seven. Tagged 2026-04-21.</p>
   </div>
+  <div class="phase-card done">
+    <div class="phase-num">Phase 8</div>
+    <h4>v0.6.0 — Digital Object Linkage <span class="status-pill live">done</span></h4>
+    <p>Fourth normative profile — the profile matrix now sits at a majority. <a href="spec/profiles/digital-object-linkage.html">Digital Object Linkage</a> covers <code>rico:Instantiation</code> carriers (MIME, checksums via <code>rico:technicalCharacteristics</code>, extent, record-backlinks) and <code>rico:Function</code> (ISDF business functions), plus the optional <code>POST /upload</code> and thumbnail derivative endpoints. Two shipped fixtures (<code>instantiation-tiff</code>, <code>instantiation-application</code>) + two planned. All five design questions resolved on-page. Tagged 2026-04-21.</p>
+  </div>
   <div class="phase-card">
-    <div class="phase-num">Phase 8+</div>
+    <div class="phase-num">Phase 9+</div>
     <h4>Remaining profiles &amp; v1.0 <span class="status-pill draft">planned</span></h4>
-    <p>Define Provenance &amp; Event (Authority &amp; Context dependency now satisfied), Digital Object Linkage, Export-Only, Round-Trip Editing — each when an implementer is ready. Freeze <strong>v1.0</strong> when a second implementation passes conformance on any profile.</p>
+    <p>Define Provenance &amp; Event (Authority &amp; Context dependency satisfied since v0.4; still greenfield on shapes + fixtures), Export-Only (OAI-PMH harvest + JSON-LD dumps), Round-Trip Editing — each when an implementer is ready. Freeze <strong>v1.0</strong> when a second implementation passes conformance on any profile.</p>
   </div>
   <div class="phase-card">
     <div class="phase-num">Beyond v1.0</div>
