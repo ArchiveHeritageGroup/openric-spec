@@ -1,0 +1,157 @@
+# Copyright (C) 2026 Johan Pieterse / Plain Sailing Information Systems
+# SPDX-License-Identifier: AGPL-3.0-or-later
+#
+# OpenRiC SHACL shapes — profile: round-trip-editing
+# ==================================================
+# Shapes for the write-side surface: provenance trail over mutations.
+#
+# The write-request + write-response envelopes themselves are pure JSON
+# (not JSON-LD) — those are validated by JSON Schema at
+# /schemas/write-response.schema.json, not by SHACL. This file covers the
+# JSON-LD-ish pieces:
+#
+# Shapes in this file:
+#   - RevisionListShape       — openric:RevisionList returned by
+#                               GET /{type}/{id}/revisions
+#   - RevisionEntryShape      — one row inside that list (action + actor
+#                               + entity + timestamp, payload optional)
+#   - AuditedActionShape      — property-shape constraint on the `action`
+#                               field (create | update | delete)
+#
+# Cross-entity checks (e.g. "every audit row references a Record that still
+# exists") are NOT included here — they belong to graph-traversal and are
+# only meaningful against a full triple-store dump.
+#
+# Usage:
+#   pyshacl -s always-on.shacl.ttl -s round-trip-editing.shacl.ttl \
+#           -d revision-response.jsonld -f human
+
+@prefix sh:      <http://www.w3.org/ns/shacl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rico:    <https://www.ica.org/standards/RiC/ontology#> .
+@prefix openric: <https://openric.org/ns/v1#> .
+@prefix :        <https://openric.org/shapes#> .
+
+
+# ----------------------------------------------------------------------------
+# RevisionList — the envelope returned by GET /{type}/{id}/revisions
+# ----------------------------------------------------------------------------
+
+:RevisionListShape a sh:NodeShape ;
+    sh:targetClass openric:RevisionList ;
+    sh:name "Revision List Validation" ;
+    sh:description "Envelope for the audit trail of one entity — entity reference, total count, and the revision entries themselves" ;
+
+    sh:property [
+        sh:path rdf:type ;
+        sh:hasValue openric:RevisionList ;
+        sh:message "Response MUST be typed openric:RevisionList"
+    ] ;
+
+    sh:property [
+        sh:path openric:entity ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "RevisionList MUST declare the entity it describes via openric:entity"
+    ] ;
+
+    sh:property [
+        sh:path openric:total ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:integer ;
+        sh:minInclusive 0 ;
+        sh:message "RevisionList MUST carry an openric:total (non-negative integer)"
+    ] ;
+
+    sh:property [
+        sh:path openric:items ;
+        sh:node :RevisionEntryShape ;
+        sh:message "Each item in openric:items MUST validate as a RevisionEntry"
+    ] .
+
+
+# ----------------------------------------------------------------------------
+# RevisionEntry — one row of the audit trail
+# ----------------------------------------------------------------------------
+
+:RevisionEntryShape a sh:NodeShape ;
+    sh:name "Revision Entry Validation" ;
+    sh:description "A single audit-log row: who did what to which entity, when" ;
+
+    sh:property [
+        sh:path openric:id ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:integer ;
+        sh:message "RevisionEntry MUST have an id (stable per-row audit identifier)"
+    ] ;
+
+    sh:property [
+        sh:path openric:action ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ("create" "update" "delete") ;
+        sh:message "action MUST be one of: create, update, delete"
+    ] ;
+
+    sh:property [
+        sh:path openric:entity ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "RevisionEntry MUST reference the entity the action targeted"
+    ] ;
+
+    sh:property [
+        sh:path openric:actor ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:pattern "^(api_key:[0-9]+|session|anonymous)$" ;
+        sh:message "actor MUST be 'api_key:<n>', 'session', or 'anonymous'"
+    ] ;
+
+    sh:property [
+        sh:path openric:created_at ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:or (
+            [ sh:datatype xsd:dateTime ]
+            [ sh:datatype xsd:string ]
+        ) ;
+        sh:message "created_at MUST be present — ISO 8601 datetime"
+    ] ;
+
+    # ip + payload are optional
+    sh:property [
+        sh:path openric:ip ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:severity sh:Info ;
+        sh:message "Optional: IPv4 or IPv6 of the requester"
+    ] ;
+
+    sh:property [
+        sh:path openric:payload ;
+        sh:maxCount 1 ;
+        sh:severity sh:Info ;
+        sh:message "Optional: redacted request body snapshot"
+    ] .
+
+
+# ----------------------------------------------------------------------------
+# AuditedActionShape — standalone constraint on action values, reusable
+# by implementations that want to check audit-log exports outside the
+# RevisionList envelope.
+# ----------------------------------------------------------------------------
+
+:AuditedActionShape a sh:NodeShape ;
+    sh:name "Audited Action Enum" ;
+    sh:targetSubjectsOf openric:action ;
+
+    sh:property [
+        sh:path openric:action ;
+        sh:in ("create" "update" "delete") ;
+        sh:message "openric:action MUST be one of: create, update, delete"
+    ] .

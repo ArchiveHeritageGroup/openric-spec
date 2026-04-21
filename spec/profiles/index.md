@@ -82,11 +82,11 @@ Consumers MUST read this field before issuing any requests that depend on a spec
 | [**Authority & Context**](authority-context.html) | **v0.4.0 normative** | Places, Rules, Activities as first-class entities with reconciliation-friendly identifiers. |
 | [**Graph Traversal**](graph-traversal.html) | **v0.5.0 normative** | `/graph`, `/relations`, `/hierarchy` — cross-entity walks plus full-graph SHACL hygiene shapes. |
 | [**Digital Object Linkage**](digital-object-linkage.html) | **v0.6.0 normative** | Instantiation carriers (MIME, checksums, extent, record-backlinks) plus ISDF Functions. Optional `POST /upload` + thumbnail derivative. |
+| [**Round-Trip Editing**](round-trip-editing.html) | **v0.7.0 normative** | Full write surface — POST/PATCH/DELETE on every entity + relations, gated by API-key scopes, with a public audit trail via `/{type}/{id}/revisions`. |
 | **Provenance & Event** | planned | Activity subclasses (Production, Accumulation, etc.) with the full event model. Depends on Authority & Context. |
 | **Export-Only** | planned | OAI-PMH harvest plus one-shot JSON-LD dumps. Independent of all other profiles. |
-| **Round-Trip Editing** | planned | Full write surface with provenance-aware write-back rules. Depends on Core Discovery + Authority & Context. |
 
-**Core Discovery**, **Authority & Context**, **Graph Traversal**, and **Digital Object Linkage** are normative as of v0.6.0 — more than half of the profile matrix. The remaining three profiles will be defined as demand emerges from implementers; Provenance & Event is the likely next cycle, because its dependency on Authority & Context is now satisfied.
+Five of seven profiles normative as of v0.7.0 — **Core Discovery**, **Authority & Context**, **Graph Traversal**, **Digital Object Linkage**, and **Round-Trip Editing**. Remaining two (Provenance & Event, Export-Only) are still greenfield — shapes and fixtures are not yet written for them.
 
 <!-- TK Q1: confirm "profile" vs "level" naming. Profile chosen because our six axes are orthogonal, not a strict progression. -->
 
