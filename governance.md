@@ -112,8 +112,8 @@ If it passes, you can publicly claim `OpenRiC v0.2.0` conformance. If you'd like
 
 | Phase | When | What |
 |---|---|---|
-| **Now** | v0.2.x | Single maintainer; Discussions-based spec changes; lightweight policy. |
-| **Next** | v0.3.0 → v1.0 | Invite 2–3 external spec editors. Formalise proposal-template. Add implementation registry. Move to a `MAINTAINERS.md` file. |
+| **Now** | v0.30.x–v0.35.x | Single maintainer; Discussions-based spec changes; lightweight policy. Six of seven profiles normative. |
+| **Next** | v0.35.0 → v1.0 | Invite 2–3 external spec editors. Formalise proposal-template. Add implementation registry. Move to a `MAINTAINERS.md` file. |
 | **v1.0** | when a second implementation exists and passes conformance | Cut `v1.0`. Freeze the core contract. Major changes only on major bumps. |
 | **Post-v1.0** | later | Move governance to a working group or steering committee if community size warrants. Adopt a CoC if the contributor base grows beyond a handful. |
 

@@ -41,7 +41,7 @@ Profile versions track the spec version that last modified the profile. If Core 
 
 Minor-version changes within the same major are additive and optional. Major-version changes (v0.x → v1.0, v1.x → v2.0) may remove or reshape fields; implementations declare the major they target.
 
-<!-- TK Q8: confirm version-tracks-spec vs independent-version lifecycle before v0.3.0 freeze. -->
+<!-- Q8 resolved: profile and spec versions are independent; see core-discovery.md Q8. -->
 
 ## 5. Declaration
 
@@ -52,7 +52,7 @@ Servers declare supported profiles in the service description at `GET /`:
   "name": "Example Archive Catalogue",
   "version": "1.0",
   "openric_conformance": {
-    "spec_version": "0.3.0",
+    "spec_version": "0.35.0",
     "profiles": [
       {
         "id": "core-discovery",
@@ -78,15 +78,15 @@ Consumers MUST read this field before issuing any requests that depend on a spec
 
 | Profile | Status | Scope |
 |---|---|---|
-| [**Core Discovery**](core-discovery.html) | **v0.3.0 normative** | Read-only Records, Agents, Repositories, vocabulary, autocomplete. The minimum "I can be queried" claim. |
-| [**Authority & Context**](authority-context.html) | **v0.4.0 normative** | Places, Rules, Activities as first-class entities with reconciliation-friendly identifiers. |
-| [**Graph Traversal**](graph-traversal.html) | **v0.5.0 normative** | `/graph`, `/relations`, `/hierarchy` — cross-entity walks plus full-graph SHACL hygiene shapes. |
-| [**Digital Object Linkage**](digital-object-linkage.html) | **v0.6.0 normative** | Instantiation carriers (MIME, checksums, extent, record-backlinks) plus ISDF Functions. Optional `POST /upload` + thumbnail derivative. |
-| [**Round-Trip Editing**](round-trip-editing.html) | **v0.7.0 normative** | Full write surface — POST/PATCH/DELETE on every entity + relations, gated by API-key scopes, with a public audit trail via `/{type}/{id}/revisions`. |
-| [**Provenance & Event**](provenance-event.html) | **v0.8.0 normative** | Tightened Activity shapes — Production/Accumulation/Activity with required results, participants, dates. Depends on Authority & Context. |
+| [**Core Discovery**](core-discovery.html) | **v0.30.0 normative** | Read-only Records, Agents, Repositories, vocabulary, autocomplete. The minimum "I can be queried" claim. |
+| [**Authority & Context**](authority-context.html) | **v0.31.0 normative** | Places, Rules, Activities as first-class entities with reconciliation-friendly identifiers. |
+| [**Graph Traversal**](graph-traversal.html) | **v0.32.0 normative** | `/graph`, `/relations`, `/hierarchy` — cross-entity walks plus full-graph SHACL hygiene shapes. |
+| [**Digital Object Linkage**](digital-object-linkage.html) | **v0.33.0 normative** | Instantiation carriers (MIME, checksums, extent, record-backlinks) plus ISDF Functions. Optional `POST /upload` + thumbnail derivative. |
+| [**Round-Trip Editing**](round-trip-editing.html) | **v0.34.0 normative** | Full write surface — POST/PATCH/DELETE on every entity + relations, gated by API-key scopes, with a public audit trail via `/{type}/{id}/revisions`. |
+| [**Provenance & Event**](provenance-event.html) | **v0.35.0 normative** | Tightened Activity shapes — Production/Accumulation/Activity with required results, participants, dates. Depends on Authority & Context. |
 | **Export-Only** | planned | OAI-PMH harvest plus one-shot JSON-LD dumps. Independent of all other profiles. |
 
-Six of seven profiles normative as of v0.8.0 — **Core Discovery**, **Authority & Context**, **Graph Traversal**, **Digital Object Linkage**, **Round-Trip Editing**, and **Provenance & Event**. Only **Export-Only** remains greenfield.
+Six of seven profiles normative as of v0.35.0 — **Core Discovery**, **Authority & Context**, **Graph Traversal**, **Digital Object Linkage**, **Round-Trip Editing**, and **Provenance & Event**. Only **Export-Only** remains greenfield.
 
 <!-- TK Q1: confirm "profile" vs "level" naming. Profile chosen because our six axes are orthogonal, not a strict progression. -->
 

@@ -31,25 +31,25 @@ This is the pattern that turned IIIF from aspirational spec to eight-hundred-ins
 <div class="surfaces">
   <a class="surface-card" href="{{ '/spec/profiles/core-discovery.html' | relative_url }}">
     <span class="surface-icon">🔍</span>
-    <h3>Core Discovery <span class="status-pill live">v0.3.0 normative</span></h3>
+    <h3>Core Discovery <span class="status-pill live">v0.30.0 normative</span></h3>
     <div class="url">Records · Agents · Repositories · Vocabulary · Autocomplete</div>
     <p>The minimum "I can be queried" claim. Ten read-only endpoints, three entity types, no graph traversal. Every OpenRiC server starts here.</p>
   </a>
   <a class="surface-card" href="{{ '/spec/profiles/authority-context.html' | relative_url }}">
     <span class="surface-icon">🏛</span>
-    <h3>Authority &amp; Context <span class="status-pill live">v0.4.0 normative</span></h3>
+    <h3>Authority &amp; Context <span class="status-pill live">v0.31.0 normative</span></h3>
     <div class="url">Places · Rules · Activities as first-class</div>
     <p>Reconciliation-friendly identifiers for places, rules, and activities. The profile that turns a catalogue into a knowledge graph.</p>
   </a>
   <a class="surface-card" href="{{ '/spec/profiles/provenance-event.html' | relative_url }}">
     <span class="surface-icon">📜</span>
-    <h3>Provenance &amp; Event <span class="status-pill live">v0.8.0 normative</span></h3>
+    <h3>Provenance &amp; Event <span class="status-pill live">v0.35.0 normative</span></h3>
     <div class="url">Production · Accumulation · full event model</div>
     <p>Tightened Activity shapes: Production MUST carry results + participants + dates. Who did what to which record, when. Depends on Authority &amp; Context.</p>
   </a>
   <a class="surface-card" href="{{ '/spec/profiles/digital-object-linkage.html' | relative_url }}">
     <span class="surface-icon">🗄</span>
-    <h3>Digital Object Linkage <span class="status-pill live">v0.6.0 normative</span></h3>
+    <h3>Digital Object Linkage <span class="status-pill live">v0.33.0 normative</span></h3>
     <div class="url">Instantiations · MIME · checksums · Functions</div>
     <p>Concrete carriers of records — digital files, physical copies, checksums, MIME types — plus ISDF Functions. Optional <code>POST /upload</code> + thumbnail derivative for working catalogues.</p>
   </a>
@@ -61,13 +61,13 @@ This is the pattern that turned IIIF from aspirational spec to eight-hundred-ins
   </div>
   <a class="surface-card" href="{{ '/spec/profiles/round-trip-editing.html' | relative_url }}">
     <span class="surface-icon">✍</span>
-    <h3>Round-Trip Editing <span class="status-pill live">v0.7.0 normative</span></h3>
+    <h3>Round-Trip Editing <span class="status-pill live">v0.34.0 normative</span></h3>
     <div class="url">POST · PATCH · DELETE · /revisions</div>
     <p>Write surface gated by API-key scopes (<code>write</code>, <code>delete</code>) with a public audit trail via <code>/{type}/{id}/revisions</code>. A client that mutated an entity can verify its own change landed.</p>
   </a>
   <a class="surface-card" href="{{ '/spec/profiles/graph-traversal.html' | relative_url }}">
     <span class="surface-icon">🕸</span>
-    <h3>Graph Traversal <span class="status-pill live">v0.5.0 normative</span></h3>
+    <h3>Graph Traversal <span class="status-pill live">v0.32.0 normative</span></h3>
     <div class="url">/graph · /relations · /hierarchy</div>
     <p>Cross-entity walks keyed to a root URI + depth. Plus full-graph SHACL shapes for hygiene: orphaned records, unlinked agents, duplicate identifiers, typed-link mismatches.</p>
   </a>
@@ -106,6 +106,6 @@ See [Conformance](spec/conformance.html) for the full testing model.
 
 ## What's next
 
-**Core Discovery**, **Authority & Context**, **Graph Traversal**, **Digital Object Linkage**, **Round-Trip Editing**, and **Provenance & Event** are normative as of v0.8.0 — six of seven profiles frozen. Only **Export-Only** (OAI-PMH + JSON-LD dumps) remains greenfield. This is intentional — defining seven profiles up front and having most go unimplemented is exactly how standards lose credibility. Each profile is drafted, reviewed, and frozen only when at least one independent implementer is ready to target it (or the reference implementation already exercises the full shape — though Provenance & Event is the first profile where the reference explicitly does NOT yet conform; see its §9 Q5 for the honest accounting).
+**Core Discovery**, **Authority & Context**, **Graph Traversal**, **Digital Object Linkage**, **Round-Trip Editing**, and **Provenance & Event** are normative as of v0.35.0 — six of seven profiles frozen. Only **Export-Only** (OAI-PMH + JSON-LD dumps) remains greenfield. This is intentional — defining seven profiles up front and having most go unimplemented is exactly how standards lose credibility. Each profile is drafted, reviewed, and frozen only when at least one independent implementer is ready to target it (or the reference implementation already exercises the full shape — though Provenance & Event is the first profile where the reference explicitly does NOT yet conform; see its §9 Q5 for the honest accounting).
 
 Comments on the profile framework or the Core Discovery draft are welcome at the [GitHub Discussions](https://github.com/ArchiveHeritageGroup/openric-spec/discussions).

@@ -8,7 +8,7 @@ description: The minimum-viable OpenRiC conformance target. Read-only Records, A
 
 **Profile id:** `core-discovery`
 **Profile version:** 0.3.0
-**Spec version:** 0.3.0
+**Spec version:** 0.30.0
 **Status:** Normative
 **Dependencies:** None
 **Last updated:** 2026-04-21
@@ -80,7 +80,7 @@ Servers MUST set `Vary: Accept` on every response that content-negotiates.
   "name": "string, human-readable service name",
   "version": "string, implementation version",
   "openric_conformance": {
-    "spec_version": "0.3.0",
+    "spec_version": "0.35.0",
     "profiles": [
       {
         "id": "core-discovery",
@@ -368,7 +368,7 @@ Servers using the Heratio-style `{"success":false, "error":"..."}` error envelop
 
 ## 10. Design decisions
 
-Seven questions were flagged during drafting. All seven are resolved in the normative v0.3.0 profile. Rationale is retained below for the record; any resolution can be re-opened via a GitHub discussion citing the question ID.
+Seven questions were flagged during drafting. All seven are resolved in the normative Core Discovery profile (v0.3.0 profile, cut in spec v0.30.0). Rationale is retained below for the record; any resolution can be re-opened via a GitHub discussion citing the question ID.
 
 **A note on numbering**: Q2 was retired during early drafting; the remaining questions keep their original IDs (Q1, Q3–Q8) so cross-document references stay stable. Any resolution below can be re-opened via a GitHub discussion citing the question ID.
 
