@@ -156,6 +156,22 @@
       "purpose": "Accumulation event"
     },
     {
+      "name": "activity-production-full",
+      "profiles": [
+        "provenance-event"
+      ],
+      "status": "done",
+      "purpose": "Full-context Production \u2014 results + participant + dates + location"
+    },
+    {
+      "name": "activity-custody",
+      "profiles": [
+        "provenance-event"
+      ],
+      "status": "done",
+      "purpose": "Generic Activity fallback \u2014 custody transfer with date + location"
+    },
+    {
       "name": "instantiation-tiff",
       "profiles": [
         "digital-object-linkage"

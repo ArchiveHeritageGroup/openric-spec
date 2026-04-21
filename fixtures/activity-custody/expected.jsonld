@@ -1,0 +1,29 @@
+{
+  "@context": {
+    "rico":    "https://www.ica.org/standards/RiC/ontology#",
+    "openric": "https://openric.org/ns/v1#",
+    "xsd":     "http://www.w3.org/2001/XMLSchema#"
+  },
+  "@id":                 "https://example.org/activity/912154",
+  "@type":               "rico:Activity",
+  "rico:name":           "Transfer to current repository",
+  "rico:hasActivityType": "custody",
+  "openric:localType":   "custody",
+
+  "rico:isOrWasAssociatedWithDate": {
+    "@type":              "rico:DateRange",
+    "rico:beginningDate": { "@value": "1995-06-15", "@type": "xsd:date" }
+  },
+
+  "rico:hasOrHadLocation": {
+    "@id":       "https://example.org/place/912150",
+    "@type":     "rico:Place",
+    "rico:name": "Egypt"
+  },
+
+  "rico:hasOrHadParticipant": {
+    "@id":       "https://example.org/corporatebody/905206",
+    "@type":     "rico:CorporateBody",
+    "rico:name": "The British Museum"
+  }
+}

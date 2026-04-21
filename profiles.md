@@ -41,12 +41,12 @@ This is the pattern that turned IIIF from aspirational spec to eight-hundred-ins
     <div class="url">Places · Rules · Activities as first-class</div>
     <p>Reconciliation-friendly identifiers for places, rules, and activities. The profile that turns a catalogue into a knowledge graph.</p>
   </a>
-  <div class="surface-card" style="opacity: 0.65; cursor: default;">
+  <a class="surface-card" href="{{ '/spec/profiles/provenance-event.html' | relative_url }}">
     <span class="surface-icon">📜</span>
-    <h3>Provenance &amp; Event <span class="status-pill" style="background: var(--pending); color: #fff;">planned</span></h3>
+    <h3>Provenance &amp; Event <span class="status-pill live">v0.8.0 normative</span></h3>
     <div class="url">Production · Accumulation · full event model</div>
-    <p>Activity subclasses with the full event model — who did what, when, under which rule. Depends on Authority &amp; Context.</p>
-  </div>
+    <p>Tightened Activity shapes: Production MUST carry results + participants + dates. Who did what to which record, when. Depends on Authority &amp; Context.</p>
+  </a>
   <a class="surface-card" href="{{ '/spec/profiles/digital-object-linkage.html' | relative_url }}">
     <span class="surface-icon">🗄</span>
     <h3>Digital Object Linkage <span class="status-pill live">v0.6.0 normative</span></h3>
@@ -106,6 +106,6 @@ See [Conformance](spec/conformance.html) for the full testing model.
 
 ## What's next
 
-**Core Discovery**, **Authority & Context**, **Graph Traversal**, **Digital Object Linkage**, and **Round-Trip Editing** are normative as of v0.7.0 — five of seven profiles frozen. The remaining two (Provenance & Event, Export-Only) are still greenfield on shapes + fixtures and will be built out when an implementer is ready to target them. This is intentional — defining seven profiles up front and having most go unimplemented is exactly how standards lose credibility. Each profile is drafted, reviewed, and frozen only when at least one independent implementer is ready to target it (or the reference implementation already exercises the full shape, as was the case for the five landed to date).
+**Core Discovery**, **Authority & Context**, **Graph Traversal**, **Digital Object Linkage**, **Round-Trip Editing**, and **Provenance & Event** are normative as of v0.8.0 — six of seven profiles frozen. Only **Export-Only** (OAI-PMH + JSON-LD dumps) remains greenfield. This is intentional — defining seven profiles up front and having most go unimplemented is exactly how standards lose credibility. Each profile is drafted, reviewed, and frozen only when at least one independent implementer is ready to target it (or the reference implementation already exercises the full shape — though Provenance & Event is the first profile where the reference explicitly does NOT yet conform; see its §9 Q5 for the honest accounting).
 
 Comments on the profile framework or the Core Discovery draft are welcome at the [GitHub Discussions](https://github.com/ArchiveHeritageGroup/openric-spec/discussions).

@@ -241,10 +241,15 @@ These live inside the specification site itself — interactive tools, reference
     <h4>v0.7.0 — Round-Trip Editing <span class="status-pill live">done</span></h4>
     <p>Fifth normative profile. <a href="spec/profiles/round-trip-editing.html">Round-Trip Editing</a> covers the full write surface: POST / PATCH / DELETE across every RiC entity type and relations, gated by API-key scopes (<code>write</code>, <code>delete</code>), with a public per-entity audit trail at <code>/{type}/{id}/revisions</code>. New SHACL file <code>shapes/profiles/round-trip-editing.shacl.ttl</code> (3 shapes); two new fixtures (<code>write-response-success</code>, <code>revision-list</code>) join the two already shipped. All six design questions resolved on-page. Tagged 2026-04-21.</p>
   </div>
+  <div class="phase-card done">
+    <div class="phase-num">Phase 10</div>
+    <h4>v0.8.0 — Provenance &amp; Event <span class="status-pill live">done</span></h4>
+    <p>Sixth normative profile. <a href="spec/profiles/provenance-event.html">Provenance &amp; Event</a> tightens Authority &amp; Context's Activity shapes: <code>rico:Production</code> MUST carry results + participants + dates (Violation, not Warning); cross-entity link targets MUST be the correct RiC-O class. New SHACL file <code>shapes/profiles/provenance-event.shacl.ttl</code> (5 shapes); two new fixtures (<code>activity-production-full</code>, <code>activity-custody</code>) shipped. First profile where the reference implementation explicitly does NOT yet conform — Q5 in the profile doc names the gap (the serializer emits activities without <code>rico:resultsOrResultedIn</code> / <code>rico:hasOrHadParticipant</code>, queued for a future service release). Tagged 2026-04-21.</p>
+  </div>
   <div class="phase-card">
-    <div class="phase-num">Phase 10+</div>
-    <h4>Remaining profiles &amp; v1.0 <span class="status-pill draft">planned</span></h4>
-    <p>Define Provenance &amp; Event (Authority &amp; Context dependency satisfied since v0.4; still greenfield on shapes + fixtures) and Export-Only (OAI-PMH harvest + JSON-LD dumps; also greenfield) — each when an implementer is ready. Freeze <strong>v1.0</strong> when a second implementation passes conformance on any profile.</p>
+    <div class="phase-num">Phase 11+</div>
+    <h4>Export-Only &amp; v1.0 <span class="status-pill draft">planned</span></h4>
+    <p>Last remaining profile: Export-Only (OAI-PMH harvest + JSON-LD dumps; greenfield on shapes + fixtures). Plus: close the Provenance &amp; Event gap in the reference implementation so at least one server claims all seven profiles. Freeze <strong>v1.0</strong> when a second implementation passes conformance on any profile.</p>
   </div>
   <div class="phase-card">
     <div class="phase-num">Beyond v1.0</div>

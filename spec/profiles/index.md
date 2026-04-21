@@ -83,10 +83,10 @@ Consumers MUST read this field before issuing any requests that depend on a spec
 | [**Graph Traversal**](graph-traversal.html) | **v0.5.0 normative** | `/graph`, `/relations`, `/hierarchy` — cross-entity walks plus full-graph SHACL hygiene shapes. |
 | [**Digital Object Linkage**](digital-object-linkage.html) | **v0.6.0 normative** | Instantiation carriers (MIME, checksums, extent, record-backlinks) plus ISDF Functions. Optional `POST /upload` + thumbnail derivative. |
 | [**Round-Trip Editing**](round-trip-editing.html) | **v0.7.0 normative** | Full write surface — POST/PATCH/DELETE on every entity + relations, gated by API-key scopes, with a public audit trail via `/{type}/{id}/revisions`. |
-| **Provenance & Event** | planned | Activity subclasses (Production, Accumulation, etc.) with the full event model. Depends on Authority & Context. |
+| [**Provenance & Event**](provenance-event.html) | **v0.8.0 normative** | Tightened Activity shapes — Production/Accumulation/Activity with required results, participants, dates. Depends on Authority & Context. |
 | **Export-Only** | planned | OAI-PMH harvest plus one-shot JSON-LD dumps. Independent of all other profiles. |
 
-Five of seven profiles normative as of v0.7.0 — **Core Discovery**, **Authority & Context**, **Graph Traversal**, **Digital Object Linkage**, and **Round-Trip Editing**. Remaining two (Provenance & Event, Export-Only) are still greenfield — shapes and fixtures are not yet written for them.
+Six of seven profiles normative as of v0.8.0 — **Core Discovery**, **Authority & Context**, **Graph Traversal**, **Digital Object Linkage**, **Round-Trip Editing**, and **Provenance & Event**. Only **Export-Only** remains greenfield.
 
 <!-- TK Q1: confirm "profile" vs "level" naming. Profile chosen because our six axes are orthogonal, not a strict progression. -->
 

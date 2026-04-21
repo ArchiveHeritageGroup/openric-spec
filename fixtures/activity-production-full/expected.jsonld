@@ -1,0 +1,36 @@
+{
+  "@context": {
+    "rico":    "https://www.ica.org/standards/RiC/ontology#",
+    "openric": "https://openric.org/ns/v1#",
+    "xsd":     "http://www.w3.org/2001/XMLSchema#"
+  },
+  "@id":               "https://example.org/activity/910378",
+  "@type":             "rico:Production",
+  "rico:name":         "Production of funeral boat model",
+  "openric:localType": "production",
+
+  "rico:isOrWasAssociatedWithDate": {
+    "@type":              "rico:DateRange",
+    "rico:beginningDate": { "@value": "1961-01-01", "@type": "xsd:date" },
+    "rico:endDate":       { "@value": "1999-01-01", "@type": "xsd:date" },
+    "rico:expressedDate": "1961–1999"
+  },
+
+  "rico:resultsOrResultedIn": {
+    "@id":        "https://example.org/recordset/905228",
+    "@type":      "rico:RecordSet",
+    "rico:name":  "Egyptian Boat"
+  },
+
+  "rico:hasOrHadParticipant": {
+    "@id":        "https://example.org/corporatebody/905206",
+    "@type":      "rico:CorporateBody",
+    "rico:name":  "The British Museum"
+  },
+
+  "rico:hasOrHadLocation": {
+    "@id":        "https://example.org/place/912151",
+    "@type":      "rico:Place",
+    "rico:name":  "Thebes (Luxor)"
+  }
+}
