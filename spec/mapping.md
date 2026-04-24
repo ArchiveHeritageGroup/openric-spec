@@ -7,13 +7,25 @@ title: OpenRiC Mapping Specification
 
 **Version:** 0.1.0-draft
 **Status:** Draft — open for comment
-**Last updated:** 2026-04-17
+**Last updated:** 2026-04-24
 
 ---
 
+<div class="callout-warning" markdown="1">
+
+### ⚠️ Under RiC-O 1.1 conformance review
+
+**2026-04-24 — ICA-EGAD reviewer feedback.** This document currently claims the `rico:` namespace for a number of classes and properties that are **not** defined in RiC-O 1.1. A full conformance audit is published at [audit/ric-o-1.1-audit.html]({{ '/audit/ric-o-1.1-audit.html' | relative_url }}) — of the 168 `rico:*` tokens used across the spec repo, **110 are not in RiC-O 1.1** and need to be either renamed, remodelled to use RiC-O 1.1 patterns, or moved to an OpenRiC extension namespace (`openricx:`).
+
+Phase A (version strings, this commit) is non-semantic. Subsequent phases (renames, remodel, extension namespace) will land as separate reviewable PRs. Until they do, **treat any `rico:*` term in this document as provisional** — the single source of truth for what `rico:` actually defines is [RiC-O 1.1 (2025-05-22)](https://www.ica.org/standards/RiC/ontology/1.1).
+
+Tracking: [openric/spec#TBD](https://github.com/openric/spec/issues); reviewer has been CC'd.
+
+</div>
+
 ## 1. Purpose
 
-This specification defines a deterministic mapping from the traditional archival-description standards — **ISAD(G)**, **ISAAR(CPF)**, **ISDIAH**, **ISDF** — to the ICA's **Records in Contexts** conceptual model ([RiC-CM v1.0](https://www.ica.org/app/uploads/2023/12/RiC-CM-1.0.pdf)) and its ontology ([RiC-O v1.0](https://www.ica.org/standards/RiC/ontology)).
+This specification defines a deterministic mapping from the traditional archival-description standards — **ISAD(G)**, **ISAAR(CPF)**, **ISDIAH**, **ISDF** — to the ICA's **Records in Contexts** conceptual model ([RiC-CM v1.0](https://www.ica.org/app/uploads/2023/12/RiC-CM-1.0.pdf)) and its ontology ([RiC-O v1.1, 2025-05-22](https://www.ica.org/standards/RiC/ontology/1.1)).
 
 Given a conforming input description, exactly one conforming RiC graph SHALL result. The mapping is total: every entity in the input has a defined target class in RiC, and every normatively-required ISAD(G)/ISAAR(CPF)/ISDIAH element has a defined target predicate.
 
@@ -165,7 +177,7 @@ Boxes, containers, shelves, cabinets, vaults, and equipment all map to `rico:Thi
 | 3.2.4 Immediate source of acquisition | `rico:wasAcquiredFrom` → `rico:Agent` | |
 | 3.3.1 Scope and content | `rico:description` | |
 | 3.3.2 Appraisal, destruction, scheduling | `rico:hasAppraisalInformation` | |
-| 3.3.3 Accruals | `openric:accrualsNote` | No direct RiC-O 1.0 predicate |
+| 3.3.3 Accruals | `openric:accrualsNote` | No direct RiC-O 1.1 predicate |
 | 3.3.4 System of arrangement | `rico:arrangement` | |
 | 3.4.1 Conditions governing access | `rico:conditionsOfAccess` | |
 | 3.4.2 Conditions governing reproduction | `rico:conditionsOfUse` | |
@@ -275,7 +287,7 @@ Each relation MAY carry a `rico:Relation` reified object when date-scoping, cert
 
 ## 9. Access, security, and privacy extensions
 
-RiC-O v1.0 does not fully specify security classification or personal-data flags. OpenRiC defines the following extension properties:
+RiC-O v1.1 does not fully specify security classification or personal-data flags. OpenRiC defines the following extension properties:
 
 | Property | Domain | Range | Meaning |
 |---|---|---|---|
@@ -367,7 +379,7 @@ Jurisdictional compliance regimes (POPIA, GDPR, CDPA, IPSAS, GRAP 103, PAIA, NAZ
 
 - **O-1 — Level-to-class flexibility.** The `file` level maps to `rico:RecordSet`, following Heratio's implementation. Some communities prefer `file` → `rico:Record`. Under discussion.
 - **O-2 — Rights statements.** RiC-O's rights vocabulary is thin. A separate OpenRiC-Rights spec is likely, building on ODRL.
-- **O-3 — Preservation events.** RiC-CM covers preservation; the predicate set in RiC-O 1.0 is incomplete for fine-grained PREMIS-equivalent events. Deferred to v0.2.
+- **O-3 — Preservation events.** RiC-CM covers preservation; the predicate set in RiC-O 1.1 is incomplete for fine-grained PREMIS-equivalent events. Deferred to v0.2.
 - **O-4 — Multilinguality of `rico:title` and `rico:description`.** Whether to emit one triple per culture with `@language`, or a single JSON-LD object with `@value`/`@language` pairs. Current recommendation: array of language-tagged strings. Under review.
 - **O-5 — Thing / container modelling.** RiC-O does not have a native `Container` or `StorageLocation` class; we map to `rico:Thing` with `openric:localType`. May warrant an OpenRiC-Storage extension.
 
