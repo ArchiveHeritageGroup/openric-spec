@@ -69,6 +69,14 @@
     .nav-links a.nav-cta:hover { background: var(--accent-2); color: #fff; }
     .nav-links .sep { color: var(--border); user-select: none; padding: 0 0.15rem; }
 
+    /* ---- Demo banner (under nav, above main) ---- */
+    .demo-banner { background: linear-gradient(90deg, #0f172a 0%, #1e293b 100%); color: #e2e8f0; border-bottom: 1px solid var(--border); }
+    .demo-banner-inner { max-width: 1180px; margin: 0 auto; padding: 0.65rem 1rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.75rem; font-size: 0.92rem; }
+    .demo-banner-label { color: #cbd5e1; }
+    .demo-banner-label strong { color: #fff; }
+    .demo-banner-cta { display: inline-flex; align-items: center; gap: 0.35rem; background: var(--accent); color: #fff !important; font-weight: 600; padding: 0.4rem 0.95rem; border-radius: 6px; text-decoration: none; transition: background 0.15s, transform 0.15s; }
+    .demo-banner-cta:hover { background: var(--accent-h); transform: translateY(-1px); text-decoration: none; }
+
     /* ---- Main ---- */
     main { max-width: 1080px; margin: 0 auto; padding: 2.5rem 1.4rem 4rem; }
 
@@ -147,8 +155,6 @@
     .hero-cta .btn-primary:hover { background: var(--accent-h); color: #fff; text-decoration: none; transform: translateY(-1px); box-shadow: var(--shadow-lg); }
     .hero-cta .btn-ghost { background: #fff; color: var(--fg); border: 1px solid var(--border); }
     .hero-cta .btn-ghost:hover { border-color: var(--accent-2); color: var(--accent); text-decoration: none; }
-    .hero-see-hint { color: var(--muted-2); font-size: 0.88rem; margin: 0.7rem 0 0; line-height: 1.5; }
-    .hero-see-hint em { color: var(--fg); font-style: normal; font-weight: 600; }
 
     /* ---- Surface cards ---- */
     .surfaces { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
@@ -392,6 +398,13 @@
       </div>
     </div>
   </nav>
+
+  <div class="demo-banner">
+    <div class="demo-banner-inner">
+      <span class="demo-banner-label"><strong>See OpenRiC live</strong> — 2D/3D graph against a real archival dataset.</span>
+      <a class="demo-banner-cta" href="https://viewer.openric.org/">See it in action ↗</a>
+    </div>
+  </div>
 
   <main>
     {{ content }}
