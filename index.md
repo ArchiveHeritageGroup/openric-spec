@@ -11,11 +11,15 @@ title: OpenRiC
       OpenRiC is an open specification for how archival descriptions map to RiC-CM / RiC-O, how that data is served over HTTP for both reading and writing, and how graph-based interfaces can render it consistently across any conformant server. Not a product. A contract anyone can implement.
     </p>
     <div class="hero-cta">
-      <a class="btn-primary" href="guides/getting-started.html">Get started in 15 min →</a>
+      <a class="btn-primary" href="https://viewer.openric.org/">See it in action ↗</a>
+      <a class="btn-ghost" href="guides/getting-started.html">Get started in 15 min →</a>
       <a class="btn-ghost" href="spec/">Read the spec ↗</a>
       <a class="btn-ghost" href="api-explorer/">Try the API ↗</a>
       <a class="btn-ghost" href="https://github.com/openric/spec/discussions">Discussions ↗</a>
     </div>
+    <p class="hero-see-hint">
+      Live 2D/3D graph against a real archival dataset — click <em>Browse</em> in the viewer to pick an entity. No install, no signup.
+    </p>
   </div>
 </div>
 
