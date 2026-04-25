@@ -200,10 +200,10 @@ Servers SHOULD use the RiC-O class that most precisely describes the entity. The
 | Records | `rico:Record`, `rico:RecordSet`, `rico:RecordPart` |
 | Agents | `rico:Person`, `rico:CorporateBody`, `rico:Family`, `rico:Agent` |
 | Repositories | `rico:CorporateBody` (with `openric:role = "repository"`) |
-| Activities | `rico:Production`, `rico:Accumulation`, `rico:Activity` |
-| Functions | `rico:Function` |
+| Activities | `rico:Activity` (kind via `rico:hasActivityType` IRI from `<https://openric.org/vocab/activity-type/>`) |
+| Functions | `openricx:Function` |
 | Places | `rico:Place` |
-| Dates | `rico:DateRange` (rarely as a node; usually as an edge attribute) |
+| Dates | `openricx:DateRange` (rarely as a node; usually as an edge attribute) |
 | Instantiations (digital objects) | `rico:Instantiation` |
 | Things (boxes, containers) | `rico:Thing` + `openric:localType` |
 

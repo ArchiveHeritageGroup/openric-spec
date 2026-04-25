@@ -42,11 +42,11 @@
     "rico:type":        { "type": "string" },
     "rico:identifier":  { "type": "string", "minLength": 1 },
     "rico:title":       { "$ref": "#/$defs/langString" },
-    "rico:description": { "$ref": "#/$defs/langString" },
+    "openricx:description": { "$ref": "#/$defs/langString" },
     "rico:history":     { "$ref": "#/$defs/langString" },
-    "rico:arrangement": { "$ref": "#/$defs/langString" },
+    "openricx:arrangement": { "$ref": "#/$defs/langString" },
 
-    "rico:hasDateRangeSet": {
+    "openricx:hasDateRangeSet": {
       "oneOf": [
         { "$ref": "#/$defs/dateRange" },
         { "type": "array", "items": { "$ref": "#/$defs/dateRange" } }
@@ -60,14 +60,14 @@
       ]
     },
 
-    "rico:hasLanguage": {
+    "rico:hasOrHadLanguage": {
       "oneOf": [
         { "$ref": "#/$defs/language" },
         { "type": "array", "items": { "$ref": "#/$defs/language" } }
       ]
     },
 
-    "rico:heldBy": {
+    "rico:hasOrHadHolder": {
       "oneOf": [
         { "$ref": "#/$defs/agentRef" },
         { "type": "array", "items": { "$ref": "#/$defs/agentRef" } }
@@ -81,19 +81,19 @@
       ]
     },
 
-    "rico:hasSubject":      { "type": "array" },
-    "rico:hasInstantiation": { "type": "array" },
-    "rico:hasRecordPart":   { "type": "array" },
-    "rico:isContainedIn":   { "oneOf": [
+    "rico:hasOrHadSubject":      { "type": "array" },
+    "rico:hasOrHadInstantiation": { "type": "array" },
+    "rico:includesOrIncluded":   { "type": "array" },
+    "rico:isOrWasIncludedIn":   { "oneOf": [
       { "type": "string", "format": "uri" },
       { "type": "object" }
     ] },
 
     "rico:conditionsOfAccess":    { "type": "string" },
     "rico:conditionsOfUse":       { "type": "string" },
-    "rico:containsPersonalData":  { "type": "boolean" },
-    "rico:hasSecurityClassification": { "type": "object" },
-    "rico:hasAccessRestriction":   { "type": "array" }
+    "openricx:containsPersonalData":  { "type": "boolean" },
+    "rico:isOrWasRegulatedBy": { "type": "object" },
+    "rico:isOrWasRegulatedBy":   { "type": "array" }
   },
 
   "additionalProperties": true,
@@ -132,16 +132,16 @@
     "dateRange": {
       "type": "object",
       "anyOf": [
-        { "required": ["rico:startDate"] },
+        { "required": ["rico:hasBeginningDate"] },
         { "required": ["rico:endDate"] },
-        { "required": ["rico:normalizedDate"] }
+        { "required": ["rico:normalizedDateValue"] }
       ],
       "properties": {
         "@type":                 { "type": "string" },
-        "rico:startDate":        { "$ref": "#/$defs/dateValue" },
+        "rico:hasBeginningDate":        { "$ref": "#/$defs/dateValue" },
         "rico:endDate":          { "$ref": "#/$defs/dateValue" },
-        "rico:normalizedDate":   { "type": "string" },
-        "rico:dateType":         { "type": "string" }
+        "rico:normalizedDateValue":   { "type": "string" },
+        "rico:hasDateType":         { "type": "string" }
       }
     },
 
@@ -161,19 +161,19 @@
 
     "extent": {
       "type": "object",
-      "required": ["rico:extentType"],
+      "required": ["rico:hasExtentType"],
       "properties": {
         "@type":           { "type": "string" },
-        "rico:extentType": { "type": "string" }
+        "rico:hasExtentType": { "type": "string" }
       }
     },
 
     "language": {
       "type": "object",
-      "required": ["rico:languageCode"],
+      "required": ["openricx:languageCode"],
       "properties": {
         "@type":            { "type": "string" },
-        "rico:languageCode": {
+        "openricx:languageCode": {
           "type": "string",
           "pattern": "^[a-z]{2,3}(-[A-Za-z0-9]+)*$"
         }

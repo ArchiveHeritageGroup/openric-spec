@@ -35,7 +35,7 @@
         "target_id":        { "type": "integer" },
         "target_name":      { "type": ["string", "null"] },
         "target_type":      { "type": ["string", "null"] },
-        "rico_predicate":   { "type": "string", "description": "Canonical RiC-O property, e.g. rico:hasSubject, rico:tookPlaceAt." },
+        "rico_predicate":   { "type": "string", "description": "Canonical RiC-O property, e.g. rico:hasOrHadSubject, rico:isAssociatedWithPlace." },
         "dropdown_code":    { "type": ["string", "null"] },
         "relation_label":   { "type": ["string", "null"] },
         "start_date":       { "type": ["string", "null"] },

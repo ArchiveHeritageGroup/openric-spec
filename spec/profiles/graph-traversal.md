@@ -78,10 +78,10 @@ Returns an `openric:Subgraph` per [Graph Primitives §3.1](../graph-primitives.h
   "openric:nodes": [
     { "id":    "https://example.org/recordset/905228",
       "label": "Egyptian Boat",
-      "type":  "RecordSet" },
+      "type":  "rico:RecordSet" },
     { "id":    "https://example.org/place/912150",
       "label": "Egypt",
-      "type":  "Place" }
+      "type":  "rico:Place" }
   ],
   "openric:edges": [
     { "source":    "https://example.org/recordset/905228",
@@ -109,8 +109,8 @@ A paginated index of every edge in the store (or a subset via future query param
       "object_id":         912150,
       "subject_class":     "RicActivity",
       "object_class":      "RicPlace",
-      "rico_predicate":    "rico:tookPlaceAt",
-      "inverse_predicate": "rico:isLocationOf",
+      "rico_predicate":    "rico:isAssociatedWithPlace",
+      "inverse_predicate": "rico:isOrWasLocationOf",
       "dropdown_code":     "took_place_at",
       "domain_class":      "Activity",
       "range_class":       "Place",
@@ -143,8 +143,8 @@ Groups all edges touching one entity into `outgoing` + `incoming` lists:
       "target_id":         912328,
       "target_name":       "Egypt (archaeological region)",
       "target_type":       "Place",
-      "rico_predicate":    "rico:hasBroaderGeographicalContext",
-      "inverse_predicate": "rico:hasNarrowerGeographicalContext",
+      "rico_predicate":    "openricx:hasBroaderGeographicalContext",
+      "inverse_predicate": "openricx:hasNarrowerGeographicalContext",
       "relation_label":    "broader place",
       "certainty":         "certain"
     }
@@ -206,7 +206,7 @@ Graph Traversal ships two classes of SHACL shapes, both in `shapes/profiles/grap
 
 | Shape | Check |
 |---|---|
-| `:InstantiationLinkedFromRecordShape` | Every `rico:Instantiation` is referenced by at least one `rico:Record` via `rico:hasInstantiation` (`sh:Warning`) |
+| `:InstantiationLinkedFromRecordShape` | Every `rico:Instantiation` is referenced by at least one `rico:Record` via `rico:hasOrHadInstantiation` (`sh:Warning`) |
 | `:OrphanedRecordShape` | Every `rico:Record` has a `rico:isOrWasPartOf` parent, unless it is a top-level fonds (`sh:Warning`) |
 | `:UnlinkedAgentShape` | Every Person/CorporateBody/Family is linked via `hasCreator`, `hasAccumulator`, or `hasOrHadParticipant` (`sh:Info`) |
 | `:DuplicateIdentifierShape` | No two records share a `rico:identifier` value (`sh:Warning`) |

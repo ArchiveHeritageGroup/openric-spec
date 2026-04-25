@@ -40,10 +40,10 @@
 
     "rico:title":            { "$ref": "#/$defs/langString" },
     "rico:name":             { "$ref": "#/$defs/langString" },
-    "rico:description":      { "$ref": "#/$defs/langString" },
-    "rico:descriptiveNote":  { "$ref": "#/$defs/langString" },
-    "rico:ruleType":         { "type": "string" },
-    "rico:hasSource":        { "$ref": "#/$defs/langString" },
+    "openricx:description":      { "$ref": "#/$defs/langString" },
+    "openricx:descriptiveNote":  { "$ref": "#/$defs/langString" },
+    "rico:hasOrHadRuleType":         { "type": "string" },
+    "dcterms:source":        { "$ref": "#/$defs/langString" },
 
     "openric:localType":     { "type": "string" },
     "openric:jurisdiction":  { "type": "string" },
@@ -55,7 +55,7 @@
       ]
     },
 
-    "rico:hasDateRangeSet": {
+    "openricx:hasDateRangeSet": {
       "oneOf": [
         { "$ref": "#/$defs/dateRange" },
         { "type": "array", "items": { "$ref": "#/$defs/dateRange" } }
@@ -102,17 +102,17 @@
       "anyOf": [
         { "required": ["rico:beginningDate"] },
         { "required": ["rico:endDate"] },
-        { "required": ["rico:startDate"] },
+        { "required": ["rico:hasBeginningDate"] },
         { "required": ["rico:expressedDate"] },
-        { "required": ["rico:normalizedDate"] }
+        { "required": ["rico:normalizedDateValue"] }
       ],
       "properties": {
         "@type":                 { "type": "string" },
         "rico:beginningDate":    { "type": ["string", "object"] },
         "rico:endDate":          { "type": ["string", "object"] },
-        "rico:startDate":        { "type": ["string", "object"] },
+        "rico:hasBeginningDate":        { "type": ["string", "object"] },
         "rico:expressedDate":    { "type": ["string", "object"] },
-        "rico:normalizedDate":   { "type": "string" }
+        "rico:normalizedDateValue":   { "type": "string" }
       }
     }
   }

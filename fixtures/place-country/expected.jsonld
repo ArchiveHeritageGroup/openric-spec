@@ -1,6 +1,7 @@
 {
   "@context": {
     "rico": "https://www.ica.org/standards/RiC/ontology#",
+    "openricx": "https://openric.org/ns/ext/v1#",
     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
@@ -9,8 +10,8 @@
   "@id": "https://ric.theahg.co.za/place/912150",
   "@type": "rico:Place",
   "rico:name": "Egypt",
-  "rico:description": "Ancient Egypt, Nile Valley region. Origin of the 12th Dynasty funeral boat model.",
-  "rico:streetAddress": "Egypt, North Africa",
+  "openricx:description": "Ancient Egypt, Nile Valley region. Origin of the 12th Dynasty funeral boat model.",
+  "openricx:streetAddress": "Egypt, North Africa",
   "openric:localType": "country",
   "rico:latitude": 30.0444196,
   "rico:longitude": 31.2357116,

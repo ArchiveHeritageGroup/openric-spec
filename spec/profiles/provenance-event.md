@@ -17,13 +17,15 @@ description: The full event model — Production, Accumulation, and generic Acti
 
 ## 1. Purpose
 
-Provenance & Event is the profile for **accountable archival events**. Authority & Context lets a client fetch a `rico:Production` as a first-class entity with a name and a date; Provenance & Event requires that same Production to declare *what record it produced* and *who produced it*. Without those two cross-entity links, an event is a ghost — a timestamp with no accountability.
+Provenance & Event is the profile for **accountable archival events**. Authority & Context lets a client fetch a `rico:Activity` as a first-class entity with a name and a date; Provenance & Event requires that same activity to declare *what record it produced* and *who produced it*. Without those two cross-entity links, an event is a ghost — a timestamp with no accountability.
+
+In RiC-O 1.1 every event is the single class `rico:Activity` (the concrete subclasses `rico:Production` / `rico:Accumulation` that earlier OpenRiC drafts assumed do not exist in the canonical ontology). OpenRiC distinguishes event kinds via `rico:hasActivityType` carrying an IRI from the activity-type vocabulary defined in `spec/mapping.md` §6.5 (`<https://openric.org/vocab/activity-type/{production,accumulation,custody,transfer,publication,reproduction}>`).
 
 A server implementing this profile commits to three things, above and beyond what Authority & Context already requires:
 
-1. **`rico:Production` events MUST carry `rico:resultsOrResultedIn` + `rico:hasOrHadParticipant` + `rico:isOrWasAssociatedWithDate`** — the three invariants of a production event. Each cross-entity link MUST point at a resolvable entity of the correct RiC-O class (a Record for results, an Agent for participants).
-2. **`rico:Accumulation` events MUST carry `rico:resultsOrResultedIn` + `rico:isOrWasAssociatedWithDate`** — the accumulating agent is Warning-level, since many historical accumulations have no named actor.
-3. **Every generic `rico:Activity` (custody, publication, reproduction, etc.) MUST carry a date** — an event without a date is unplottable in a provenance timeline. Results and participants stay Warning-level for the generic fallback class.
+1. **Production-typed Activities** (`rico:hasActivityType <…/production>`) MUST carry `rico:resultsOrResultedIn` + `rico:hasOrHadParticipant` + `rico:isAssociatedWithDate` — the three invariants of a production event. Each cross-entity link MUST point at a resolvable entity of the correct RiC-O class (a Record for results, an Agent for participants).
+2. **Accumulation-typed Activities** (`rico:hasActivityType <…/accumulation>`) MUST carry `rico:resultsOrResultedIn` + `rico:isAssociatedWithDate` — the accumulating agent is Warning-level, since many historical accumulations have no named actor.
+3. **Every generic `rico:Activity`** (custody, publication, reproduction, etc.) MUST carry a date — an event without a date is unplottable in a provenance timeline. Results and participants stay Warning-level for the generic fallback class.
 
 Provenance & Event **depends on Authority & Context**. A server that has not first declared Authority & Context cannot claim this profile — its Activity shapes are the foundation this profile sharpens.
 
@@ -45,7 +47,7 @@ The Violations dominate — a response emitting a Production without `rico:resul
 ### 2.2 Forbidden without additional profile claims
 
 - **Everything Authority & Context forbids** (writes, cross-entity graph traversal, etc.) — those remain forbidden here.
-- **Inventing subclasses of `rico:Activity`** beyond the two RiC-O concrete types. Implementations MUST NOT emit `@type` values like `rico:CustodyEvent` or `openric:Transfer` — those would break the mapping spec §6.5 commitment. Local type hints go in `openric:localType`, the RiC-O class stays one of `rico:Production` / `rico:Accumulation` / `rico:Activity`.
+- **Inventing concrete `rico:Activity` subclasses.** Implementations MUST NOT emit `@type` values like `rico:Production`, `rico:Accumulation`, `rico:CustodyEvent`, or `openric:Transfer` — they are not defined in RiC-O 1.1. The `@type` is always `rico:Activity`; event-kind dispatch belongs in `rico:hasActivityType`. Local taxonomy hints (legacy event-type strings) go in `openric:localType`.
 
 ### 2.3 Content types
 
@@ -53,22 +55,24 @@ Same as Authority & Context: `application/ld+json` (success) or `application/pro
 
 ## 3. Response shapes
 
-### 3.1 `rico:Production` — full shape
+### 3.1 Production-typed Activity — full shape
 
-A Production response under Provenance & Event MUST include all three invariants plus any Authority & Context fields:
+A production-typed Activity response under Provenance & Event MUST include all three invariants plus any Authority & Context fields:
 
 ```json
 {
-  "@context": { "rico":    "https://www.ica.org/standards/RiC/ontology#",
-                "openric": "https://openric.org/ns/v1#",
-                "xsd":     "http://www.w3.org/2001/XMLSchema#" },
+  "@context": { "rico":     "https://www.ica.org/standards/RiC/ontology#",
+                "openric":  "https://openric.org/ns/v1#",
+                "openricx": "https://openric.org/ns/ext/v1#",
+                "xsd":      "http://www.w3.org/2001/XMLSchema#" },
   "@id":               "https://example.org/activity/910378",
-  "@type":             "rico:Production",
+  "@type":             "rico:Activity",
+  "rico:hasActivityType": { "@id": "https://openric.org/vocab/activity-type/production" },
   "rico:name":         "Production of funeral boat model",
   "openric:localType": "production",
 
-  "rico:isOrWasAssociatedWithDate": {
-    "@type":              "rico:DateRange",
+  "rico:isAssociatedWithDate": {
+    "@type":              "openricx:DateRange",
     "rico:beginningDate": { "@value": "1961-01-01", "@type": "xsd:date" },
     "rico:endDate":       { "@value": "1999-01-01", "@type": "xsd:date" },
     "rico:expressedDate": "1961–1999"
@@ -98,36 +102,36 @@ A Production response under Provenance & Event MUST include all three invariants
 
 | Field | Cardinality | Notes |
 |---|---|---|
-| `rico:resultsOrResultedIn` | 1..* | Embedded stub `{@id, @type, rico:name}` of the produced Record(s). `@type` MUST resolve to `rico:RecordSet`, `rico:Record`, or `rico:RecordPart`. |
-| `rico:hasOrHadParticipant` | 1..* | Embedded stub of the creator Agent. `@type` MUST resolve to `rico:Person`, `rico:CorporateBody`, `rico:Family`, or `rico:Agent`. |
-| `rico:isOrWasAssociatedWithDate` | 1 | A structured `rico:DateRange` (not a bare `xsd:date` string). |
+| `rico:resultsOrResultedIn` | 1..* | Embedded stub `{@id, @type, rico:name}` of the produced Record(s). `@type` MUST resolve to `rico:RecordSet`, `rico:Record`, or `rico:RecordPart`. (RiC-O 1.1 also defines `rico:affectsOrAffected` as a more general Activity→RecordResource link; either is canonical, per Florence Clavaud / KM Q&A #27.) |
+| `rico:hasOrHadParticipant` | 1..* | Embedded stub of the creator Agent. `@type` MUST resolve to `rico:Person`, `rico:CorporateBody`, `rico:Family`, `rico:Mechanism`, or `rico:Agent`. (The inverse `rico:isOrWasPerformedBy` is also canonical and used interchangeably by ICA-EGAD examples; implementations MAY emit either.) |
+| `rico:isAssociatedWithDate` | 1 | A structured `openricx:DateRange` (not a bare `xsd:date` string). |
 
 **Required when the source data has them**: all Authority & Context §3.4 fields (`@id`, `@type`, `rico:name`).
 
-**Optional**: `rico:hasOrHadLocation` (Place stub), `rico:hasReasonForExecution`, `rico:isOrWasFollowedBy` / `isOrWasPrecededBy` (event chaining).
+**Optional**: `rico:hasOrHadLocation` (Place stub), `rico:authorizingMandate` → `rico:Mandate` (the legal/policy basis for the event, replaces the non-canonical `rico:hasReasonForExecution`), `rico:followsInTime` / `isOrWasPrecededBy` (event chaining).
 
-### 3.2 `rico:Accumulation` — full shape
+### 3.2 Accumulation-typed Activity — full shape
 
-Similar to Production, but `hasOrHadParticipant` relaxes to SHOULD (Warning):
+Same `@type: rico:Activity` and same `hasActivityType` mechanism, with `<…/accumulation>` as the IRI. `hasOrHadParticipant` relaxes to SHOULD (Warning):
 
 **Required** (Violation):
 
 | Field | Cardinality | Notes |
 |---|---|---|
 | `rico:resultsOrResultedIn` | 1..* | Same typing rule as §3.1 |
-| `rico:isOrWasAssociatedWithDate` | 1 | Structured `rico:DateRange` |
+| `rico:isAssociatedWithDate` | 1 | Structured `openricx:DateRange` |
 
 **Strongly recommended** (Warning): `rico:hasOrHadParticipant` — the accumulating agent. Present when the source data knows it; often absent for historical accumulations (inherited collections, unidentified donors).
 
-### 3.3 `rico:Activity` — generic fallback shape
+### 3.3 Generic `rico:Activity` — fallback shape
 
-Activities that aren't Production or Accumulation (custody transfer, publication, reproduction, and the "unknown event type" fallback per `spec/mapping.md` §6.5) satisfy weaker shape rules:
+Activities whose `hasActivityType` is `<…/custody>`, `<…/publication>`, `<…/reproduction>`, `<…/transfer>`, or absent entirely (per `spec/mapping.md` §6.5) satisfy weaker shape rules:
 
 **Required** (Violation):
 
 | Field | Cardinality | Notes |
 |---|---|---|
-| `rico:isOrWasAssociatedWithDate` | 1 | Still required — an undatable event has no place on a timeline |
+| `rico:isAssociatedWithDate` | 1 | Still required — an undatable event has no place on a timeline |
 
 **Strongly recommended** (Warning): `rico:hasActivityType` — lets consumers dispatch on `custody` / `publication` / `reproduction` without parsing `openric:localType` strings.
 
@@ -154,9 +158,9 @@ Responses validate against `shapes/profiles/provenance-event.shacl.ttl`:
 
 | Shape | Target | Severity model |
 |---|---|---|
-| `:StrictProductionShape` | `rico:Production` | `sh:Violation` on missing `resultsOrResultedIn`, `hasOrHadParticipant`, or `isOrWasAssociatedWithDate` |
-| `:StrictAccumulationShape` | `rico:Accumulation` | `sh:Violation` on missing `resultsOrResultedIn` or date; `sh:Warning` on missing participant |
-| `:StrictActivityShape` | `rico:Activity` | `sh:Violation` on missing date; `sh:Warning` on missing `hasActivityType` |
+| `:StrictProductionShape` | `rico:Activity` where `hasActivityType = <…/production>` (sh:SPARQLTarget) | `sh:Violation` on missing `resultsOrResultedIn`, `hasOrHadParticipant`, or `isAssociatedWithDate` |
+| `:StrictAccumulationShape` | `rico:Activity` where `hasActivityType = <…/accumulation>` (sh:SPARQLTarget) | `sh:Violation` on missing `resultsOrResultedIn` or date; `sh:Warning` on missing participant |
+| `:StrictActivityShape` | `rico:Activity` (all) | `sh:Violation` on missing date; `sh:Warning` on missing `hasActivityType` |
 | `:ParticipantTypeShape` | subjects of `rico:hasOrHadParticipant` | `sh:Violation` if target is not a Person / CorporateBody / Family / Agent |
 | `:ResultTypeShape` | subjects of `rico:resultsOrResultedIn` | `sh:Violation` if target is not a RecordSet / Record / RecordPart |
 
@@ -166,13 +170,13 @@ Shapes are **open** — unknown predicates do not cause failure. A server claimi
 
 A server claims `provenance-event` when, for every activity exposed under `/activities`:
 
-1. `@type` is exactly one of `rico:Production`, `rico:Accumulation`, or `rico:Activity` (never a custom subclass).
-2. Productions validate against `:StrictProductionShape` at Violation severity — all three required fields present and correctly typed.
-3. Accumulations validate against `:StrictAccumulationShape` at Violation severity.
-4. Generic Activities validate against `:StrictActivityShape` at Violation severity — date required.
+1. `@type` is `rico:Activity` (never a Production / Accumulation / Custody subclass — those are not in RiC-O 1.1).
+2. Production-typed Activities (`hasActivityType <…/production>`) validate against `:StrictProductionShape` at Violation severity — all three required fields present and correctly typed.
+3. Accumulation-typed Activities validate against `:StrictAccumulationShape` at Violation severity.
+4. All Activities validate against `:StrictActivityShape` at Violation severity — date required.
 5. Every `rico:hasOrHadParticipant` target is an Agent subclass per `:ParticipantTypeShape`.
 6. Every `rico:resultsOrResultedIn` target is a Record type per `:ResultTypeShape`.
-7. The activity can be linked to and walked from a Record's `rico:isAssociatedWithActivity` (verifiable when combined with Graph Traversal).
+7. The activity can be linked to and walked from a Record's `rico:isOrWasSubjectOf` (verifiable when combined with Graph Traversal).
 
 Run the conformance probe with `--profile=provenance-event` to exercise these checks against a live server.
 
@@ -182,16 +186,17 @@ The manifest declares these two fixtures as normative for `provenance-event`:
 
 | Fixture | Status | What it pins |
 |---|---|---|
-| `activity-production-full` | done | Full-context Production — results + participant + dates + location + `rico:DateRange` structure |
+| `activity-production-full` | done | Full-context Production — results + participant + dates + location + `openricx:DateRange` structure |
 | `activity-custody` | done | Generic Activity fallback — custody transfer with date + location + participant (optional in this class) |
 
 Fixtures `activity-production` and `activity-accumulation` remain tagged for **`authority-context` only** — they do not carry the cross-entity links this profile requires and would fail `:StrictProductionShape` / `:StrictAccumulationShape`. This is intentional: a server claiming both profiles must emit the tighter shape.
 
 ## 8. Implementation checklist
 
-- [ ] When emitting `rico:Production`, include `rico:resultsOrResultedIn` (Record stub) AND `rico:hasOrHadParticipant` (Agent stub) AND `rico:isOrWasAssociatedWithDate` (`rico:DateRange`)
-- [ ] When emitting `rico:Accumulation`, include `rico:resultsOrResultedIn` AND `rico:isOrWasAssociatedWithDate` (participant optional)
-- [ ] When emitting `rico:Activity` (generic), include `rico:isOrWasAssociatedWithDate` — results + participants + location all optional
+- [ ] Type every event as `rico:Activity` (never a custom subclass) and emit `rico:hasActivityType` with an IRI from `https://openric.org/vocab/activity-type/`
+- [ ] Production-typed Activities: include `rico:resultsOrResultedIn` (Record stub) AND `rico:hasOrHadParticipant` (Agent stub) AND `rico:isAssociatedWithDate` (`openricx:DateRange`)
+- [ ] Accumulation-typed Activities: include `rico:resultsOrResultedIn` AND `rico:isAssociatedWithDate` (participant optional)
+- [ ] Generic Activities (custody, publication, etc.): include `rico:isAssociatedWithDate` — results + participants + location all optional
 - [ ] Embed cross-entity links as `{@id, @type, rico:name}` stubs — not bare URI strings
 - [ ] `@type` on participants always resolves to Person / CorporateBody / Family / Agent
 - [ ] `@type` on results always resolves to RecordSet / Record / RecordPart
@@ -212,9 +217,9 @@ Five questions were flagged during drafting; all five carry resolutions.
 
 ### Q2 — Should custody / publication / reproduction get their own `@type` subclasses?
 
-**Resolution**: **No. RiC-O has `rico:Production` and `rico:Accumulation` as the only two concrete event subclasses — everything else is `rico:Activity`.**
+**Resolution**: **No. RiC-O 1.1 has only the parent class `rico:Activity` — there are no concrete event subclasses (Production, Accumulation, CustodyEvent, Transfer all do *not* exist in 1.1). Every event is `@type: rico:Activity`, distinguished by `rico:hasActivityType`.**
 
-**Rationale**: Minting `openric:CustodyEvent` or `rico:Transfer` subclasses would either (a) fork RiC-O, which is out of scope for an implementation profile, or (b) bake an anglosphere / archival-theory-of-the-moment taxonomy into the spec. The accepted pattern is `@type: rico:Activity` + `rico:hasActivityType: "custody"` + `openric:localType: "custody"`, which preserves the RiC-O class hierarchy and gives consumers a queryable dispatch key. If RiC-O v2 adds more concrete subclasses, Provenance & Event v1.0 will track them.
+**Rationale**: Earlier OpenRiC drafts (≤ v0.36) assumed `rico:Production` / `rico:Accumulation` were concrete classes; the [RiC-O 1.1 audit](../audit/ric-o-1.1-audit.html) showed they are not. Inventing local subclasses would either (a) fork RiC-O, or (b) bake an anglosphere / archival-theory-of-the-moment taxonomy into the spec. The accepted pattern is `@type: rico:Activity` + `rico:hasActivityType: <https://openric.org/vocab/activity-type/{kind}>` + `openric:localType: "{kind}"`, which preserves the RiC-O class hierarchy, gives consumers a queryable dispatch key, and keeps the profile honest against the canonical ontology. If RiC-O v2 ever adds concrete subclasses, Provenance & Event will track them.
 
 ### Q3 — Must cross-entity links resolve to existing entities (404 check), or only validate by type?
 
@@ -222,11 +227,11 @@ Five questions were flagged during drafting; all five carry resolutions.
 
 **Rationale**: Validating that every `@id` on a Production's `rico:resultsOrResultedIn` actually resolves to a live Record requires fetching every cross-linked entity — that's a full-graph check and belongs in Graph Traversal (§5.2). Provenance & Event runs on single-endpoint responses and can only validate what's in front of it: the type of the stub, the presence of the link. A server that emits a link to a Record that was later deleted gets a SHACL Warning at Graph Traversal level, not a Violation here.
 
-### Q4 — `rico:DateRange` as a structured sub-object, or allow bare `xsd:date` strings?
+### Q4 — `openricx:DateRange` as a structured sub-object, or allow bare `xsd:date` strings?
 
-**Resolution**: **Structured `rico:DateRange` object, always.**
+**Resolution**: **Structured `openricx:DateRange` object, always.**
 
-**Rationale**: Bare date strings discard two things that archival dates need: date qualifiers (`circa 1961`, `between 1961 and 1999`) and range endpoints. The RiC-O `rico:DateRange` class accommodates both via `rico:beginningDate`, `rico:endDate`, and `rico:expressedDate` (free text for "early 1960s", "Ming dynasty", "before the French Revolution"). Mandating the structured shape from v0.8 prevents the bare-string pattern from becoming entrenched and requires retrofits later.
+**Rationale**: Bare date strings discard two things that archival dates need: date qualifiers (`circa 1961`, `between 1961 and 1999`) and range endpoints. The OpenRiC extension class `openricx:DateRange` accommodates both via `rico:beginningDate`, `rico:endDate`, and `rico:expressedDate` (free text for "early 1960s", "Ming dynasty", "before the French Revolution"). RiC-O 1.1 dropped the `DateRange` class itself — OpenRiC keeps it under the extension namespace as an API convenience while the canonical RDF can use native RiC-O 1.1 date patterns where the source data has clean ISO-8601 endpoints. Mandating the structured shape from v0.8 prevents the bare-string pattern from becoming entrenched and requires retrofits later.
 
 ### Q5 — Reference implementation does not currently emit `resultsOrResultedIn` or `hasOrHadParticipant`. Freeze the profile anyway?
 

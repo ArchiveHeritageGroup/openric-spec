@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://openric.org/schemas/v0.1.0/activity.schema.json",
   "title": "OpenRiC Activity response",
-  "description": "Validates a single /activities/{id} response. Covers rico:Production, rico:Accumulation, and rico:Activity (the generic superclass, used when type_id does not fit the more specific subclasses).",
+  "description": "Validates a single /activities/{id} response. Every event is rico:Activity (RiC-O 1.1 has no concrete Activity subclasses); kind is carried in rico:hasActivityType as an IRI from the OpenRiC activity-type vocabulary (production, accumulation, custody, transfer, publication, reproduction).",
 
   "type": "object",
   "required": ["@id", "@type"],
@@ -39,10 +39,10 @@
     },
 
     "rico:name":          { "$ref": "#/$defs/langString" },
-    "rico:description":   { "$ref": "#/$defs/langString" },
+    "openricx:description":   { "$ref": "#/$defs/langString" },
     "openric:localType":  { "type": "string" },
 
-    "rico:isOrWasAssociatedWithDate": {
+    "rico:isAssociatedWithDate": {
       "oneOf": [
         { "$ref": "#/$defs/dateRange" },
         { "type": "array", "items": { "$ref": "#/$defs/dateRange" } }
@@ -108,9 +108,9 @@
         "@type":                 { "type": "string" },
         "rico:beginningDate":    { "type": ["string", "object"] },
         "rico:endDate":          { "type": ["string", "object"] },
-        "rico:startDate":        { "type": ["string", "object"] },
+        "rico:hasBeginningDate":        { "type": ["string", "object"] },
         "rico:expressedDate":    { "type": ["string", "object"] },
-        "rico:normalizedDate":   { "type": "string" }
+        "rico:normalizedDateValue":   { "type": "string" }
       }
     }
   }

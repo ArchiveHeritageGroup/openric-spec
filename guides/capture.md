@@ -80,7 +80,7 @@ A production, accumulation, custody, reproduction, or mandate event — anything
 | Field | Notes |
 |---|---|
 | Name | Short descriptive name of the activity. Required. |
-| Type | From `ric_activity_type`. Maps to `rico:Production`, `rico:Accumulation`, etc. |
+| Type | From `ric_activity_type`. The class is always `rico:Activity`; the kind is carried in `rico:hasActivityType` as an IRI from `<https://openric.org/vocab/activity-type/>` (`production`, `accumulation`, `custody`, `transfer`, `publication`, `reproduction`). |
 | Date display | Free-text for uncertain dates: `c. 2400 BC`, `late 19th century`. |
 | Start / End date | Structured dates if known. |
 | Place ID | Optional — numeric id of an existing Place this activity took place at. |

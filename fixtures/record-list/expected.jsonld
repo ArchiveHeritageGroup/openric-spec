@@ -1,6 +1,6 @@
 {
   "@context": "https://www.ica.org/standards/RiC/ontology",
-  "@type": "rico:RecordList",
+  "@type": "openricx:RecordList",
   "ric:total": 714,
   "ric:page": 1,
   "ric:items": [

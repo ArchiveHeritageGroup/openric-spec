@@ -1,9 +1,10 @@
 {
   "@context": {
     "rico": "https://www.ica.org/standards/RiC/ontology#",
+    "openricx": "https://openric.org/ns/ext/v1#",
     "openric": "https://openric.org/ns/v1#"
   },
-  "@type": "rico:PlaceList",
+  "@type": "openricx:PlaceList",
   "openric:total": 183,
   "openric:page": 1,
   "openric:limit": 3,

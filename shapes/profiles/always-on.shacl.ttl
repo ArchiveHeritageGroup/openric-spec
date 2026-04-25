@@ -7,7 +7,7 @@
 # a server claims. Load alongside any profile-scoped shape file.
 #
 # Shapes in this file:
-#   - DateRangeShape        — structural validation of rico:DateRange (used
+#   - DateRangeShape        — structural validation of openricx:DateRange (used
 #                             by Records, Agents, Activities, Rules, …)
 #
 # Usage (combined with a profile file):
@@ -17,11 +17,12 @@
 @prefix sh:   <http://www.w3.org/ns/shacl#> .
 @prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
 @prefix rico: <https://www.ica.org/standards/RiC/ontology#> .
+@prefix openricx: <https://openric.org/ns/ext/v1#> .
 @prefix :     <https://openric.org/shapes#> .
 
 
 :DateRangeShape a sh:NodeShape ;
-    sh:targetClass rico:DateRange ;
+    sh:targetClass openricx:DateRange ;
     sh:name "DateRange Validation" ;
 
     sh:or (

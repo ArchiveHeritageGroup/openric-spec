@@ -1,6 +1,7 @@
 {
   "@context": {
     "rico": "https://www.ica.org/standards/RiC/ontology#",
+    "openricx": "https://openric.org/ns/ext/v1#",
     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
@@ -12,23 +13,23 @@
   "rico:type": "Record",
   "rico:title": "Demo of folder1",
   "rico:identifier": "Cat",
-  "rico:description": "Example item Scope and content",
+  "openricx:description": "Example item Scope and content",
   "rico:hasExtent": {
     "@type": "https://www.ica.org/standards/RiC/ontology#Extent",
-    "rico:extentType": "1 paqge"
+    "rico:hasExtentType": "1 paqge"
   },
-  "rico:heldBy": {
+  "rico:hasOrHadHolder": {
     "@id": "https://ric.theahg.co.za/repository/the-archive-and-heritage-group",
     "@type": "https://www.ica.org/standards/RiC/ontology#CorporateBody",
     "rico:name": "The Archive And Heritage Group"
   },
   "rico:conditionsOfAccess": "Example item Conditions governing access",
-  "rico:hasInstantiation": [
+  "rico:hasOrHadInstantiation": [
     {
       "@type": "https://www.ica.org/standards/RiC/ontology#Instantiation",
       "rico:identifier": "cat.jpg",
-      "rico:mimeType": "image/jpeg",
-      "rico:size": 102354
+      "openricx:mimeType": "image/jpeg",
+      "openricx:size": 102354
     }
   ]
 }

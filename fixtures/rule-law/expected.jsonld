@@ -1,6 +1,7 @@
 {
   "@context": {
     "rico": "https://www.ica.org/standards/RiC/ontology#",
+    "openricx": "https://openric.org/ns/ext/v1#",
     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
@@ -10,15 +11,15 @@
   "@type": "rico:Rule",
   "rico:title": "Egyptian Antiquities Protection Law (Law 117/1983)",
   "rico:name": "Egyptian Antiquities Protection Law (Law 117/1983)",
-  "rico:description": "Egyptian law governing the protection and export of antiquities. All antiquities found in Egypt are state property. Export requires ministerial approval.",
-  "rico:ruleType": "law",
+  "openricx:description": "Egyptian law governing the protection and export of antiquities. All antiquities found in Egypt are state property. Export requires ministerial approval.",
+  "rico:hasOrHadRuleType": "law",
   "openric:localType": "law",
   "openric:jurisdiction": "Egypt",
-  "rico:descriptiveNote": "Law No. 117 of 1983 on the Protection of Antiquities, Arab Republic of Egypt. Amended 2010.",
-  "rico:hasSource": "Supreme Council of Antiquities, Ministry of Tourism and Antiquities",
+  "openricx:descriptiveNote": "Law No. 117 of 1983 on the Protection of Antiquities, Arab Republic of Egypt. Amended 2010.",
+  "dcterms:source": "Supreme Council of Antiquities, Ministry of Tourism and Antiquities",
   "owl:sameAs": "https://en.wikipedia.org/wiki/Law_No._117_of_1983",
-  "rico:hasDateRangeSet": {
-    "@type": "rico:DateRange",
+  "openricx:hasDateRangeSet": {
+    "@type": "openricx:DateRange",
     "rico:beginningDate": {
       "@value": "1983-01-01",
       "@type": "xsd:date"

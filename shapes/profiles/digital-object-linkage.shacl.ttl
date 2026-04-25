@@ -8,7 +8,7 @@
 #
 # Shapes in this file:
 #   - InstantiationShape    — rico:Instantiation
-#   - FunctionShape         — rico:Function
+#   - FunctionShape         — openricx:Function
 #
 # The cross-entity "Instantiation must be linked from a Record" check lives
 # in profile: graph-traversal because it requires the full triple store
@@ -21,6 +21,7 @@
 @prefix sh:   <http://www.w3.org/ns/shacl#> .
 @prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
 @prefix rico: <https://www.ica.org/standards/RiC/ontology#> .
+@prefix openricx: <https://openric.org/ns/ext/v1#> .
 @prefix :     <https://openric.org/shapes#> .
 
 
@@ -37,7 +38,7 @@
     ] ;
 
     sh:property [
-        sh:path rico:hasMimeType ;
+        sh:path openricx:hasMimeType ;
         sh:maxCount 1 ;
         sh:pattern "^[a-zA-Z0-9!#$&^_.+-]+/[a-zA-Z0-9!#$&^_.+-]+$" ;
         sh:severity sh:Warning ;
@@ -49,14 +50,14 @@
     # with no way to identify what it actually carries.
     sh:or (
         [ sh:property [ sh:path rico:hasCarrierType ; sh:minCount 1 ] ]
-        [ sh:property [ sh:path rico:hasMimeType ; sh:minCount 1 ] ]
+        [ sh:property [ sh:path openricx:hasMimeType ; sh:minCount 1 ] ]
         [ sh:property [ sh:path rico:hasContentOfType ; sh:minCount 1 ] ]
-        [ sh:property [ sh:path rico:hasProductionTechnique ; sh:minCount 1 ] ]
+        [ sh:property [ sh:path rico:productionTechnique ; sh:minCount 1 ] ]
     ) .
 
 
 :FunctionShape a sh:NodeShape ;
-    sh:targetClass rico:Function ;
+    sh:targetClass openricx:Function ;
     sh:name "Function (ISDF) Validation" ;
 
     # Accept either rico:name (shorthand) OR rico:hasOrHadName (canonical).

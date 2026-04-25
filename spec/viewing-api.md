@@ -21,14 +21,16 @@ A reference implementation exists in the Heratio `ahg-ric` package's `LinkedData
 
 ## 2. Conformance levels
 
-| Level | Requirement |
-|---|---|
-| **L2-core** | `/vocabulary`, `/records`, `/records/{id}`, `/agents`, `/agents/{id}`, `/repositories`, `/repositories/{id}` |
-| **L2-graph** | L2-core + `/graph`, `/records/{id}/export` |
-| **L2-query** | L2-core + `/sparql`, `/validate` |
-| **L2-full** | All of the above |
+> **Note (v0.37):** The `L2-core` / `L2-graph` / `L2-query` / `L2-full` table below is **legacy** terminology, retained for historical context. Current conformance claims SHOULD be **profile-based** — `core-discovery`, `authority-context`, `graph-traversal`, `digital-object-linkage`, `round-trip-editing`, `provenance-event`, `export-only`, and `sparql-access` (draft). Mapping: `L2-core` ≈ `core-discovery`; `L2-graph` ≈ `graph-traversal` + `export-only`; `L2-query` ≈ `sparql-access`. The `openric_conformance.profiles` declaration in `GET /` is the authoritative claim.
 
-Level is advertised in the service description (§6).
+| Level | Requirement | Current profile equivalent |
+|---|---|---|
+| **L2-core** | `/vocabulary`, `/records`, `/records/{id}`, `/agents`, `/agents/{id}`, `/repositories`, `/repositories/{id}` | `core-discovery` |
+| **L2-graph** | L2-core + `/graph`, `/records/{id}/export` | `core-discovery` + `graph-traversal` + `export-only` |
+| **L2-query** | L2-core + `/sparql`, `/validate` | `core-discovery` + `sparql-access` (draft) |
+| **L2-full** | All of the above | All seven normative profiles + `sparql-access` |
+
+Level is advertised in the service description (§6) — but new implementations SHOULD declare profiles in `openric_conformance.profiles` instead.
 
 ## 3. Base URL
 
@@ -39,6 +41,47 @@ All endpoints live under:
 ```
 
 HTTPS is REQUIRED in production. Implementations MAY serve HTTP for local development.
+
+## 3.1 Semantic URIs vs API endpoints
+
+OpenRiC distinguishes between **stable semantic entity URIs** (the linked-data identity of an archival entity) and **API endpoints** (one access mechanism for retrieving, editing, validating, or exporting that entity).
+
+| Layer | Pattern | Purpose |
+|---|---|---|
+| **Internal database ID** | `12345` | Local persistence only. |
+| **API endpoint** | `https://archives.example.org/api/ric/v1/agents/12345` | Application access — defined by this spec. |
+| **Semantic URI** *(recommended)* | `https://archives.example.org/id/agent/12345` | Linked-data identity — dereferences via content negotiation (§7). |
+| **External authority URI** | `https://rdf.archives-nationales.culture.gouv.fr/agent/009941` | Identity in an external authority dataset (e.g. Garance, Wikidata, GeoNames). |
+| **Reconciliation link** | `skos:exactMatch` / `skos:closeMatch` / `owl:sameAs` | Identity / alignment relationship between local and external URIs. |
+
+**Recommended URI pattern** for the semantic identity layer:
+
+```
+{scheme}://{host}/id/{kind}/{id}
+```
+
+Where `{kind}` is one of `record`, `record-set`, `record-part`, `agent`, `person`, `corporate-body`, `family`, `mechanism`, `place`, `rule`, `activity`, `instantiation`, `function`. Implementations MAY serve the semantic URI as a 303-See-Other redirect to the content-negotiated representation (HTML, JSON-LD, Turtle, RDF/XML).
+
+A server MAY expose only the API layer (`/api/ric/v1/...`) and treat that as both identity and access — but doing so couples the linked-data identity to the implementation API version. The two-layer pattern is RECOMMENDED for institutions that want their entity URIs to outlive any specific OpenRiC version.
+
+External authority URIs MUST be preserved as external identifiers — implementations MUST NOT silently replace them with locally-minted URIs without retaining the original via `skos:exactMatch` / `skos:closeMatch` / `owl:sameAs`. See §7.3 below for the reconciliation-relation guidance.
+
+## 3.2 Content negotiation
+
+Every entity URI (semantic or API) SHOULD support content negotiation:
+
+| `Accept` header | Response |
+|---|---|
+| `text/html` (or browser default) | Human-readable entity page (recommended) |
+| `application/ld+json` | JSON-LD (REQUIRED in core profiles) |
+| `text/turtle` | Turtle |
+| `application/rdf+xml` | RDF/XML (RECOMMENDED for archival interoperability) |
+| `application/n-triples` | N-Triples (OPTIONAL) |
+| `application/json` | API JSON representation (when distinct from JSON-LD) |
+
+Servers MUST set `Vary: Accept` on every response that content-negotiates and SHOULD support 303-See-Other redirects from the semantic URI to the content-specific representation (e.g. `/id/agent/123` → `/api/ric/v1/agents/123.jsonld`).
+
+Implementations MAY initially support only `application/ld+json` and `application/json`; the broader set is a strong RECOMMENDATION at the Linked-Data Publication tier and is required in the (forthcoming) Linked-Data Publication Profile.
 
 ## 4. Endpoints
 
@@ -100,7 +143,7 @@ Returns the subset of RiC-O the server actually emits, plus any OpenRiC extensio
 ```json
 {
   "@context": "https://openric.org/ns/v1/context.jsonld",
-  "@type": "rico:RecordSetList",
+  "@type": "openricx:RecordSetList",
   "openric:total": 1423,
   "openric:page": 1,
   "openric:limit": 50,
@@ -139,7 +182,7 @@ Returns the subset of RiC-O the server actually emits, plus any OpenRiC extensio
 | Method & path | Purpose |
 |---|---|
 | `GET /functions` | Paginated list of ISDF functions |
-| `GET /functions/{id}` | Single function as `rico:Function` |
+| `GET /functions/{id}` | Single function as `openricx:Function` |
 
 ### 4.7 Graph
 
@@ -246,7 +289,7 @@ GET /api/ric/v1/instantiations
 GET /api/ric/v1/instantiations/{id}
 ```
 
-List endpoints accept `page`, `per_page`, and OPTIONAL type filters matching the taxonomy (e.g. `?type_id=country`). Show endpoints return full `rico:Place` / `rico:Rule` / `rico:ProductionActivity` / `rico:Instantiation` serialisations with any `owl:sameAs` authority links.
+List endpoints accept `page`, `per_page`, and OPTIONAL type filters matching the taxonomy (e.g. `?type_id=country`). Show endpoints return full `rico:Place` / `rico:Rule` / `rico:Activity` / `rico:Instantiation` serialisations with any `owl:sameAs` authority links.
 
 `/places/flat` returns `{items: [{id, name}], count}` — small-payload parent-picker companion. Unpaginated; bounded by server-side policy.
 
@@ -258,7 +301,7 @@ GET /api/ric/v1/relations-for/{entity-id}
 GET /api/ric/v1/relation-types?domain={class}&range={class}
 ```
 
-- `/relations` is the paginated global list. `q` matches against `rico:predicate`, `dropdown_code`, and evidence text.
+- `/relations` is the paginated global list. `q` matches against `rdf:predicate`, `dropdown_code`, and evidence text.
 - `/relations-for/{id}` returns `{outgoing: [...], incoming: [...], total, entity_id}` grouped by direction. Use this on entity show-pages.
 - `/relation-types` returns the catalog of allowed relation predicates, optionally filtered by domain/range class.
 
@@ -360,7 +403,7 @@ Servers MUST support `application/ld+json`. Other formats are OPTIONAL.
 
 ### 5.2 Language negotiation
 
-`Accept-Language` selects the culture for `rico:title`, `rico:description`, etc. Servers SHOULD honour the header. When a requested language is unavailable, the server MUST fall back to the entity's `sourceCulture`.
+`Accept-Language` selects the culture for `rico:title`, `openricx:description`, etc. Servers SHOULD honour the header. When a requested language is unavailable, the server MUST fall back to the entity's `sourceCulture`.
 
 ### 5.3 CORS
 
@@ -433,13 +476,32 @@ Errors MUST use HTTP status codes correctly and return a JSON error body:
 
 Codes: `not-found`, `forbidden`, `bad-request`, `rate-limited`, `unavailable`, `internal`.
 
+## 8.5 Pagination envelope policy
+
+OpenRiC defines two list-envelope shapes — implementations MUST use the right shape for the right endpoint class:
+
+| Endpoint class | Envelope | Required keys |
+|---|---|---|
+| **JSON-LD list endpoints** (Records, Agents, Places, Rules, Activities, Instantiations, Functions, Repositories) | JSON-LD with `@context` and openric: prefix | `@context`, `@type` (one of `openricx:RecordList`, `openricx:AgentList`, …), `openric:total`, `openric:page`, `openric:limit`, `openric:items`, optionally `openric:next` / `openric:prev` |
+| **Plain JSON convenience endpoints** (revision lists, relation lists, autocomplete, vocabulary lookups) | Plain JSON, no `@context` | `total`, `limit`, `offset` OR `page`/`per_page`, `items`. Servers MAY use either offset- or page-style pagination but MUST be internally consistent within a single endpoint. |
+| **OAI-PMH** | OAI-PMH XML protocol envelopes only | per OAI-PMH 2.0 spec |
+| **Autocomplete** | Plain JSON | `query`, `items` (array of `{id, label, type}` triples), `limit` |
+
+A server MUST NOT mix the two shapes within a single endpoint (e.g., emit `openric:items` alongside plain `total`). When in doubt: if the endpoint returns RDF entities, use the JSON-LD envelope; if it returns operational metadata (revisions, audit, autocomplete), use the plain envelope.
+
+## 8.6 Node `type` CURIE policy
+
+Graph and list responses use **CURIEs** (prefixed names like `rico:Person`, `rico:RecordSet`, `openricx:Function`) for `@type` and `Node.type` values, not bare local names. Bare local names (`"Person"`) MUST NOT be emitted — clients cannot disambiguate `rico:Person` from `foaf:Person`.
+
+Where a server wants to expose its implementation-specific subtype (e.g. `"box"` for a `rico:Thing` carrier kind), use the dedicated `openric:localType` slot, not the canonical `type` field.
+
 ## 9. Rate limiting
 
 Servers SHOULD rate-limit. The reference implementation uses `60 requests / minute / IP`. When limiting, servers MUST return HTTP 429 with `Retry-After` header.
 
 ## 10. OpenAPI description
 
-Every conformant server MUST expose a valid OpenAPI 3.1 description at:
+Every conformant server MUST expose a valid OpenAPI 3.0 description at:
 
 ```
 GET /api/ric/v1/openapi.json

@@ -10,147 +10,147 @@
     {
       "id": "https://ric.theahg.co.za/default/recordset/905228",
       "label": "Egyptian Boat",
-      "type": "RecordSet",
+      "type": "rico:RecordSet",
       "atomId": 905228,
       "atomUrl": "/egyptian-boat"
     },
     {
       "id": "https://ric.theahg.co.za/default/term/905229",
       "label": "Model boat",
-      "type": "Thing",
+      "type": "rico:Thing",
       "atomId": 905229,
       "atomUrl": "/model-boat"
     },
     {
       "id": "https://ric.theahg.co.za/default/term/905230",
       "label": "Funeral barge",
-      "type": "Thing",
+      "type": "rico:Thing",
       "atomId": 905230,
       "atomUrl": "/funeral-barge"
     },
     {
       "id": "https://ric.theahg.co.za/default/term/905231",
       "label": "Egyptian",
-      "type": "Thing",
+      "type": "rico:Thing",
       "atomId": 905231,
       "atomUrl": "/egyptian"
     },
     {
       "id": "https://ric.theahg.co.za/default/term/905232",
       "label": "12th Dynasty",
-      "type": "Thing",
+      "type": "rico:Thing",
       "atomId": 905232,
       "atomUrl": "/12th-dynasty"
     },
     {
       "id": "https://ric.theahg.co.za/default/term/905233",
       "label": "Wood",
-      "type": "Thing",
+      "type": "rico:Thing",
       "atomId": 905233,
       "atomUrl": "/wood-1"
     },
     {
       "id": "https://ric.theahg.co.za/default/term/902996",
       "label": "Africa",
-      "type": "Place",
+      "type": "rico:Place",
       "atomId": 902996,
       "atomUrl": "/africa"
     },
     {
       "id": "https://ric.theahg.co.za/default/term/903006",
       "label": "Egypt",
-      "type": "Place",
+      "type": "rico:Place",
       "atomId": 903006,
       "atomUrl": "/egypt"
     },
     {
       "id": "https://ric.theahg.co.za/default/corporatebody/905206",
       "label": "The British Museum UPDATED",
-      "type": "CorporateBody",
+      "type": "rico:CorporateBody",
       "atomId": 905206,
       "atomUrl": "/the-british-museum"
     },
     {
       "id": "https://ric.theahg.co.za/default/activity/910860",
       "label": "Creation",
-      "type": "Activity",
+      "type": "rico:Activity",
       "atomId": 910860,
       "atomUrl": "/ric-activity-from-event-905243"
     },
     {
       "id": "https://ric.theahg.co.za/default/activity/912152",
       "label": "Production of funeral boat model",
-      "type": "Activity",
+      "type": "rico:Activity",
       "atomId": 912152,
       "atomUrl": "/ric-activity-egyptian-boat-production"
     },
     {
       "id": "https://ric.theahg.co.za/default/activity/912153",
       "label": "3D Photogrammetry Digitisation",
-      "type": "Activity",
+      "type": "rico:Activity",
       "atomId": 912153,
       "atomUrl": "/ric-activity-egyptian-boat-digitisation"
     },
     {
       "id": "https://ric.theahg.co.za/default/activity/912154",
       "label": "Transfer to current repository",
-      "type": "Activity",
+      "type": "rico:Activity",
       "atomId": 912154,
       "atomUrl": "/ric-activity-egyptian-boat-custody"
     },
     {
       "id": "https://ric.theahg.co.za/default/activity/912346",
       "label": "Giza Pyramid",
-      "type": "Activity",
+      "type": "rico:Activity",
       "atomId": 912346,
       "atomUrl": "/giza-pyramid"
     },
     {
       "id": "https://ric.theahg.co.za/default/activity/912348",
       "label": "Giza Pyramid Organization",
-      "type": "Activity",
+      "type": "rico:Activity",
       "atomId": 912348,
       "atomUrl": "/giza-pyramid-organization"
     },
     {
       "id": "https://ric.theahg.co.za/default/place/912150",
       "label": "Egypt",
-      "type": "Place",
+      "type": "rico:Place",
       "atomId": 912150,
       "atomUrl": "/ric-place-egypt"
     },
     {
       "id": "https://ric.theahg.co.za/default/place/912151",
       "label": "Thebes (Luxor)",
-      "type": "Place",
+      "type": "rico:Place",
       "atomId": 912151,
       "atomUrl": "/ric-place-thebes"
     },
     {
       "id": "https://ric.theahg.co.za/default/rule/912155",
       "label": "Egyptian Antiquities Protection Law (Law 117/1983)",
-      "type": "Rule",
+      "type": "rico:Rule",
       "atomId": 912155,
       "atomUrl": "/ric-rule-egyptian-antiquities-law"
     },
     {
       "id": "https://ric.theahg.co.za/default/rule/912350",
       "label": "Giza protection ordenance",
-      "type": "Rule",
+      "type": "rico:Rule",
       "atomId": 912350,
       "atomUrl": "/giza-protection-ordenance"
     },
     {
       "id": "https://ric.theahg.co.za/default/instantiation/912056",
       "label": "egyptian_boat_from_ancient_lives.glb",
-      "type": "Instantiation",
+      "type": "rico:Instantiation",
       "atomId": 912056,
       "atomUrl": "/ric-instantiation-912056"
     },
     {
       "id": "https://ric.theahg.co.za/default/instantiation/912156",
       "label": "Egyptian Boat 3D Model (glTF)",
-      "type": "Instantiation",
+      "type": "rico:Instantiation",
       "atomId": 912156,
       "atomUrl": "/ric-instantiation-egyptian-boat-3d"
     }
@@ -267,13 +267,13 @@
     {
       "source": "https://ric.theahg.co.za/default/recordset/905228",
       "target": "https://ric.theahg.co.za/default/instantiation/912056",
-      "predicate": "rico:hasInstantiation",
+      "predicate": "rico:hasOrHadInstantiation",
       "label": "has instantiation"
     },
     {
       "source": "https://ric.theahg.co.za/default/recordset/905228",
       "target": "https://ric.theahg.co.za/default/instantiation/912156",
-      "predicate": "rico:hasInstantiation",
+      "predicate": "rico:hasOrHadInstantiation",
       "label": "has instantiation"
     }
   ]

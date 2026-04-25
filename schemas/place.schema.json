@@ -39,8 +39,8 @@
     },
 
     "rico:name":           { "$ref": "#/$defs/langString" },
-    "rico:description":    { "$ref": "#/$defs/langString" },
-    "rico:streetAddress":  { "type": ["string", "null"] },
+    "openricx:description":    { "$ref": "#/$defs/langString" },
+    "openricx:streetAddress":  { "type": ["string", "null"] },
 
     "rico:latitude":  { "type": ["number", "null"], "minimum": -90,  "maximum": 90 },
     "rico:longitude": { "type": ["number", "null"], "minimum": -180, "maximum": 180 },
@@ -77,7 +77,7 @@
       ]
     },
 
-    "rico:hasPlaceName": {
+    "rico:hasOrHadPlaceName": {
       "oneOf": [
         { "$ref": "#/$defs/placeName" },
         { "type": "array", "items": { "$ref": "#/$defs/placeName" } }

@@ -44,10 +44,10 @@
     },
 
     "rico:name":                 { "$ref": "#/$defs/langString" },
-    "rico:alternativeForm":      { "$ref": "#/$defs/langString" },
-    "rico:otherName":            { "$ref": "#/$defs/langString" },
+    "openricx:alternativeForm":      { "$ref": "#/$defs/langString" },
+    "openricx:otherName":            { "$ref": "#/$defs/langString" },
 
-    "rico:hasAgentName": {
+    "rico:hasOrHadAgentName": {
       "oneOf": [
         { "$ref": "#/$defs/agentName" },
         { "type": "array", "items": { "$ref": "#/$defs/agentName" } }
@@ -55,23 +55,23 @@
     },
 
     "rico:history":              { "$ref": "#/$defs/langString" },
-    "rico:generalContext":       { "$ref": "#/$defs/langString" },
+    "openricx:generalContext":       { "$ref": "#/$defs/langString" },
 
-    "rico:hasPlace": {
+    "rico:isAssociatedWithPlace": {
       "oneOf": [
         { "type": "object" },
         { "type": "array", "items": { "type": "object" } }
       ]
     },
 
-    "rico:hasMandate":           { "type": "array" },
-    "rico:hasOrHadPolicy":       { "type": "array" },
-    "rico:hasInternalStructure": { "$ref": "#/$defs/langString" },
+    "rico:authorizingMandate":           { "type": "array" },
+    "openricx:hasOrHadPolicy":       { "type": "array" },
+    "openricx:hasInternalStructure": { "$ref": "#/$defs/langString" },
 
-    "rico:hasHolding":           { "type": "array" },
-    "rico:hasFindingAid":        { "type": "array" },
+    "rico:isOrWasHolderOf":           { "type": "array" },
+    "rico:isOrWasDescribedBy":        { "type": "array" },
 
-    "rico:contact":              { "type": "object" },
+    "openricx:contact":              { "type": "object" },
     "rico:conditionsOfAccess":   { "type": "string" }
   },
 

@@ -9,7 +9,7 @@
       "entity":     { "type": "place", "id": 912401 },
       "actor":      "api_key:14",
       "ip":         "203.0.113.42",
-      "payload":    { "rico:description": "Updated to clarify UNESCO World Heritage status." },
+      "payload":    { "openricx:description": "Updated to clarify UNESCO World Heritage status." },
       "created_at": "2026-04-20T14:22:07Z"
     },
     {

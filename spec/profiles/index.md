@@ -32,7 +32,7 @@ A server declares one or more profiles and the level it meets for each. Example:
 ## 3. Composition rules
 
 - **Profiles are additive, not hierarchical.** Authority & Context is *not* a superset of Core Discovery; they are orthogonal. A server may implement any subset.
-- **Dependency declarations.** Some profiles have hard dependencies — for example, Provenance & Event depends on Authority & Context because Activity entities carry `rico:hasOrHadAgent` references. A profile document lists its dependencies; declaring a profile without its dependencies is a conformance failure.
+- **Dependency declarations.** Some profiles have hard dependencies — for example, Provenance & Event depends on Authority & Context because Activity entities carry `rico:hasOrHadParticipant` references. A profile document lists its dependencies; declaring a profile without its dependencies is a conformance failure.
 - **Forbidden-field rule.** A response under one profile MUST NOT emit fields from a profile the server does not claim. A Core-Discovery-only server that emits `rico:isOrWasSubjectOf` edges lies about its capabilities and fails conformance.
 
 ## 4. Versioning

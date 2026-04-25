@@ -40,9 +40,9 @@
 
     "rico:identifier":   { "type": ["string", "null"] },
     "rico:title":        { "$ref": "#/$defs/langString" },
-    "rico:description":  { "$ref": "#/$defs/langString" },
+    "openricx:description":  { "$ref": "#/$defs/langString" },
 
-    "rico:hasMimeType": {
+    "openricx:hasMimeType": {
       "type": ["string", "null"],
       "pattern": "^[a-zA-Z0-9!#$&^_.+-]+/[a-zA-Z0-9!#$&^_.+-]+$"
     },
@@ -56,10 +56,10 @@
       ]
     },
 
-    "rico:technicalCharacteristics":            { "$ref": "#/$defs/langString" },
-    "rico:productionTechnicalCharacteristics":  { "$ref": "#/$defs/langString" },
+    "openricx:technicalCharacteristics":            { "$ref": "#/$defs/langString" },
+    "openricx:productionTechnicalCharacteristics":  { "$ref": "#/$defs/langString" },
 
-    "rico:isInstantiationOf": {
+    "rico:isOrWasInstantiationOf": {
       "oneOf": [
         { "type": "string", "format": "uri" },
         {
@@ -73,8 +73,8 @@
       ]
     },
 
-    "rico:hasAccessRestriction":    { "type": "array" },
-    "rico:hasChecksum":             { "type": ["string", "object"] }
+    "rico:isOrWasRegulatedBy":    { "type": "array" },
+    "openricx:hasChecksum":             { "type": ["string", "object"] }
   },
 
   "additionalProperties": true,
@@ -115,7 +115,7 @@
       "type": "object",
       "properties": {
         "@type":            { "type": "string" },
-        "rico:extentType":  { "type": "string" },
+        "rico:hasExtentType":  { "type": "string" },
         "rico:quantity":    { "type": ["number", "string"] }
       }
     }

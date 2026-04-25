@@ -1,12 +1,12 @@
 ---
 layout: default
 title: "Fixture: activity-production"
-description: "A rico:Production activity with a date range — conformance fixture for the authority-context profile."
+description: "A rico:Activity activity with a date range — conformance fixture for the authority-context profile."
 ---
 
 # Fixture: `activity-production`
 
-A rico:Production activity (type_id=production) with a date range. Exercises: production branch of the activity schema's `@type` pattern; [mapping spec §6.5](/spec/mapping.html#_6-5-activity-type-mapping) `production → Production`.
+A rico:Activity activity (type_id=production) with a date range. Exercises: production branch of the activity schema's `@type` pattern; [mapping spec §6.5](/spec/mapping.html#_6-5-activity-type-mapping) `production → Production`.
 
 **Profile:** `authority-context` · **Status:** done
 

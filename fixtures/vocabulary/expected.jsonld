@@ -1,6 +1,7 @@
 {
   "@context": {
     "rico": "https://www.ica.org/standards/RiC/ontology#",
+    "openricx": "https://openric.org/ns/ext/v1#",
     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
   },
@@ -23,7 +24,7 @@
       "rdfs:label": "Family"
     },
     {
-      "@id": "rico:Function",
+      "@id": "openricx:Function",
       "rdfs:label": "Function"
     },
     {
@@ -61,7 +62,7 @@
       "rdfs:label": "Identifier"
     },
     {
-      "@id": "rico:hasDateRangeSet",
+      "@id": "openricx:hasDateRangeSet",
       "rdfs:label": "Has Date Range Set"
     },
     {
@@ -69,15 +70,15 @@
       "rdfs:label": "Has Creator"
     },
     {
-      "@id": "rico:heldBy",
+      "@id": "rico:hasOrHadHolder",
       "rdfs:label": "Held By"
     },
     {
-      "@id": "rico:hasInstantiation",
+      "@id": "rico:hasOrHadInstantiation",
       "rdfs:label": "Has Instantiation"
     },
     {
-      "@id": "rico:hasSubject",
+      "@id": "rico:hasOrHadSubject",
       "rdfs:label": "Has Subject"
     }
   ]

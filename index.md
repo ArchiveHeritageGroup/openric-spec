@@ -5,7 +5,7 @@ title: OpenRiC
 
 <div class="hero">
   <div class="hero-inner">
-    <div class="hero-eyebrow">OpenRiC · v0.2.0 · 46 endpoints, OAI-PMH, API Explorer, conformance suite live</div>
+    <div class="hero-eyebrow">OpenRiC · v0.37.0 · 7 normative profiles + SPARQL draft · RiC-O 1.1 conformant</div>
     <h1>Records in Contexts, served over HTTP — implementation-neutral, IIIF-inspired.</h1>
     <p class="hero-lede">
       OpenRiC is an open specification for how archival descriptions map to RiC-CM / RiC-O, how that data is served over HTTP for both reading and writing, and how graph-based interfaces can render it consistently across any conformant server. Not a product. A contract anyone can implement.
@@ -42,7 +42,7 @@ title: OpenRiC
   <div class="boundary-cell spec">
     <div class="boundary-label">Specification</div>
     <div class="boundary-title">OpenRiC</div>
-    <p>Four documents, JSON Schemas, SHACL shapes, a 27-case fixture pack, an OpenAPI 3.0 contract, and a black-box conformance probe. CC-BY 4.0. Versioned; <code>v0.2.0</code> is current.</p>
+    <p>Four base documents, seven normative profiles (one draft), JSON Schemas, SHACL shapes, a 27-case fixture pack, an OpenAPI 3.0 contract, and a black-box conformance probe. CC-BY 4.0. Versioned; <code>v0.37.0</code> is current (RiC-O 1.1 conformant).</p>
     <div class="boundary-where"><a href="https://openric.org/">openric.org</a></div>
   </div>
   <div class="boundary-cell impl">
@@ -232,7 +232,7 @@ These live inside the specification site itself — interactive tools, reference
   <div class="phase-card done">
     <div class="phase-num">Phase 5</div>
     <h4>v0.30.0 — Core Discovery freeze <span class="status-pill live">done</span></h4>
-    <p>All 7 Core Discovery design questions resolved (Q6 RFC 7807 mandated and migrated in reference impl; ContactPoint shape pinned to <code>rico:ContactPoint</code>). Profile-scoped SHACL includes <code>:ContactPointShape</code>. Core Discovery Profile flipped from Draft to <strong>Normative</strong>. Tagged 2026-04-21.</p>
+    <p>All 7 Core Discovery design questions resolved (Q6 RFC 7807 mandated and migrated in reference impl; ContactPoint shape pinned to <code>openricx:ContactPoint</code>). Profile-scoped SHACL includes <code>:ContactPointShape</code>. Core Discovery Profile flipped from Draft to <strong>Normative</strong>. Tagged 2026-04-21.</p>
   </div>
   <div class="phase-card done">
     <div class="phase-num">Phase 6</div>
@@ -247,7 +247,7 @@ These live inside the specification site itself — interactive tools, reference
   <div class="phase-card done">
     <div class="phase-num">Phase 8</div>
     <h4>v0.33.0 — Digital Object Linkage <span class="status-pill live">done</span></h4>
-    <p>Fourth normative profile — the profile matrix now sits at a majority. <a href="spec/profiles/digital-object-linkage.html">Digital Object Linkage</a> covers <code>rico:Instantiation</code> carriers (MIME, checksums via <code>rico:technicalCharacteristics</code>, extent, record-backlinks) and <code>rico:Function</code> (ISDF business functions), plus the optional <code>POST /upload</code> and thumbnail derivative endpoints. Two shipped fixtures (<code>instantiation-tiff</code>, <code>instantiation-application</code>) + two planned. All five design questions resolved on-page. Tagged 2026-04-21.</p>
+    <p>Fourth normative profile — the profile matrix now sits at a majority. <a href="spec/profiles/digital-object-linkage.html">Digital Object Linkage</a> covers <code>rico:Instantiation</code> carriers (MIME, checksums via <code>openricx:technicalCharacteristics</code>, extent, record-backlinks) and <code>openricx:Function</code> (ISDF business functions), plus the optional <code>POST /upload</code> and thumbnail derivative endpoints. Two shipped fixtures (<code>instantiation-tiff</code>, <code>instantiation-application</code>) + two planned. All five design questions resolved on-page. Tagged 2026-04-21.</p>
   </div>
   <div class="phase-card done">
     <div class="phase-num">Phase 9</div>
@@ -257,7 +257,7 @@ These live inside the specification site itself — interactive tools, reference
   <div class="phase-card done">
     <div class="phase-num">Phase 10</div>
     <h4>v0.35.0 — Provenance &amp; Event <span class="status-pill live">done</span></h4>
-    <p>Sixth normative profile. <a href="spec/profiles/provenance-event.html">Provenance &amp; Event</a> tightens Authority &amp; Context's Activity shapes: <code>rico:Production</code> MUST carry results + participants + dates (Violation, not Warning); cross-entity link targets MUST be the correct RiC-O class. New SHACL file <code>shapes/profiles/provenance-event.shacl.ttl</code> (5 shapes); two new fixtures (<code>activity-production-full</code>, <code>activity-custody</code>) shipped. Reference serializer gap closed in service v0.8.13; data backfill still pending before the reference claims this profile. Tagged 2026-04-21.</p>
+    <p>Sixth normative profile. <a href="spec/profiles/provenance-event.html">Provenance &amp; Event</a> tightens Authority &amp; Context's Activity shapes: production-typed <code>rico:Activity</code> events (those carrying <code>rico:hasActivityType &lt;…/production&gt;</code>) MUST carry results + participants + dates (Violation, not Warning); cross-entity link targets MUST be the correct RiC-O class. New SHACL file <code>shapes/profiles/provenance-event.shacl.ttl</code> (5 shapes); two new fixtures (<code>activity-production-full</code>, <code>activity-custody</code>) shipped. Reference serializer gap closed in service v0.8.13; data backfill still pending before the reference claims this profile. Tagged 2026-04-21.</p>
   </div>
   <div class="phase-card done">
     <div class="phase-num">Phase 11</div>

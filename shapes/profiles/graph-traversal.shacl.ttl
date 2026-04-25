@@ -71,13 +71,13 @@
     sh:targetClass rico:Instantiation ;
     sh:name "Instantiation-Record Link Check" ;
     sh:sparql [
-        sh:message "Instantiation should be linked from a Record via rico:hasInstantiation" ;
+        sh:message "Instantiation should be linked from a Record via rico:hasOrHadInstantiation" ;
         sh:severity sh:Warning ;
         sh:select """
             SELECT $this WHERE {
                 $this a rico:Instantiation .
                 FILTER NOT EXISTS {
-                    ?record rico:hasInstantiation $this .
+                    ?record rico:hasOrHadInstantiation $this .
                 }
             }
         """

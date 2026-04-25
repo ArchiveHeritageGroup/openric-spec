@@ -13,7 +13,7 @@
 #   - PersonShape           — rico:Person
 #   - CorporateBodyShape    — rico:CorporateBody
 #   - FamilyShape           — rico:Family
-#   - AgentNameShape        — structured rico:hasAgentName values
+#   - AgentNameShape        — structured rico:hasOrHadAgentName values
 #   - RepositoryShape       — ISDIAH custodial institutions
 #
 # Usage:
@@ -24,6 +24,7 @@
 @prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rico: <https://www.ica.org/standards/RiC/ontology#> .
+@prefix openricx: <https://openric.org/ns/ext/v1#> .
 @prefix :     <https://openric.org/shapes#> .
 
 
@@ -69,7 +70,7 @@
     ] ;
 
     sh:property [
-        sh:path rico:isOrWasHeldBy ;
+        sh:path rico:hasOrHadHolder ;
         sh:class rico:CorporateBody ;
         sh:severity sh:Warning ;
         sh:message "RecordSet should be held by a repository (CorporateBody)"
@@ -101,7 +102,7 @@
 # Agent shapes
 # ----------------------------------------------------------------------------
 # OpenRiC v0.1 accepts EITHER rico:name (shorthand, common in practice) OR
-# rico:hasAgentName (RiC-O canonical structured form). At least one must
+# rico:hasOrHadAgentName (RiC-O canonical structured form). At least one must
 # be present.
 
 :PersonShape a sh:NodeShape ;
@@ -110,14 +111,14 @@
 
     sh:or (
         [ sh:property [ sh:path rico:name ; sh:minCount 1 ] ]
-        [ sh:property [ sh:path rico:hasAgentName ; sh:minCount 1 ] ]
+        [ sh:property [ sh:path rico:hasOrHadAgentName ; sh:minCount 1 ] ]
     ) ;
 
     sh:property [
-        sh:path rico:hasAgentName ;
+        sh:path rico:hasOrHadAgentName ;
         sh:node :AgentNameShape ;
         sh:severity sh:Info ;
-        sh:message "When present, rico:hasAgentName must be properly structured"
+        sh:message "When present, rico:hasOrHadAgentName must be properly structured"
     ] .
 
 
@@ -127,14 +128,14 @@
 
     sh:or (
         [ sh:property [ sh:path rico:name ; sh:minCount 1 ] ]
-        [ sh:property [ sh:path rico:hasAgentName ; sh:minCount 1 ] ]
+        [ sh:property [ sh:path rico:hasOrHadAgentName ; sh:minCount 1 ] ]
     ) ;
 
     sh:property [
-        sh:path rico:hasAgentName ;
+        sh:path rico:hasOrHadAgentName ;
         sh:node :AgentNameShape ;
         sh:severity sh:Info ;
-        sh:message "When present, rico:hasAgentName must be properly structured"
+        sh:message "When present, rico:hasOrHadAgentName must be properly structured"
     ] .
 
 
@@ -144,7 +145,7 @@
 
     sh:or (
         [ sh:property [ sh:path rico:name ; sh:minCount 1 ] ]
-        [ sh:property [ sh:path rico:hasAgentName ; sh:minCount 1 ] ]
+        [ sh:property [ sh:path rico:hasOrHadAgentName ; sh:minCount 1 ] ]
     ) .
 
 
@@ -169,7 +170,7 @@
 # recommendations on top.
 
 :RepositoryShape a sh:NodeShape ;
-    sh:targetSubjectsOf rico:isOrHasCurrentCustodian ;
+    sh:targetSubjectsOf rico:hasOrHadHolder ;
     sh:name "Repository (ISDIAH) Recommendations" ;
     sh:description "Custodial institutions that hold records. Applied to any subject of isOrHasCurrentCustodian." ;
 
@@ -186,16 +187,16 @@
     ] ;
 
     sh:property [
-        sh:path rico:isOrWasLocatedAt ;
+        sh:path rico:hasOrHadLocation ;
         sh:severity sh:Info ;
         sh:message "Repository should link to at least one Place"
     ] ;
 
     sh:property [
-        sh:path rico:contact ;
+        sh:path openricx:contact ;
         sh:maxCount 1 ;
         sh:node :ContactPointShape ;
-        sh:message "Repository MAY carry at most one rico:contact, typed rico:ContactPoint; see §3.4.1"
+        sh:message "Repository MAY carry at most one openricx:contact, typed openricx:ContactPoint; see §3.4.1"
     ] .
 
 
@@ -208,34 +209,34 @@
 
 :ContactPointShape a sh:NodeShape ;
     sh:name "Contact Point" ;
-    sh:description "Single embedded contact object under rico:contact — postal + telephone + email fields, all optional" ;
+    sh:description "Single embedded contact object under openricx:contact — postal + telephone + email fields, all optional" ;
 
     sh:property [
         sh:path rdf:type ;
-        sh:hasValue rico:ContactPoint ;
-        sh:message "rico:contact value MUST be typed rico:ContactPoint"
+        sh:hasValue openricx:ContactPoint ;
+        sh:message "openricx:contact value MUST be typed openricx:ContactPoint"
     ] ;
 
     sh:property [
-        sh:path rico:streetAddress ;
+        sh:path openricx:streetAddress ;
         sh:maxCount 1 ;
         sh:datatype xsd:string
     ] ;
 
     sh:property [
-        sh:path rico:postalCode ;
+        sh:path openricx:postalCode ;
         sh:maxCount 1 ;
         sh:datatype xsd:string
     ] ;
 
     sh:property [
-        sh:path rico:city ;
+        sh:path openricx:city ;
         sh:maxCount 1 ;
         sh:datatype xsd:string
     ] ;
 
     sh:property [
-        sh:path rico:country ;
+        sh:path openricx:country ;
         sh:maxCount 1 ;
         sh:datatype xsd:string ;
         sh:severity sh:Info ;
@@ -243,7 +244,7 @@
     ] ;
 
     sh:property [
-        sh:path rico:telephone ;
+        sh:path openricx:telephone ;
         sh:maxCount 1 ;
         sh:datatype xsd:string ;
         sh:severity sh:Info ;
@@ -251,7 +252,7 @@
     ] ;
 
     sh:property [
-        sh:path rico:email ;
+        sh:path openricx:email ;
         sh:maxCount 1 ;
         sh:datatype xsd:string
     ] .

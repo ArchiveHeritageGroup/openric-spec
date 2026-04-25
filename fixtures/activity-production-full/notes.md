@@ -10,7 +10,7 @@ Three invariants this fixture proves:
 
 1. `rico:resultsOrResultedIn` → RecordSet stub, not a loose `@id` string (the link is typed so SHACL can validate the target is actually a record).
 2. `rico:hasOrHadParticipant` → CorporateBody stub. Person or Family also valid. A rico:Place or rico:Thing as the target is a `:ParticipantTypeShape` Violation.
-3. `rico:isOrWasAssociatedWithDate` → structured `rico:DateRange` object, not a bare `xsd:date` string. Both endpoints + `rico:expressedDate` recommended when the source data is a date range.
+3. `rico:isAssociatedWithDate` → structured `openricx:DateRange` object, not a bare `xsd:date` string. Both endpoints + `rico:expressedDate` recommended when the source data is a date range.
 
 `rico:hasOrHadLocation` is optional (Warning at most) — included here because the reference mapping spec (§5.2.1 / §5.2.3) suggests it for events with a known place.
 

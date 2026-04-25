@@ -1,19 +1,23 @@
 {
   "@context": {
     "rico": "https://www.ica.org/standards/RiC/ontology#",
+    "openricx": "https://openric.org/ns/ext/v1#",
     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "xsd": "http://www.w3.org/2001/XMLSchema#"
   },
   "@id": "https://ric.theahg.co.za/activity/910441",
-  "@type": "rico:Accumulation",
+  "@type": "rico:Activity",
   "rico:name": "Accumulation",
   "openric:localType": "accumulation",
-  "rico:isOrWasAssociatedWithDate": {
-    "@type": "rico:DateRange",
+  "rico:isAssociatedWithDate": {
+    "@type": "openricx:DateRange",
     "rico:beginningDate": {
       "@value": "1995-01-01",
       "@type": "xsd:date"
     }
+  },
+  "rico:hasActivityType": {
+    "@id": "https://openric.org/vocab/activity-type/accumulation"
   }
 }

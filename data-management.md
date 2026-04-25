@@ -22,7 +22,7 @@ Pick by operational fit, not semantic purity.
 
 ## What "RiC data" actually is
 
-A RiC record is a **graph fragment**: a `rico:Record` node with typed edges — `rico:hasInstantiation` to Instantiation nodes, `rico:hasCreator` to Agents, `rico:isOrWasPartOf` up into a RecordSet — and dozens of other relation types defined in [RiC-O](https://github.com/ICA-EGAD/RiC-O). Every node carries one of the ~19 RiC classes; every edge has defined cardinality and an inverse.
+A RiC record is a **graph fragment**: a `rico:Record` node with typed edges — `rico:hasOrHadInstantiation` to Instantiation nodes, `rico:hasCreator` to Agents, `rico:isOrWasPartOf` up into a RecordSet — and dozens of other relation types defined in [RiC-O](https://github.com/ICA-EGAD/RiC-O). Every node carries one of the ~19 RiC classes; every edge has defined cardinality and an inverse.
 
 A server needs to store three things:
 

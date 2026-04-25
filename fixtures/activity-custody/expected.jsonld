@@ -1,6 +1,7 @@
 {
   "@context": {
     "rico":    "https://www.ica.org/standards/RiC/ontology#",
+    "openricx": "https://openric.org/ns/ext/v1#",
     "openric": "https://openric.org/ns/v1#",
     "xsd":     "http://www.w3.org/2001/XMLSchema#"
   },
@@ -10,8 +11,8 @@
   "rico:hasActivityType": "custody",
   "openric:localType":   "custody",
 
-  "rico:isOrWasAssociatedWithDate": {
-    "@type":              "rico:DateRange",
+  "rico:isAssociatedWithDate": {
+    "@type":              "openricx:DateRange",
     "rico:beginningDate": { "@value": "1995-06-15", "@type": "xsd:date" }
   },
 

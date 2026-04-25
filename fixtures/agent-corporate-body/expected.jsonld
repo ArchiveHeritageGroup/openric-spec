@@ -1,6 +1,7 @@
 {
   "@context": {
     "rico": "https://www.ica.org/standards/RiC/ontology#",
+    "openricx": "https://openric.org/ns/ext/v1#",
     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "xsd": "http://www.w3.org/2001/XMLSchema#"
@@ -8,7 +9,7 @@
   "@id": "https://ric.theahg.co.za/actor/south-african-heritage-foundation",
   "@type": "rico:CorporateBody",
   "rico:name": "South African Heritage Foundation",
-  "rico:normalizedForm": "South African Heritage Foundation",
-  "rico:dateOfEstablishment": "1975-",
+  "openricx:normalizedForm": "South African Heritage Foundation",
+  "rico:hasBeginningDate": "1975-",
   "rico:history": "Non-profit organization dedicated to preserving South African cultural heritage."
 }

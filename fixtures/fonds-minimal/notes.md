@@ -5,7 +5,7 @@
 **Exercises:**
 - Level `fonds` → `rico:RecordSet` class mapping ([mapping.md §6.1](../../spec/mapping.html#6-class-mapping))
 - Actor type `person` → `rico:Person` ([mapping.md §6.2](../../spec/mapping.html#62-actor--ricoagent-hierarchy))
-- Event type `creation` → `rico:hasCreator` edge (rather than a full `rico:Production` event, which is tested in `event-production`)
+- Event type `creation` → `rico:hasCreator` edge (rather than a full `rico:Activity` event, which is tested in `event-production`)
 - Language-tagged `rico:title` via `@value` / `@language`
 - Minimum required fields only — nothing optional
 

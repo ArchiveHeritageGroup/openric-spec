@@ -132,7 +132,7 @@ Pagination envelope:
 
 - `total` MUST reflect the unfiltered set size when no query is supplied, or the filtered size when `?q=` or equivalent is present.
 - `limit` and `offset` MUST be integers.
-- Each item MUST include at minimum `@id`, `@type`, and a name-like field (`rico:title` for records, `rico:name` or `rico:hasAgentName` for agents and repositories).
+- Each item MUST include at minimum `@id`, `@type`, and a name-like field (`rico:title` for records, `rico:name` or `rico:hasOrHadAgentName` for agents and repositories).
 - Servers MUST emit RFC 5988 `Link` headers with `rel="next"` and `rel="prev"` when applicable.
 
 <!-- Q5: Resolved — pagination mandatory; default page 50, max 200. See §10 Q5. -->
@@ -147,24 +147,24 @@ Pagination envelope:
 |---|---|---|
 | `@id` | 1 | Stable IRI, dereferenceable (SHOULD 303-redirect to content-negotiated representation) |
 | `@type` | 1 | `rico:Record` (other subclasses allowed but MUST extend this) |
-| `rico:title` OR `rico:hasName` | 1 | Multilingual via `@language` tags permitted |
+| `rico:title` OR `rico:hasOrHadName` | 1 | Multilingual via `@language` tags permitted |
 | `rico:identifier` | 1 | String |
 
 **Optional fields (permitted in this profile):**
 
 | Field | Cardinality | Notes |
 |---|---|---|
-| `rico:description` | 0..1 | Long-form prose |
+| `openricx:description` | 0..1 | Long-form prose |
 | `rico:hasBeginningDate` | 0..1 | xsd:gYear / xsd:date / xsd:dateTime |
 | `rico:hasEndDate` | 0..1 | Same types as above |
-| `rico:heldBy` | 0..1 | Embedded partial repository object — `@id`, `@type`, `rico:name` only |
+| `rico:hasOrHadHolder` | 0..1 | Embedded partial repository object — `@id`, `@type`, `rico:name` only |
 | `rico:hasCreator` | 0..n | Embedded partial agent objects — `@id`, `@type`, `rico:name` only |
 
 **Forbidden without other profile claims:**
 
 - `rico:isOrWasSubjectOf`, `rico:hasOrHadSubject` — require Graph Traversal profile
-- `rico:hasInstantiation` — requires Digital Object Linkage profile
-- `rico:hasAcquisitionProvenance` — requires Provenance & Event profile
+- `rico:hasOrHadInstantiation` — requires Digital Object Linkage profile
+- `rico:hasOrganicProvenance` — requires Provenance & Event profile
 
 #### 3.4.2 `GET /agents/{key}`
 
@@ -174,7 +174,7 @@ Pagination envelope:
 |---|---|---|
 | `@id` | 1 | |
 | `@type` | 1 | One of `rico:Agent`, `rico:Person`, `rico:CorporateBody`, `rico:Family` |
-| `rico:name` OR `rico:hasAgentName` | 1 | Either shorthand or canonical AgentName object permitted (v0.2+) |
+| `rico:name` OR `rico:hasOrHadAgentName` | 1 | Either shorthand or canonical AgentName object permitted (v0.2+) |
 
 **Optional fields:**
 
@@ -199,37 +199,37 @@ Pagination envelope:
 | Field | Cardinality | Notes |
 |---|---|---|
 | `rico:history` | 0..1 | |
-| `rico:contact` | 0..1 | Single `rico:ContactPoint` object; shape in §3.4.1 |
+| `openricx:contact` | 0..1 | Single `openricx:ContactPoint` object; shape in §3.4.1 |
 
-#### 3.4.1 `rico:ContactPoint` shape
+#### 3.4.1 `openricx:ContactPoint` shape
 
-The contact point is a single embedded object under `rico:contact`, typed `rico:ContactPoint`. Consistent with `spec/mapping.md` §5.2.2 (ISDIAH 5.2.2 → `rico:contact → rico:ContactPoint`). All subfields are OPTIONAL — emit only what you have; omit nulls. Implementations MUST NOT invent alternative property names.
+The contact point is a single embedded object under `openricx:contact`, typed `openricx:ContactPoint`. Consistent with `spec/mapping.md` §5.2.2 (ISDIAH 5.2.2 → `openricx:contact → openricx:ContactPoint`). All subfields are OPTIONAL — emit only what you have; omit nulls. Implementations MUST NOT invent alternative property names.
 
 ```json
 {
-  "rico:contact": {
-    "@type": "rico:ContactPoint",
-    "rico:streetAddress": "Private Bag X236",
-    "rico:postalCode": "0001",
-    "rico:city": "Pretoria",
-    "rico:country": "ZA",
-    "rico:telephone": "+27 12 323 5300",
-    "rico:email": "info@example.org"
+  "openricx:contact": {
+    "@type": "openricx:ContactPoint",
+    "openricx:streetAddress": "Private Bag X236",
+    "openricx:postalCode": "0001",
+    "openricx:city": "Pretoria",
+    "openricx:country": "ZA",
+    "openricx:telephone": "+27 12 323 5300",
+    "openricx:email": "info@example.org"
   }
 }
 ```
 
 | Field | Cardinality | Notes |
 |---|---|---|
-| `@type` | 1 | MUST be `rico:ContactPoint` |
-| `rico:streetAddress` | 0..1 | Free-form single-line address |
-| `rico:postalCode` | 0..1 | |
-| `rico:city` | 0..1 | |
-| `rico:country` | 0..1 | ISO 3166-1 alpha-2 RECOMMENDED |
-| `rico:telephone` | 0..1 | E.164 RECOMMENDED |
-| `rico:email` | 0..1 | |
+| `@type` | 1 | MUST be `openricx:ContactPoint` |
+| `openricx:streetAddress` | 0..1 | Free-form single-line address |
+| `openricx:postalCode` | 0..1 | |
+| `openricx:city` | 0..1 | |
+| `openricx:country` | 0..1 | ISO 3166-1 alpha-2 RECOMMENDED |
+| `openricx:telephone` | 0..1 | E.164 RECOMMENDED |
+| `openricx:email` | 0..1 | |
 
-**Rationale for `rico:ContactPoint` over `schema:ContactPoint`.** The Core Discovery profile is RiC-native and avoids cross-vocabulary dependencies in its normative surface. `schema.org/ContactPoint` is a valid alternative shape in a non-normative `@context` alias; implementations that want schema.org interop MAY emit the same object under `schema:contactPoint` in addition, but a Core-Discovery-conformant response MUST emit the `rico:contact → rico:ContactPoint` form.
+**Rationale for `openricx:ContactPoint` over `schema:ContactPoint`.** The Core Discovery profile is RiC-native and avoids cross-vocabulary dependencies in its normative surface. `schema.org/ContactPoint` is a valid alternative shape in a non-normative `@context` alias; implementations that want schema.org interop MAY emit the same object under `schema:contactPoint` in addition, but a Core-Discovery-conformant response MUST emit the `openricx:contact → openricx:ContactPoint` form.
 
 ### 3.5 Autocomplete — `GET /autocomplete?q=&types=&limit=`
 
@@ -396,7 +396,7 @@ Seven questions were flagged during drafting. All seven are resolved in the norm
 
 **Resolution**: **First-class in Core.**
 
-**Rationale**: `rico:heldBy` is emitted inline on every record in the list and detail shapes already. If repositories were A&C-only, every Core-only implementation would have to either strip the `heldBy` triple (losing material context) or leak a class the profile doesn't cover (breaking conformance). First-classing repositories matches what real archival discovery always needs — "who holds this?" is a first-order discovery question, not an authority-control detail.
+**Rationale**: `rico:hasOrHadHolder` is emitted inline on every record in the list and detail shapes already. If repositories were A&C-only, every Core-only implementation would have to either strip the `heldBy` triple (losing material context) or leak a class the profile doesn't cover (breaking conformance). First-classing repositories matches what real archival discovery always needs — "who holds this?" is a first-order discovery question, not an authority-control detail.
 
 ### Q5 — Pagination mandatory on list endpoints?
 
@@ -422,7 +422,7 @@ Seven questions were flagged during drafting. All seven are resolved in the norm
 
 **Resolution**: **Open shapes.**
 
-**Rationale**: Closed shapes punish harmless additions — a reference server adding `rico:someInternalMarker` for operational reasons while still satisfying every Core Discovery requirement would fail validation under closed shapes. That turns every future spec extension into a coordinated flag day for every implementation. Open shapes let the ecosystem extend forward-compatibly: new predicates don't break old validators, and closed-shape validation can still be offered as a stricter optional profile for implementers who want it.
+**Rationale**: Closed shapes punish harmless additions — a reference server adding an implementation-specific predicate (e.g. `myimpl:someInternalMarker`) for operational reasons while still satisfying every Core Discovery requirement would fail validation under closed shapes. That turns every future spec extension into a coordinated flag day for every implementation. Open shapes let the ecosystem extend forward-compatibly: new predicates don't break old validators, and closed-shape validation can still be offered as a stricter optional profile for implementers who want it.
 
 ### Q8 — Profile lifecycle: tracks spec versions, or independent?
 

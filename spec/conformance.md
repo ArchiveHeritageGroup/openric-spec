@@ -31,6 +31,8 @@ This document specifies:
 | **L3** | Graph primitives conformance | All subgraph responses satisfy the six invariants in [Graph Primitives](graph-primitives.html) §6. |
 | **L4** | Full conformance | L1 + L2 + L3, plus round-trip (input → RiC → subgraph → viewer-ready) passes with no data loss against the round-trip fixture set. |
 
+> **Note (v0.37):** The `L1`–`L4` envelope levels above are **legacy** terminology, retained for historical context. Current conformance claims SHOULD be **profile-based** — `core-discovery`, `authority-context`, `graph-traversal`, `digital-object-linkage`, `round-trip-editing`, `provenance-event`, `export-only`, and `sparql-access` (draft). A server's `openric_conformance.profiles` declaration in `GET /` is the authoritative claim; the L1–L4 levels were defined before the profile model and now map roughly as: L1 ≈ per-profile mapping, L2 ≈ profile basic-discovery surface, L3 ≈ graph-traversal, L4 ≈ full multi-profile.
+
 Implementations advertise the highest level they claim. Claims are verifiable — the validator CLI reports actual level, which MUST match the claim.
 
 ## 3. Normative validation inputs
@@ -43,14 +45,14 @@ The shape file defines, at minimum:
 
 | Node shape | Target class | Key constraints |
 |---|---|---|
-| `:RecordSetShape` | `rico:RecordSet` | `rico:title` required (1 string), `rico:identifier` recommended, `rico:hasDateRangeSet` recommended |
-| `:RecordShape` | `rico:Record` | As RecordSet; `rico:isContainedIn` required if not a root |
-| `:AgentShape` | `rico:Agent` (and subclasses) | `rico:name` required, `rico:hasDateRangeSet` with `dateType=existence` recommended |
-| `:RepositoryShape` | `rico:CorporateBody` with `openric:role=repository` | `rico:name` required, `rico:hasPlace` recommended |
-| `:FunctionShape` | `rico:Function` | `rico:name` required |
-| `:DateRangeShape` | `rico:DateRange` | At least one of `rico:startDate` / `rico:endDate` / `rico:normalizedDate` |
-| `:ExtentShape` | `rico:Extent` | `rico:extentType` required |
-| `:LanguageShape` | `rico:Language` | `rico:languageCode` required, MUST be ISO 639-3 |
+| `:RecordSetShape` | `rico:RecordSet` | `rico:title` required (1 string), `rico:identifier` recommended, `openricx:hasDateRangeSet` recommended |
+| `:RecordShape` | `rico:Record` | As RecordSet; `rico:isOrWasIncludedIn` required if not a root |
+| `:AgentShape` | `rico:Agent` (and subclasses) | `rico:name` required, `openricx:hasDateRangeSet` with `dateType=existence` recommended |
+| `:RepositoryShape` | `rico:CorporateBody` with `openric:role=repository` | `rico:name` required, `rico:isAssociatedWithPlace` recommended |
+| `:FunctionShape` | `openricx:Function` | `rico:name` required |
+| `:DateRangeShape` | `openricx:DateRange` | At least one of `rico:hasBeginningDate` / `rico:endDate` / `rico:normalizedDateValue` |
+| `:ExtentShape` | `rico:Extent` | `rico:hasExtentType` required |
+| `:LanguageShape` | `rico:Language` | `openricx:languageCode` required, MUST be ISO 639-3 |
 
 Severity levels: `sh:Violation` (L1 fail), `sh:Warning` (advisory), `sh:Info`.
 

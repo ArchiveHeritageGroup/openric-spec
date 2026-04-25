@@ -1,5 +1,42 @@
 # OpenRiC Specification — Changelog
 
+## v0.37.0 — 2026-04-25
+
+### RiC-O 1.1 namespace remediation (Phases A → E) + drift cleanups + Garance-aligned additions
+
+This is the largest single release since the v0.30.0 → v0.36.0 profile-freeze series. It closes the [RiC-O 1.1 conformance audit](audit/ric-o-1.1-audit.html) (110 missing terms → 0 genuine emitted-context violations) and adds the linked-data publication infrastructure flagged by external review (Florence Clavaud / Garance / KM RiC user-group thread).
+
+**Namespace remediation — five phases applied:**
+
+- **Phase A** (already shipped 2026-04-24, commit `47c6581`): version strings RiC-O 1.0 → 1.1, audit doc published.
+- **Phase B**: 20 high-confidence pure RENAMEs + 3 cross-namespace RENAMEs (`Vocabulary`→`skos:ConceptScheme`, `hasBroaderConcept`→`skos:broader`, `conformsTo`→`dcterms:conformsTo`) + 2 DROPs (placeholder/marker terms). 129 occurrences across 38 files. **Result: 110 → 86 missing.**
+- **Phase C**: extension namespace `openricx: <https://openric.org/ns/ext/v1#>` declared in mapping.md, 5 SHACL shape files, and 14 JSON-LD fixture `@context` blocks. All 46 EXTENSION rows renamed (`rico:X` → `openricx:X`), 244 occurrences. **Result: 86 → 39 missing.**
+- **Phase D** (8 sub-phases): mechanical RENAMEs against verified canonical 1.1 targets (incl. `hasAgentName`→`hasOrHadAgentName`, `hasPlaceName`→`hasOrHadPlaceName`); Holder/Location family rename without data-flips; **Activity+`hasActivityType` remodel** of Production/Accumulation/CustodyEvent/Transfer/ProductionActivity classes (single canonical `rico:Activity` class with new vocab IRIs at `<https://openric.org/vocab/activity-type/>` — directly endorsed by Florence Clavaud, RiC user group thread #27); Rule-regulation remodel; provenance pattern (`hasAcquisitionProvenance` / `wasAcquiredFrom` → `hasOrganicProvenance`); Function class → `openricx:Function` interim with §6.4 documenting canonical alternatives; `hasPlace` → `isAssociatedWithPlace`; **`openricx:hasFindingAid` → `rico:isOrWasDescribedBy` + `rico:hasDocumentaryFormType <…#FindingAid>`** per Florence Clavaud KM thread #1; held `rico:hasSource` → `dcterms:source`; **mapping.md §6.2 extended with `mechanism → rico:Mechanism`** and new §10 "Systems, APIs, and Mechanisms" section endorsed by Florence (KM #27 — "scanner or digital camera") and the Garance review (§10.8). **Result: 39 → 10 missing.**
+- **Phase E**: low-confidence remodels — `hasOccupation` → `openricx:hasOccupation` SKOS pattern (per Aaron Hope + Florence KM #20, OccupationType is an ActivityType subclass); `hasReasonForExecution` → `rico:authorizingMandate`; `isOrWasControlledBy` → `rico:hasOrHadController`; `rico:value` → `openricx:checksumValue`. **Result: 10 → 7 remaining tokens, all confirmed false positives** (intentional documentation prose in "MUST NOT emit X" warnings). **Zero genuine emitted-context uses of unsupported `rico:*` terms remain.**
+
+**Pre-A drift cleanups (from external review P1/P2):**
+
+- **Pagination envelope policy** ([viewing-api.md §8.5](spec/viewing-api.html)): one canonical envelope per endpoint class (JSON-LD lists use `openric:total/page/limit/items` with `@context`; plain JSON convenience endpoints use `total/items` without `@context`).
+- **Node.type CURIE policy** ([viewing-api.md §8.6](spec/viewing-api.html)): graph and list responses use prefixed CURIEs (`rico:Person`), not bare local names. 47 fixture / spec rewrites.
+- **OpenAPI version** consistent at 3.0 (was 3.1 in viewing-api.md only).
+- **Legacy L1-L4 conformance levels** marked as legacy in conformance.md and viewing-api.md; current claims are profile-based.
+- **Round-Trip audit visibility** softened (round-trip-editing.md §2.3): minimal fields public by default; richer fields (actor, IP, payload) operator-gated per published visibility table — addresses POPIA/GDPR concerns flagged in external review.
+- **Version matrix** published in [spec/index.md](spec/index.html); landing-page hero updated from v0.2.0 to v0.37.0.
+
+**Linked-data publication additions (from Garance review, ICA-EGAD-aligned):**
+
+- **[openricx ontology](ns/ext/v1.html)** — Turtle ontology stub at `/ns/ext/v1.ttl` declaring all 48 openricx terms (13 classes + 35 properties), plus an HTML index. Closes the audit's v1.0 reviewer-checklist row "Extension namespace exists — dereferences to human and machine documentation."
+- **[OpenRiC vocabularies](vocab/index.html)** — SKOS ConceptSchemes published for activity-type (6 concepts) and rule-type (8 concepts) at `/vocab/activity-type/` and `/vocab/rule-type/`, with HTML and Turtle representations.
+- **[Semantic URIs vs API endpoints](spec/viewing-api.html#3-1-semantic-uris-vs-api-endpoints)** (viewing-api.md §3.1) — recommended `/id/{kind}/{id}` semantic URI pattern separate from `/api/ric/v1/...` endpoints, with the linked-data identity layer documented.
+- **[Content negotiation policy](spec/viewing-api.html#3-2-content-negotiation)** (viewing-api.md §3.2) — HTML / JSON-LD / Turtle / RDF/XML negotiation table, `Vary: Accept` mandate.
+- **[Related Implementations page](related-implementations.html)** — Garance, ICA-EGAD RiC-O, and Heratio listed as external reference projects with permitted-use guidance and attribution requirements.
+- **[SPARQL Access Profile (Draft)](spec/profiles/sparql-access.html)** — 8th profile drafted as an optional, read-only SPARQL 1.1 query surface for RDF-backed implementations. Status: Draft pending implementer feedback + SHACL shapes + fixtures.
+
+**Notes:**
+- The OpenRiC reference service (`ric.theahg.co.za`) implements the seven Normative profiles. Implementing the new SPARQL Access Draft profile, content-negotiation extensions, and the `/id/...` semantic URI layer requires service-side work — Phase G in the project plan.
+- The `openricx:` ontology and the vocabularies under `/vocab/` are dereferenceable as static files (Turtle + HTML) once the GitHub Pages build picks up this commit. Implementations MAY use the URIs immediately; the ontology stub is normative for `openricx:*` term semantics.
+- ICA-EGAD upstream-proposal candidates remain open: `ContactPoint`, `hasAppraisalInformation`, `containsPersonalData`. Tracking via [audit §F](audit/ric-o-1.1-audit.html).
+
 ## v0.36.1 — 2026-04-21
 
 ### SPARQL positioned; triplestore-choice guide added
@@ -21,7 +58,7 @@
 
 ### Provenance & Event profile + freeze-series renumber
 
-- **[Provenance & Event](spec/profiles/provenance-event.html)** (new, 235 lines). Tightens Authority & Context's Activity shapes: `rico:Production` MUST carry `rico:resultsOrResultedIn` + `rico:hasOrHadParticipant` + `rico:isOrWasAssociatedWithDate` at Violation severity (was Warning); cross-entity link targets MUST be the correct RiC-O class via new `:ParticipantTypeShape` + `:ResultTypeShape`.
+- **[Provenance & Event](spec/profiles/provenance-event.html)** (new, 235 lines). Tightens Authority & Context's Activity shapes: `rico:Activity` MUST carry `rico:resultsOrResultedIn` + `rico:hasOrHadParticipant` + `rico:isAssociatedWithDate` at Violation severity (was Warning); cross-entity link targets MUST be the correct RiC-O class via new `:ParticipantTypeShape` + `:ResultTypeShape`.
 - `shapes/profiles/provenance-event.shacl.ttl` (new, 5 shapes). 2 new fixtures: `activity-production-full`, `activity-custody`.
 - Q5 is the honest one: this is the first profile where the reference server's serializer didn't yet emit the required shape at freeze time. Gap closed in service v0.8.13; data backfill still pending for full conformance claim.
 - **Renumber catch-up.** The freeze series was initially cut as v0.3.0 through v0.8.0, which silently collided with pre-freeze draft tags that already existed under those names. This release renumbers the series to continue the real tag history (v0.29.0 → v0.30.0 → … → v0.36.0). Profile versions (per-profile lifecycle, see core-discovery.md §10 Q8) remain independent of spec version.
@@ -38,9 +75,9 @@
 
 ### Digital Object Linkage profile
 
-- **[Digital Object Linkage](spec/profiles/digital-object-linkage.html)** (new, 284 lines). Covers `rico:Instantiation` (MIME, checksums via `rico:technicalCharacteristics`, extent, record-backlinks) and `rico:Function` (ISDF business functions) as first-class entities. Optional `POST /upload` + `GET /thumbnail/{id}` endpoints are ergonomic extensions; not required for profile claim.
+- **[Digital Object Linkage](spec/profiles/digital-object-linkage.html)** (new, 284 lines). Covers `rico:Instantiation` (MIME, checksums via `rico:technicalCharacteristics`, extent, record-backlinks) and `openricx:Function` (ISDF business functions) as first-class entities. Optional `POST /upload` + `GET /thumbnail/{id}` endpoints are ergonomic extensions; not required for profile claim.
 - Pre-existing `shapes/profiles/digital-object-linkage.shacl.ttl` (2 shapes: `:InstantiationShape`, `:FunctionShape`) now normative. 2 shipped fixtures: `instantiation-tiff`, `instantiation-application`.
-- Q1 resolved the long-standing taxonomy question: `rico:Function` stays in Digital Object Linkage (historical grouping) rather than being re-homed to Authority & Context.
+- Q1 resolved the long-standing taxonomy question: `openricx:Function` stays in Digital Object Linkage (historical grouping) rather than being re-homed to Authority & Context.
 
 ## v0.32.0 — 2026-04-21
 
@@ -54,7 +91,7 @@
 
 ### Authority & Context profile
 
-- **[Authority & Context](spec/profiles/authority-context.html)** (new, 298 lines). First-class `rico:Place`, `rico:Rule`, and `rico:Activity` (plus concrete subclasses `rico:Production`, `rico:Accumulation`) with reconciliation-friendly identifiers via `owl:sameAs`.
+- **[Authority & Context](spec/profiles/authority-context.html)** (new, 298 lines). First-class `rico:Place`, `rico:Rule`, and `rico:Activity` (plus concrete subclasses `rico:Activity`, `rico:Activity`) with reconciliation-friendly identifiers via `owl:sameAs`.
 - Pre-existing `shapes/profiles/authority-context.shacl.ttl` (6 shapes) now normative. 6 shipped fixtures: `place-country`, `place-with-parent`, `place-list`, `rule-law`, `activity-production`, `activity-accumulation`.
 - Orthogonal to Core Discovery. 4 design questions resolved: hierarchy shape via `rico:isOrWasPartOf` stubs (Q1); `owl:sameAs` SHOULD not MUST (Q3); Activity subclass selection mandatory when data supports it (Q4); rule-type vocabulary open with 5 conventional values RECOMMENDED (Q5).
 
@@ -134,7 +171,7 @@ The following endpoints were added to the Viewing API document (`§4.11–4.18`)
 
 ### Graph endpoint additions
 
-- `/graph?uri=/default/term/{id}` and `/default/thing/{id}`, `/default/concept/{id}`, `/default/subject/{id}` — the subgraph root dispatcher now recognises Term/Thing/Concept/Subject entity URIs, so clicking a subject node in the viewer drills into the records tagged with it. `rico:hasBroaderConcept` + `rico:hasSubject` edges.
+- `/graph?uri=/default/term/{id}` and `/default/thing/{id}`, `/default/concept/{id}`, `/default/subject/{id}` — the subgraph root dispatcher now recognises Term/Thing/Concept/Subject entity URIs, so clicking a subject node in the viewer drills into the records tagged with it. `rico:hasBroaderConcept` + `rico:hasOrHadSubject` edges.
 
 ### Auth
 

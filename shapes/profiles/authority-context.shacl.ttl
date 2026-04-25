@@ -4,14 +4,15 @@
 # OpenRiC SHACL shapes — profile: authority-context
 # =================================================
 # Shapes for the contextual entities that qualify records: Places, Rules,
-# and Activities (Production / Accumulation).
+# and Activities (production / accumulation / generic — RiC-O 1.1 has only
+# one Activity class; kind is carried in rico:hasActivityType).
 #
 # Shapes in this file:
-#   - ProductionShape       — rico:Production (creation event)
-#   - AccumulationShape     — rico:Accumulation (aggregation event)
-#   - ActivityShape         — rico:Activity (generic)
+#   - ProductionShape       — rico:Activity with hasActivityType=production
+#   - AccumulationShape     — rico:Activity with hasActivityType=accumulation
+#   - ActivityShape         — every rico:Activity (generic baseline)
 #   - PlaceShape            — rico:Place
-#   - PlaceNameShape        — structured rico:hasPlaceName values
+#   - PlaceNameShape        — structured rico:hasOrHadPlaceName values
 #   - RuleShape             — rico:Rule (mandates, legislation, policies)
 #
 # Usage:
@@ -21,6 +22,7 @@
 @prefix sh:   <http://www.w3.org/ns/shacl#> .
 @prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
 @prefix rico: <https://www.ica.org/standards/RiC/ontology#> .
+@prefix openricx: <https://openric.org/ns/ext/v1#> .
 @prefix :     <https://openric.org/shapes#> .
 
 
@@ -29,7 +31,17 @@
 # ----------------------------------------------------------------------------
 
 :ProductionShape a sh:NodeShape ;
-    sh:targetClass rico:Production ;
+    sh:target [
+        a sh:SPARQLTarget ;
+        sh:prefixes <https://openric.org/shapes#> ;
+        sh:select """
+            PREFIX rico: <https://www.ica.org/standards/RiC/ontology#>
+            SELECT ?this WHERE {
+                ?this a rico:Activity ;
+                      rico:hasActivityType <https://openric.org/vocab/activity-type/production> .
+            }
+        """ ;
+    ] ;
     sh:name "Production Activity Validation" ;
 
     # rico:resultsOrResultedIn is recommended but not required at v0.1 —
@@ -49,14 +61,24 @@
     ] ;
 
     sh:property [
-        sh:path rico:isOrWasAssociatedWithDate ;
+        sh:path rico:isAssociatedWithDate ;
         sh:severity sh:Warning ;
         sh:message "Production should have an associated date"
     ] .
 
 
 :AccumulationShape a sh:NodeShape ;
-    sh:targetClass rico:Accumulation ;
+    sh:target [
+        a sh:SPARQLTarget ;
+        sh:prefixes <https://openric.org/shapes#> ;
+        sh:select """
+            PREFIX rico: <https://www.ica.org/standards/RiC/ontology#>
+            SELECT ?this WHERE {
+                ?this a rico:Activity ;
+                      rico:hasActivityType <https://openric.org/vocab/activity-type/accumulation> .
+            }
+        """ ;
+    ] ;
     sh:name "Accumulation Activity Validation" ;
 
     sh:property [
@@ -86,17 +108,17 @@
     sh:targetClass rico:Place ;
     sh:name "Place Validation" ;
 
-    # Accept either rico:name (shorthand) OR rico:hasPlaceName (canonical).
+    # Accept either rico:name (shorthand) OR rico:hasOrHadPlaceName (canonical).
     sh:or (
         [ sh:property [ sh:path rico:name ; sh:minCount 1 ] ]
-        [ sh:property [ sh:path rico:hasPlaceName ; sh:minCount 1 ] ]
+        [ sh:property [ sh:path rico:hasOrHadPlaceName ; sh:minCount 1 ] ]
     ) ;
 
     sh:property [
-        sh:path rico:hasPlaceName ;
+        sh:path rico:hasOrHadPlaceName ;
         sh:node :PlaceNameShape ;
         sh:severity sh:Info ;
-        sh:message "When present, rico:hasPlaceName must be properly structured"
+        sh:message "When present, rico:hasOrHadPlaceName must be properly structured"
     ] .
 
 
@@ -127,18 +149,18 @@
     ] ;
 
     sh:property [
-        sh:path rico:ruleType ;
+        sh:path rico:hasOrHadRuleType ;
         sh:severity sh:Warning ;
         sh:message "Rule should have a rule type"
     ] ;
 
     sh:property [
-        sh:path rico:jurisdiction ;
+        sh:path openricx:jurisdiction ;
         sh:severity sh:Info ;
         sh:message "Rule should specify the jurisdiction it applies to"
     ] ;
 
     sh:or (
-        [ sh:property [ sh:path rico:descriptiveNote ; sh:minCount 1 ] ]
-        [ sh:property [ sh:path rico:ruleType ; sh:minCount 1 ] ]
+        [ sh:property [ sh:path openricx:descriptiveNote ; sh:minCount 1 ] ]
+        [ sh:property [ sh:path rico:hasOrHadRuleType ; sh:minCount 1 ] ]
     ) .

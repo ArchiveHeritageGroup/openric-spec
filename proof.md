@@ -85,7 +85,7 @@ Every counter maps to a real endpoint: <code>/records</code>, <code>/agents</cod
   <div class="num">3</div>
   <div>
     <h4>Publishing — JSON-LD over HTTP</h4>
-    <p>The record is live at <a href="https://ric.theahg.co.za/api/ric/v1/records/egyptian-boat"><code>/api/ric/v1/records/egyptian-boat</code></a>, content-negotiated, with an embedded <code>rico:heldBy</code> link to the British Museum repository and a stable <code>@id</code> anyone can follow.</p>
+    <p>The record is live at <a href="https://ric.theahg.co.za/api/ric/v1/records/egyptian-boat"><code>/api/ric/v1/records/egyptian-boat</code></a>, content-negotiated, with an embedded <code>rico:hasOrHadHolder</code> link to the British Museum repository and a stable <code>@id</code> anyone can follow.</p>
 <pre><code>curl https://ric.theahg.co.za/api/ric/v1/records/egyptian-boat</code></pre>
   </div>
 </div>
@@ -147,7 +147,7 @@ Each card links to a real JSON-LD document served by the reference API. Open any
   <div class="entity-card">
     <span class="type">rico:CorporateBody</span>
     <h4>The British Museum</h4>
-    <p>ISDIAH repository. Holdings linked via <code>rico:hasHolding</code>. Address and contact fields preserved.</p>
+    <p>ISDIAH repository. Holdings linked via <code>rico:isOrWasHolderOf</code>. Address and contact fields preserved.</p>
     <p><a href="https://ric.theahg.co.za/api/ric/v1/repositories/the-british-museum"><code>/repositories/the-british-museum</code></a></p>
   </div>
   <div class="entity-card">
@@ -175,7 +175,7 @@ Each card links to a real JSON-LD document served by the reference API. Open any
     <p><a href="https://ric.theahg.co.za/api/ric/v1/instantiations"><code>/instantiations</code></a></p>
   </div>
   <div class="entity-card">
-    <span class="type">rico:Function</span>
+    <span class="type">openricx:Function</span>
     <h4>ISDF function</h4>
     <p>Function / activity-context description — used to model why a record was created and by which business process.</p>
     <p><a href="https://ric.theahg.co.za/api/ric/v1/functions"><code>/functions</code></a></p>
@@ -199,14 +199,14 @@ This is the 1:1 mapping the reference implementation applies at read time. No tr
     <tr><td>3.2.1 Name of creator</td><td><code>rico:hasCreator</code></td><td>Link to a <code>rico:Agent</code>; inverse <code>rico:isCreatorOf</code>.</td></tr>
     <tr><td>3.2.2 Administrative/biographical history</td><td><code>rico:history</code> on the linked Agent</td><td>Not a predicate on the Record itself.</td></tr>
     <tr><td>3.2.3 Archival history</td><td><code>rico:history</code></td><td>Custody + transfer chain.</td></tr>
-    <tr><td>3.2.4 Immediate source of acquisition</td><td><code>rico:hasAcquisitionProvenance</code></td><td>Link to the donor/transferor Agent.</td></tr>
-    <tr><td>3.3.1 Scope and content</td><td><code>rico:description</code></td><td>Long-form prose.</td></tr>
-    <tr><td>3.4.1 Conditions governing access</td><td><code>rico:hasAccessRule</code></td><td>Link to a <code>rico:Rule</code> when the restriction is formal.</td></tr>
-    <tr><td>3.4.3 Language</td><td><code>rico:hasLanguage</code></td><td>ISO 639 code.</td></tr>
-    <tr><td>3.4.4 Physical characteristics</td><td><code>rico:hasPhysicalCharacteristics</code></td><td>Condition, binding, material.</td></tr>
-    <tr><td>3.5.1 Existence of originals</td><td><code>rico:hasInstantiation</code></td><td>Each copy / format is its own <code>rico:Instantiation</code>.</td></tr>
+    <tr><td>3.2.4 Immediate source of acquisition</td><td><code>rico:hasOrganicProvenance</code></td><td>Link to the donor/transferor Agent.</td></tr>
+    <tr><td>3.3.1 Scope and content</td><td><code>openricx:description</code></td><td>Long-form prose.</td></tr>
+    <tr><td>3.4.1 Conditions governing access</td><td><code>rico:isOrWasRegulatedBy</code></td><td>Link to a <code>rico:Rule</code> when the restriction is formal.</td></tr>
+    <tr><td>3.4.3 Language</td><td><code>rico:hasOrHadLanguage</code></td><td>ISO 639 code.</td></tr>
+    <tr><td>3.4.4 Physical characteristics</td><td><code>openricx:hasPhysicalCharacteristics</code></td><td>Condition, binding, material.</td></tr>
+    <tr><td>3.5.1 Existence of originals</td><td><code>rico:hasOrHadInstantiation</code></td><td>Each copy / format is its own <code>rico:Instantiation</code>.</td></tr>
     <tr><td>3.5.3 Related descriptions</td><td><code>rico:isRelatedTo</code> (symmetric)</td><td>Falls back to <code>rico:isOrWasSubjectOf</code> where typed.</td></tr>
-    <tr><td>Repository</td><td><code>rico:heldBy</code></td><td>Link to a <code>rico:CorporateBody</code> playing the Repository role.</td></tr>
+    <tr><td>Repository</td><td><code>rico:hasOrHadHolder</code></td><td>Link to a <code>rico:CorporateBody</code> playing the Repository role.</td></tr>
   </tbody>
 </table>
 

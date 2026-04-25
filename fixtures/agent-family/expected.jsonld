@@ -1,6 +1,7 @@
 {
   "@context": {
     "rico": "https://www.ica.org/standards/RiC/ontology#",
+    "openricx": "https://openric.org/ns/ext/v1#",
     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "xsd": "http://www.w3.org/2001/XMLSchema#"
@@ -8,5 +9,5 @@
   "@id": "https://ric.theahg.co.za/actor/pieterse-ai",
   "@type": "rico:Family",
   "rico:name": "Pieterse AI",
-  "rico:normalizedForm": "Pieterse AI"
+  "openricx:normalizedForm": "Pieterse AI"
 }

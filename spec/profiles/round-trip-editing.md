@@ -56,7 +56,17 @@ A server MUST accept PATCH; accepting PUT as an alias is RECOMMENDED (same body 
 |---|---|---|
 | GET | `/api/ric/v1/{type}/{id}/revisions` | `openric:RevisionList` |
 
-**Public read** — audit reads MUST NOT require auth. Sensitive keys (passwords, API keys, tokens) MUST be redacted at write time, before the payload is stored; this means public exposure of the audit log is safe.
+**Public-read default — operator-configurable** (revised v0.37): audit revision endpoints MUST exist for every writable entity. **Public visibility of revision metadata is the default**, but implementations MAY require authentication for sensitive fields. Sensitive keys (passwords, API keys, tokens) MUST be redacted at write time before the payload is stored.
+
+| Audit field | Default public visibility | Operator may restrict |
+|---|---|---|
+| Revision exists (`id`, `action`) | Public | Coarsen to row count |
+| Timestamp (`created_at`) | Public | Coarsen to date precision |
+| Actor (api-key id, user id) | **Redacted-or-role-only by default** | — |
+| IP address (`ip`) | **Not public by default** | — |
+| Payload (full JSON diff) | **Not public by default** | Operator opt-in for full payload |
+
+The "round-trip closure" (a client confirms its own mutation persisted) only requires `id`, `action`, `created_at`, and the entity's stable `@id`. The richer fields (full payload, actor IP) are governance metadata; their visibility is an operator/jurisdiction decision (POPIA §14, GDPR Art. 5/6, etc.), not an OpenRiC normative requirement.
 
 ### 2.4 Optional endpoints
 
@@ -130,7 +140,7 @@ The audit trail for one entity, newest-first.
       "entity":     { "type": "place", "id": 912401 },
       "actor":      "api_key:14",
       "ip":         "203.0.113.42",
-      "payload":    { "rico:description": "Updated to clarify UNESCO status." },
+      "payload":    { "openricx:description": "Updated to clarify UNESCO status." },
       "created_at": "2026-04-20T14:22:07Z"
     }
   ]
@@ -219,7 +229,7 @@ Fixtures outside this list are NOT required for profile conformance.
 - [ ] DELETE returns `200 OK` with `{success: true, id}`
 - [ ] Every successful mutation writes one row to the audit log (action, entity, actor, timestamp, payload)
 - [ ] Sensitive keys (passwords, API keys) redacted in the stored payload before insert
-- [ ] `GET /{t}/{id}/revisions` returns `openric:RevisionList` per §3.3 — public, no auth
+- [ ] `GET /{t}/{id}/revisions` returns `openric:RevisionList` per §3.3 — minimal fields (`id`, `action`, `created_at`, `entity`) public by default; richer fields (`actor`, `ip`, `payload`) operator-gated per §2.3 visibility table
 - [ ] Revision response validates against `:RevisionListShape` — 0 Violations
 - [ ] 401 on missing/invalid key; 403 on scope mismatch — both `application/problem+json`
 - [ ] 409 on referential-integrity conflicts; 422 on body validation failures
