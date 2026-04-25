@@ -5,21 +5,19 @@ title: OpenRiC Mapping Specification
 
 # OpenRiC Mapping Specification
 
-**Version:** 0.1.0-draft
-**Status:** Draft — open for comment
-**Last updated:** 2026-04-24
+**Version:** 0.37.0
+**Status:** Active — RiC-O 1.1 namespace remediation complete
+**Last updated:** 2026-04-25
 
 ---
 
-<div class="callout-warning" markdown="1">
+<div class="callout" markdown="1">
 
-### ⚠️ Under RiC-O 1.1 conformance review
+### ✅ RiC-O 1.1 namespace remediation — complete (v0.37.0, 2026-04-25)
 
-**2026-04-24 — ICA-EGAD reviewer feedback.** This document currently claims the `rico:` namespace for a number of classes and properties that are **not** defined in RiC-O 1.1. A full conformance audit is published at [audit/ric-o-1.1-audit.html]({{ '/audit/ric-o-1.1-audit.html' | relative_url }}) — of the 168 `rico:*` tokens used across the spec repo, **110 are not in RiC-O 1.1** and need to be either renamed, remodelled to use RiC-O 1.1 patterns, or moved to an OpenRiC extension namespace (`openricx:`).
+This document has been remediated against [RiC-O 1.1 (2025-05-22)](https://www.ica.org/standards/RiC/ontology/1.1). Every `rico:*` term emitted as data is canonical 1.1; every term that needed renaming, remodelling, or moving to the OpenRiC extension namespace has been processed across five phases (A → E). The full per-term disposition table and phase summaries are at [audit/ric-o-1.1-audit.html]({{ '/audit/ric-o-1.1-audit.html' | relative_url }}).
 
-Phase A (version strings, this commit) is non-semantic. Subsequent phases (renames, remodel, extension namespace) will land as separate reviewable PRs. Until they do, **treat any `rico:*` term in this document as provisional** — the single source of truth for what `rico:` actually defines is [RiC-O 1.1 (2025-05-22)](https://www.ica.org/standards/RiC/ontology/1.1).
-
-Tracking: [openric/spec#TBD](https://github.com/openric/spec/issues); reviewer has been CC'd.
+The remaining `rico:*` tokens that appear in this document are exclusively in **"MUST NOT emit X"** warnings explaining what's *not* in RiC-O 1.1 — they are documentation prose, not emissions. Implementations of any OpenRiC profile MUST NOT emit them as data.
 
 </div>
 

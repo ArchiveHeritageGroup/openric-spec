@@ -5,9 +5,9 @@ title: OpenRiC Viewing API
 
 # OpenRiC Viewing API
 
-**Version:** 0.1.0-draft
-**Status:** Draft — open for comment
-**Last updated:** 2026-04-17
+**Version:** 0.37.0
+**Status:** Active — RiC-O 1.1 namespace remediation complete
+**Last updated:** 2026-04-25
 
 ---
 

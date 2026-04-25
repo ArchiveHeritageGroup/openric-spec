@@ -5,7 +5,13 @@ title: RiC-O 1.1 conformance audit
 
 # RiC-O 1.1 conformance audit — openric/spec
 
-**Generated:** 2026-04-24 · **Catalyst:** ICA-EGAD reviewer feedback (April 2026) · **Canonical ontology:** [RiC-O 1.1, 2025-05-22](https://raw.githubusercontent.com/ICA-EGAD/RiC-O/master/ontology/current-version/RiC-O_1-1.rdf) — 102 classes, 316 object properties, 60 datatype properties, 23 annotation properties.
+> ## ✅ STATUS — REMEDIATION COMPLETE (v0.37.0, 2026-04-25)
+>
+> All five remediation phases (A → E) below have been applied. The original audit found **110 of 168 distinct `rico:*` tokens** were not in RiC-O 1.1; after remediation, **zero genuine emit-context uses of unsupported `rico:*` terms remain**. The 7-10 `rico:*` mentions that still appear in a repo-wide token scan are exclusively inside **"MUST NOT emit X"** documentation prose — correct text, not violations.
+>
+> The body of this document below is preserved for forensic / audit-history purposes — it is the complete record of what was found, what was decided per term, and how each phase was applied. New readers should focus on the ✅ phase-status markers in §Migration plan; the 478-canonical-vs-110-missing numbers reflect the **pre-remediation state**, not current.
+
+**Generated:** 2026-04-24 · **Remediation completed:** 2026-04-25 · **Catalyst:** ICA-EGAD reviewer feedback (April 2026) · **Canonical ontology:** [RiC-O 1.1, 2025-05-22](https://raw.githubusercontent.com/ICA-EGAD/RiC-O/master/ontology/current-version/RiC-O_1-1.rdf) — 102 classes, 316 object properties, 60 datatype properties, 23 annotation properties.
 
 ## Method
 

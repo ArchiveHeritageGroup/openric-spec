@@ -1,5 +1,19 @@
 # OpenRiC Specification — Changelog
 
+## v0.37.1 — 2026-04-25
+
+### Public consistency patch
+
+Triggered by an external "outstanding work" review (`openric_outstanding_deep_review_v2.md`) that flagged drift between the v0.37.0 landing claim and several supporting pages. The review's namespace claims (still uses `rico:DateRange` etc.) were verified as **stale reads** — the live site already reflects v0.37.0 — but the reviewer correctly caught presentation-level drift:
+
+- Per-document version headers in `spec/mapping.md`, `spec/viewing-api.md`, `spec/graph-primitives.md`, `spec/conformance.md` bumped from `0.1.0-draft` to `0.37.0` with `Status: Active — RiC-O 1.1 namespace remediation complete`.
+- README.md current-version banner updated from v0.36.1 to v0.37.0; service-table cell flagged "currently tracking spec v0.36.0 (Phase G migration to v0.37.0 in progress)".
+- Mapping spec's stale "⚠️ Under RiC-O 1.1 conformance review" callout replaced with a "✅ REMEDIATION COMPLETE" callout pointing readers at the audit doc.
+- Audit document opens with a prominent **STATUS — REMEDIATION COMPLETE** banner so casual readers do not misread the historical "110 of 168 missing" finding as the current state.
+- New [`/drift-log.html`](drift-log.html) page — public list of known service-side / viewer / capture / conformance-probe drift items against the v0.37.0 spec, with ETAs or blocker explanations. Service Phase G migration items enumerated.
+
+No spec semantics changed.
+
 ## v0.37.0 — 2026-04-25
 
 ### RiC-O 1.1 namespace remediation (Phases A → E) + drift cleanups + Garance-aligned additions
